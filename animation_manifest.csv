@@ -1,0 +1,117 @@
+Animation_ID,Page,Component,Trigger,Engine,Type,Duration_ms,Description
+hero_fade_in,Home,Hero,Load,Framer,fade,600,Hero title and subtitle fade in
+hero_name_slide,Home,Hero,Load,Framer,slide-left,700,Name slides in from left
+hero_tagline_slide,Home,Hero,Hero,Load,Framer,slide-right,700,Tagline slides in from right
+hero_desc_stagger,Home,Hero,Load,Framer,stagger,800,Description text staggers in
+cta_view_projects_hover,Home,Hero,Hover,Framer,scale-glow,300,View Projects button hover
+cta_view_projects_click,Home,Hero,Click,GSAP,ripple,400,View Projects click ripple
+cta_contact_hover,Home,Hero,Hover,Framer,scale-glow,300,Contact button hover
+cta_contact_click,Home,Hero,Click,GSAP,ripple,400,Contact button click
+stat_count_osint,Home,Stats,Load,GSAP,number,1500,OSINT cases stat count
+stat_count_certs,Home,Stats,Load,GSAP,number,1500,Certifications stat count
+stat_count_cases,Home,Stats,Load,GSAP,number,1500,Cases analyzed stat count
+highlight_card_osint_enter,Home,Highlights,Load,Framer,slide-fade,600,OSINT card enters
+highlight_card_osint_hover,Home,Highlights,Hover,Framer,lift-glow,300,OSINT card hover lift
+highlight_card_crime_enter,Home,Highlights,Load,Framer,slide-fade,600,Cybercrime card enters
+highlight_card_crime_hover,Home,Highlights,Hover,Framer,lift-glow,300,Cybercrime card hover lift
+highlight_card_dev_enter,Home,Highlights,Load,Framer,slide-fade,600,Secure dev card enters
+highlight_card_dev_hover,Home,Highlights,Hover,Framer,lift-glow,300,Secure dev card hover lift
+highlight_card_click_modal,Home,Highlights,Click,Framer,modal-zoom,400,Highlight card modal opens
+cta_section_headline,Home,CTA,Load,Framer,fade-in-up,600,CTA section headline
+cta_section_para,Home,CTA,Load,Framer,fade-in-up,700,CTA section paragraph
+button_hover_home,Home,Buttons,Hover,CSS,scale-shadow,250,Generic button hover effect
+button_click_home,Home,Buttons,Click,GSAP,pulse,200,Generic button click effect
+about_bio_fade,About,Bio,Load,Framer,fade-in-up,600,Bio section fades in
+about_mission_slide,About,Mission,Load,Framer,slide-left,700,Mission card slides in
+about_approach_slide,About,Approach,Load,Framer,slide-right,700,Approach card slides in
+timeline_education_enter,About,Timeline,Load,Framer,slide-fade,600,Education timeline enters
+timeline_development_enter,About,Timeline,Load,Framer,slide-fade,700,Development timeline enters
+timeline_osint_enter,About,Timeline,Load,Framer,slide-fade,800,OSINT timeline enters
+globe_rotate_idle,About,Globe,Load,Three,orbit,4000,Globe rotates idle
+globe_rotate_hover,About,Globe,Hover,Three,speed-up,300,Globe speeds up on hover
+resume_button_pulse,About,Resume,Hover,CSS,pulse-soft,1500,Resume button pulses
+resume_button_click,About,Resume,Click,GSAP,download-bounce,600,Resume downloads with bounce
+avatar_wave_hover,About,Avatar,Hover,GSAP,wave,800,Avatar image waves on hover
+modal_resume_open,About,Modal,Click,Framer,zoom-fade,400,Resume modal opens
+modal_resume_close,About,Modal,Click,Framer,zoom-fade-out,300,Resume modal closes
+exp_card_osint_1_enter,Experience,Cards,Load,Framer,slide-fade,600,OSINT exp card 1 enters
+exp_card_osint_1_hover,Experience,Cards,Hover,Framer,lift-expand,300,OSINT exp card 1 hovers
+exp_card_osint_1_click,Experience,Cards,Click,Framer,modal-open,400,OSINT exp card 1 modal opens
+exp_card_dev_enter,Experience,Cards,Load,Framer,slide-fade,700,Dev exp card enters
+exp_card_dev_hover,Experience,Cards,Hover,Framer,lift-expand,300,Dev exp card hovers
+exp_card_dev_click,Experience,Cards,Click,Framer,modal-open,400,Dev exp card modal opens
+exp_tag_osint_hover,Experience,Tags,Hover,Framer,pop-scale,250,OSINT tag pops on hover
+exp_tag_dev_hover,Experience,Tags,Hover,Framer,pop-scale,250,Dev tag pops on hover
+exp_filter_chip_osint_click,Experience,Filter,Click,GSAP,toggle-active,300,OSINT filter toggles
+exp_filter_chip_dev_click,Experience,Filter,Click,GSAP,toggle-active,300,Dev filter toggles
+exp_modal_open,Experience,Modal,Click,Framer,zoom-fade,400,Experience modal opens
+exp_modal_close,Experience,Modal,Click,Framer,zoom-fade-out,300,Experience modal closes
+project_tile_1_enter,Projects,Grid,Load,Framer,slide-fade,600,Project 1 tile enters
+project_tile_1_hover,Projects,Grid,Hover,Framer,lift-shadow,300,Project 1 tile hovers
+project_tile_1_click,Projects,Grid,Click,Framer,modal-open,400,Project 1 opens 3D scene
+project_hotspot_1_ripple,Projects,Scene,Load,GSAP,ripple,800,Project 1 hotspot 1 ripples
+project_hotspot_2_ripple,Projects,Scene,Load,GSAP,ripple,1000,Project 1 hotspot 2 ripples
+project_hotspot_3_ripple,Projects,Scene,Load,GSAP,ripple,1200,Project 1 hotspot 3 ripples
+project_hotspot_click_1,Projects,Scene,Click,Framer,modal-zoom,400,Project hotspot 1 modal opens
+project_hotspot_click_2,Projects,Scene,Click,Framer,modal-zoom,400,Project hotspot 2 modal opens
+project_hotspot_click_3,Projects,Scene,Click,Framer,modal-zoom,400,Project hotspot 3 modal opens
+project_evidence_modal_1_open,Projects,Modal,Click,Framer,fade-zoom,400,Evidence modal 1 opens
+project_evidence_modal_1_close,Projects,Modal,Click,Framer,fade-zoom-out,300,Evidence modal 1 closes
+project_tile_2_enter,Projects,Grid,Load,Framer,slide-fade,700,Project 2 tile enters
+project_tile_2_hover,Projects,Grid,Hover,Framer,lift-shadow,300,Project 2 tile hovers
+project_tile_2_click,Projects,Grid,Click,Framer,modal-open,400,Project 2 opens 3D scene
+project_tile_3_enter,Projects,Grid,Load,Framer,slide-fade,800,Project 3 tile enters
+project_tile_3_hover,Projects,Grid,Hover,Framer,lift-shadow,300,Project 3 tile hovers
+project_tile_3_click,Projects,Grid,Click,Framer,modal-open,400,Project 3 opens 3D scene
+project_tile_4_enter,Projects,Grid,Load,Framer,slide-fade,900,Project 4 tile enters
+project_tile_4_hover,Projects,Grid,Hover,Framer,lift-shadow,300,Project 4 tile hovers
+project_tile_4_click,Projects,Grid,Click,Framer,modal-open,400,Project 4 opens 3D scene
+project_camera_orbit,Projects,Scene,Load,Three,orbit,6000,Camera orbits around 3D scene
+project_scene_fade_out,Projects,Modal,Click,Framer,fade,400,3D scene fades out
+skill_radar_sweep,Skills,Radar,Load,GSAP,sweep,2000,Radar chart sweeps
+skill_bar_investigation_fill,Skills,Bars,Load,GSAP,fill,1200,Investigation skills bar fills
+skill_bar_technical_fill,Skills,Bars,Load,GSAP,fill,1200,Technical skills bar fills
+skill_chip_osint_pop,Skills,Chips,Click,Framer,pop,250,OSINT skill chip pops
+skill_chip_crime_pop,Skills,Chips,Click,Framer,pop,250,Cybercrime skill chip pops
+skill_chip_dev_pop,Skills,Chips,Click,Framer,pop,250,Development skill chip pops
+skill_chip_forensics_pop,Skills,Chips,Click,Framer,pop,250,Forensics skill chip pops
+skill_chip_fraud_pop,Skills,Chips,Click,Framer,pop,250,Fraud analysis skill chip pops
+skill_chip_darkweb_pop,Skills,Chips,Click,Framer,pop,250,Dark web skill chip pops
+skill_chip_websec_pop,Skills,Chips,Click,Framer,pop,250,Web security skill chip pops
+skill_chip_sql_pop,Skills,Chips,Click,Framer,pop,250,SQL skill chip pops
+skill_chip_api_pop,Skills,Chips,Click,Framer,pop,250,API security skill chip pops
+skill_chip_owasp_pop,Skills,Chips,Click,Framer,pop,250,OWASP skill chip pops
+skill_section_headline,Skills,Heading,Load,Framer,fade-in-up,600,Skills section headline
+skill_section_para,Skills,Heading,Load,Framer,fade-in-up,700,Skills section paragraph
+cert_badge_1_flip,Certifications,Badge,Click,Framer,flip,500,CSI Linux badge flips
+cert_badge_2_flip,Certifications,Badge,Click,Framer,flip,500,Security Blue Team badge flips
+cert_badge_3_flip,Certifications,Badge,Click,Framer,flip,500,Cybrary badge flips
+cert_verify_link_hover,Certifications,Link,Hover,CSS,underline-expand,300,Verify link hovers
+cert_modal_open,Certifications,Modal,Click,Framer,zoom-fade,400,Certificate modal opens
+cert_modal_close,Certifications,Modal,Click,Framer,zoom-fade-out,300,Certificate modal closes
+edu_degree_card_slide,Education,Card,Load,Framer,slide-fade,600,Degree card slides in
+edu_coursework_expand,Education,Card,Click,Framer,expand,300,Coursework section expands
+edu_projects_enter,Education,Projects,Load,Framer,slide-fade,700,Academic projects enter
+edu_project_hover,Education,Projects,Hover,Framer,lift-glow,300,Academic project hovers
+edu_modal_open,Education,Modal,Click,Framer,zoom-fade,400,Education modal opens
+edu_modal_close,Education,Modal,Click,Framer,zoom-fade-out,300,Education modal closes
+contact_form_field_focus_glow,Contact,Form,Focus,CSS,glow-soft,300,Form field focus glow
+contact_form_field_blur,Contact,Form,Blur,CSS,glow-fade,300,Form field blur fade
+contact_submit_button_hover,Contact,Form,Hover,Framer,scale-glow,300,Submit button hovers
+contact_submit_loading,Contact,Form,Submit,GSAP,spin,400,Submit button loading spinner
+contact_submit_success,Contact,Form,Submit,Lottie,confetti,2000,Success confetti animation
+contact_submit_error,Contact,Form,Submit,GSAP,shake,500,Error shake animation
+contact_modal_success_open,Contact,Modal,Submit,Framer,zoom-fade,600,Success modal opens
+contact_modal_success_close,Contact,Modal,Auto,Framer,fade-out,300,Success modal auto-closes after 6s
+contact_info_email_hover,Contact,Info,Hover,CSS,underline-slide,300,Email link hovers
+contact_info_phone_hover,Contact,Info,Hover,CSS,underline-slide,300,Phone link hovers
+contact_method_card_enter,Contact,Card,Load,Framer,slide-fade,600,Contact method card enters
+contact_method_card_hover,Contact,Card,Hover,Framer,lift-glow,300,Contact method card hovers
+header_logo_hover,Header,Logo,Hover,Framer,scale-rotate,250,Logo hovers
+header_nav_hover,Header,Nav,Hover,CSS,underline-expand,300,Nav link underline expands
+header_sticky_shadow,Header,Header,Scroll,CSS,shadow-drop,300,Header shadow appears on scroll
+header_menu_toggle_click,Header,Menu,Click,Framer,rotate,300,Mobile menu icon rotates
+footer_fade_up,Footer,Footer,Load,Framer,fade-in-up,800,Footer fades in from bottom
+footer_social_icon_pulse,Footer,Social,Hover,CSS,pulse-soft,1500,Social icon pulses
+footer_link_hover_glow,Footer,Link,Hover,CSS,text-glow,300,Footer link glows on hover
+footer_divider_expand,Footer,Divider,Load,Framer,width-expand,800,Footer divider expands
