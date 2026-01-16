@@ -157,99 +157,53 @@ export default function Index() {
               </motion.div>
             </motion.div>
 
-            {/* Right: Visual Element (Rotating Card) + 3D Background Visibility Area */}
+            {/* Right: Visual Element */}
             <div className="hidden lg:flex items-center justify-center h-[600px] w-full relative">
-              {/* 
-                  We want the 3D background (Globe) to be visible here.
-                  However, we can also restore the "Visual Element" (Rotating Card) 
-                  but make it semi-transparent or styled to complement the 3D scene.
-                  
-                  If the user wants the 3D animation (Globe) to be the main focus,
-                  we can keep this area clear or add a minimal HUD overlay.
-                  
-                  Let's restore the rotating card but make it a "Holographic" overlay 
-                  so the 3D globe behind it is still visible.
-               */}
-              {/* <motion.div
+              <motion.div
                 initial={{ opacity: 0, scale: 0.8, rotateY: 20 }}
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                 transition={{ duration: 1, ease: "easeOut" }}
-                className="relative w-80 h-96 rounded-2xl border border-primary/20 bg-background/10 backdrop-blur-[2px] overflow-hidden flex items-center justify-center group hover:border-primary/50 transition-colors duration-500"
+                className="relative h-96 md:h-full min-h-96 rounded-2xl border-2 border-[#2F80ED]/30 overflow-hidden flex items-center justify-center group"
               >
-                {/* Animated border/scanline */}
-                {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent animate-scanline pointer-events-none" /> */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2F80ED]/5 via-transparent to-[#7E8A97]/5" />
 
-                {/* Center icon */}
-                {/* <motion.div
+                <motion.div
+                  animate={{ rotateZ: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 rounded-2xl"
+                  style={{
+                    background:
+                      "conic-gradient(from 0deg, transparent, rgba(47, 128, 237, 0.5), transparent)",
+                    opacity: 0.1,
+                  }}
+                />
+
+                <motion.div
                   animate={{
-                    y: [0, -10, 0],
+                    y: [0, -20, 0],
+                    scale: [1, 1.05, 1],
                   }}
                   transition={{
                     duration: 4,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="text-6xl opacity-80 drop-shadow-[0_0_15px_rgba(18,194,233,0.5)]"
-                > */}
-                  {/* 🔍
+                  className="text-7xl md:text-8xl opacity-50"
+                >
+                  🔍
                 </motion.div>
 
-                {/* Decorative rings */}
-                {/* <div className="absolute inset-0 border-2 border-primary/10 rounded-2xl scale-90" /> */}
-                {/* <div className="absolute inset-0 border border-secondary/10 rounded-2xl scale-75" /> */}
-              {/* </motion.div> */} */} */}
-
-            {/* Right: Visual Element */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotateY: 20 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="relative h-96 md:h-full min-h-96 rounded-2xl border-2 border-[#2F80ED]/30 overflow-hidden flex items-center justify-center group"
-            >
-              {/* Background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2F80ED]/5 via-transparent to-[#7E8A97]/5" />
-
-              {/* Animated border */}
-              <motion.div
-                animate={{ rotateZ: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background:
-                    "conic-gradient(from 0deg, transparent, rgba(47, 128, 237, 0.5), transparent)",
-                  opacity: 0.1,
-                }}
-              />
-
-              {/* Center icon */}
-              <motion.div
-                animate={{
-                  y: [0, -20, 0],
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="text-7xl md:text-8xl opacity-50"
-              >
-                🔍
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute inset-4 rounded-2xl border border-[#2F80ED]/50"
+                />
+                <motion.div
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.1, 0.3] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 0.1 }}
+                  className="absolute inset-0 rounded-2xl border border-[#7E8A97]/30"
+                />
               </motion.div>
-
-              {/* Pulsing rings */}
-              <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-4 rounded-2xl border border-[#2F80ED]/50"
-              />
-              <motion.div
-                animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.1, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 0.1 }}
-                className="absolute inset-0 rounded-2xl border border-[#7E8A97]/30"
-              />
-            </motion.div>
-            
             </div>
           </div>
         </section>
@@ -292,7 +246,6 @@ export default function Index() {
                   data-cursor="interactive"
                   data-animation-id="card_hover_01"
                 >
-                  {/* Animated background glow */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     initial={{ opacity: 0 }}
@@ -317,7 +270,6 @@ export default function Index() {
                     </p>
                   </div>
 
-                  {/* Bottom accent line */}
                   <motion.div
                     className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary to-secondary w-0 group-hover:w-full transition-all duration-500"
                     initial={{ width: 0 }}
