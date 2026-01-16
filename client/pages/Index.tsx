@@ -158,7 +158,7 @@ export default function Index() {
             </motion.div>
 
             {/* Right: Visual Element */}
-            <div className="hidden lg:flex items-center justify-center h-[600px] w-full relative">
+            <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-2xl border-2 border-[#2F80ED]/30 overflow-hidden flex items-center justify-center group">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8, rotateY: 20 }}
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
