@@ -17,25 +17,25 @@ export function Layout({ children, isDark, onThemeToggle }: LayoutProps) {
   const getVariant = (pathname: string): BackgroundVariant => {
     switch (pathname) {
       case "/":
-        return "globe"; // Rotating sphere with orbit ring
+        return "threat-intel-globe";
       case "/about":
-        return "network"; // Interconnected network nodes
+        return "digital-network-mesh";
       case "/experience":
-        return "dna"; // DNA double helix structure
+        return "security-lattice";
       case "/contact":
-        return "hexgrid"; // Hexagonal grid pattern
+        return "signal-scanning";
       case "/projects":
-        return "grid"; // Flying through grid effect
+        return "data-streams";
       case "/education":
-        return "spiral"; // Spiral helix animation
+        return "recon-spiral";
       case "/downloads":
-        return "flow"; // Wave-like flowing particles
+        return "traffic-flow";
       case "/certifications":
-        return "vortex"; // Swirling vortex effect
+        return "encryption-vortex";
       case "/skills":
-        return "matrix"; // Matrix-style particle animation
+        return "cyber-matrix";
       default:
-        return "globe";
+        return "threat-intel-globe";
     }
   };
 

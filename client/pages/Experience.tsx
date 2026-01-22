@@ -1,270 +1,118 @@
 import { motion, Variants } from "framer-motion";
-import { Briefcase, Calendar, MapPin, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
-
-const DEFAULT_experiences = [
-  {
-    id: 1,
-    title: "OSINT & Cyber Crime Investigation",
-    organization: "Independent",
-    period: "2025 – Present",
-    location: "Remote",
-    description:
-      "Leading independent investigations into cybercrime and threat intelligence",
-    responsibilities: [
-      "Conducted advanced OSINT on threat actors and fake profiles",
-      "Analyzed phishing, impersonation, and online fintech fraud patterns",
-      "Correlated emails, usernames, IPs, and domains across open sources",
-      "Supported documentation for law enforcement standards",
-      "Studied roles of Cyber Crime Cells & CERT-In in India",
-      "Built comprehensive threat intelligence reports",
-    ],
-    skills: ["OSINT", "Investigation", "Threat Analysis", "Documentation"],
-    highlight:
-      "Specialized in tracing digital footprints and threat actor attribution",
-  },
-  {
-    id: 2,
-    title: "Web & Application Development",
-    organization: "Various Projects",
-    period: "2023 – 2024",
-    location: "Remote/On-site",
-    description:
-      "Developed secure web and mobile applications with focus on security",
-    responsibilities: [
-      "Designed secure web & mobile applications from ground up",
-      "Implemented robust authentication and validation mechanisms",
-      "Built access control systems and permission hierarchies",
-      "Designed SQL-backed systems minimizing injection risks",
-      "Integrated APIs securely with proper rate limiting",
-      "Handled sensitive data with encryption and secure storage",
-      "Applied OWASP security practices throughout development",
-      "Conducted security code reviews and testing",
-    ],
-    skills: [
-      "Web Development",
-      "Mobile Development",
-      "SQL",
-      "Security",
-      "API Design",
-    ],
-    highlight:
-      "Built production-grade applications with security as first-class citizen",
-  },
-];
+import { Shield, Target, Activity, Terminal, Briefcase, Globe, Database, Search } from "lucide-react";
 
 export default function Experience() {
-  const [experiences, setExperiences] = useState<any[]>([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("experiences");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setExperiences(parsed.length > 0 ? parsed : DEFAULT_experiences);
-      } catch {
-        setExperiences(DEFAULT_experiences);
-      }
-    } else {
-      setExperiences(DEFAULT_experiences);
-    }
-  }, []);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
+  const revealVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
+  const experiences = [
+    {
+      company: "Independent Investigation Services",
+      role: "OSINT & Cybercrime Research Specialist",
+      period: "2024 - Present",
+      description: "Providing high-stakes digital investigation services for private clients and legal teams. Specialized in asset tracing, threat actor profiling, and infrastructure analysis.",
+      deliverables: [
+        "Actionable intelligence reports for legal proceedings.",
+        "Darknet monitoring for potential data breaches.",
+        "Methodical tracking of digital footprints for HNWIs.",
+        "Identity verification and cross-border profiling."
+      ],
+      icon: Search
+    },
+    {
+      company: "Technical Research & Development",
+      role: "Security-Focused Application Developer",
+      period: "2023 - 2024",
+      description: "Designed and implemented secure application architectures with a focus on data integrity and user privacy. Leveraged modern stacks to build robust investigative tools.",
+      deliverables: [
+        "Developed custom OSINT automation scripts in Python.",
+        "Built secure web platforms with zero-trust principles.",
+        "Conducted internal security audits and vulnerability assessments.",
+        "Optimized data collection pipelines for efficiency."
+      ],
+      icon: Terminal
+    }
+  ];
+
   return (
-    <div className="relative">
+    <div className="flex flex-col min-h-screen bg-transparent pt-20">
       {/* Header */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-            Professional Experience
-          </h1>
-          <div className="h-1 w-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-8" />
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            A track record of successfully conducting cybercrime investigations,
-            developing secure applications, and contributing to the
-            cybersecurity landscape.
-          </p>
-        </motion.div>
+      <section className="py-32">
+        <div className="container px-4 mx-auto">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={revealVariants}
+            className="max-w-4xl"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md">
+              <Briefcase className="w-4 h-4 text-primary" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Log: Professional Record</span>
+            </div>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none">
+              Operational <span className="text-muted-foreground/40 italic font-light">Experience.</span>
+            </h1>
+            <p className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8">
+              A record of professional engagements where technical depth and investigative rigor were deployed to solve complex digital challenges.
+            </p>
+          </motion.div>
+        </div>
       </section>
 
-      {/* Experience Cards */}
-      <section className="container mx-auto max-w-7xl px-4 py-12 md:py-20 border-t border-border">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="space-y-8"
-        >
-          {experiences.map((exp) => (
-            <motion.div
-              key={exp.id}
-              variants={itemVariants}
-              className="group relative rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/30 transition-all duration-300 data-cursor-interactive"
-              data-cursor="interactive"
-            >
-              {/* Background gradient */}
+      {/* Experience List */}
+      <section className="pb-48">
+        <div className="container px-4 mx-auto">
+          <div className="space-y-16">
+            {experiences.map((exp, index) => (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-              />
-
-              <div className="relative z-10 p-8 md:p-12">
-                {/* Header */}
-                <div className="mb-8">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                key={index}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={revealVariants}
+                transition={{ delay: index * 0.1 }}
+                className="group relative p-12 rounded-[3rem] border border-border bg-background/40 backdrop-blur-md hover:bg-muted/10 transition-all duration-500 overflow-hidden"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                  <div className="lg:col-span-4 space-y-6">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform duration-500">
+                      <exp.icon className="w-8 h-8 text-primary" />
+                    </div>
                     <div>
-                      <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-                        {exp.title}
-                      </h2>
-                      <p className="text-lg font-semibold text-primary">
-                        {exp.organization}
-                      </p>
+                      <h3 className="text-3xl font-bold tracking-tight mb-2">{exp.company}</h3>
+                      <p className="text-xl text-primary font-bold opacity-80">{exp.role}</p>
+                      <p className="text-lg text-muted-foreground font-mono mt-4 uppercase tracking-widest">{exp.period}</p>
                     </div>
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 10 }}
-                      className="text-4xl opacity-50"
-                    >
-                      <Briefcase className="w-8 h-8 text-primary" />
-                    </motion.div>
                   </div>
-
-                  {/* Meta info */}
-                  <div className="flex flex-col sm:flex-row gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-primary" />
-                      <span>{exp.period}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      <span>{exp.location}</span>
+                  
+                  <div className="lg:col-span-8 space-y-10">
+                    <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+                      {exp.description}
+                    </p>
+                    
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">Key Intelligence Deliverables</h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {exp.deliverables.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-4 text-lg text-foreground font-medium opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>
-
-                {/* Highlight */}
-                <div className="p-4 rounded-lg bg-primary/10 border border-primary/20 mb-8">
-                  <p className="text-sm text-primary font-semibold">
-                    ✨ {exp.highlight}
-                  </p>
-                </div>
-
-                {/* Description */}
-                <p className="text-muted-foreground mb-8 leading-relaxed">
-                  {exp.description}
-                </p>
-
-                {/* Responsibilities */}
-                <div className="mb-8">
-                  <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wide">
-                    Key Responsibilities
-                  </h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {exp.responsibilities.map((responsibility, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.05 }}
-                        className="flex items-start gap-3 text-muted-foreground"
-                      >
-                        <ArrowRight className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{responsibility}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Skills */}
-                <div>
-                  <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wide">
-                    Skills & Technologies
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.skills.map((skill, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        className="px-3 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-xs font-semibold text-primary hover:bg-primary/30 transition-colors"
-                      >
-                        {skill}
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom accent */}
-              <motion.div
-                className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary to-secondary w-0 group-hover:w-full transition-all duration-500"
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* Statistics Section */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32 border-t border-border">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-8"
-        >
-          {[
-            { label: "Years of Experience", value: "2+" },
-            { label: "Cases Analyzed", value: "10+" },
-            { label: "Projects Completed", value: "15+" },
-            { label: "Security Standards", value: "OWASP" },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="p-6 rounded-xl border border-border bg-card text-center hover:border-primary/30 transition-all duration-300"
-            >
-              <p className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                {stat.value}
-              </p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
     </div>
   );
