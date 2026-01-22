@@ -11,7 +11,15 @@ export default function Certifications() {
     },
   };
 
-  const certifications = [
+    const certifications = [
+    {
+      title: "Intelligence Track – Advanced Course",
+      issuer: "National Cyber Crime Training Center, Government of India",
+      date: "2026",
+      description: "Advanced specialized training in cyber intelligence operations, multi-source data synthesis, and complex digital threat investigation.",
+      skills: ["Cyber Intel", "Evidence Synthesis", "Threat Investigation"],
+      icon: FileText
+    },
     {
       title: "OSINT Professional Certification",
       issuer: "Cyber Intelligence Academy",
