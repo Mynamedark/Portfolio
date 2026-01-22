@@ -108,7 +108,8 @@
 
   pre,
   code {
-    @apply bg-muted/50 p-4 rounded-md;
+    @apply bg-muted p-4 rounded-md;
+    background-color: rgba(20, 26, 46, 0.5);
     overflow-x: auto;
     white-space: pre;
   }
@@ -151,6 +152,9 @@
   }
 
   .card-interactive {
-    @apply rounded-lg border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-lg;
+    @apply rounded-lg border border-border bg-card transition-all duration-300 hover:shadow-lg;
+    &:hover {
+      border-color: rgba(0, 200, 255, 0.5);
+    }
   }
 }
