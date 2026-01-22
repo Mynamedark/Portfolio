@@ -1,6 +1,10 @@
 import * as THREE from "three";
 import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+
+if (typeof window !== "undefined") {
+  (window as any).THREE = THREE;
+}
 import {
   InstancedMesh,
   Object3D,
@@ -754,96 +758,176 @@ function OSINTNodeNetwork() {
 // --- CYBER DRAGON ---
 function CyberDragon() {
   const { mouse, viewport } = useThree();
-  const segments = 24;
+  const segments = 32; // Increased segments for smoother body
   const segmentRefs = useRef<Group[]>([]);
   const headRef = useRef<Group>(null);
+  const leftWingRef = useRef<Group>(null);
+  const rightWingRef = useRef<Group>(null);
   
   const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
-    const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
+  const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
 
-    const theme = useThemeColors();
-    const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
+  const theme = useThemeColors();
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
 
-    // Professional Materials
-    const armorMaterial = useMemo(() => new MeshStandardMaterial({
-      color: "#1a1a1a",
-      metalness: 0.9,
-      roughness: 0.1,
-    }), []);
+  // Enhanced Materials
+  const armorMaterial = useMemo(() => new MeshStandardMaterial({
+    color: "#0a0a0a",
+    metalness: 0.95,
+    roughness: 0.05,
+  }), []);
 
-    const accentMaterial = useMemo(() => new MeshStandardMaterial({
-      color: highlightColor,
-      emissive: highlightColor,
-      emissiveIntensity: 0.2,
-      transparent: true,
-      opacity: 0.8,
-    }), [highlightColor]);
+  const skinMaterial = useMemo(() => new MeshStandardMaterial({
+    color: "#1a1a1a",
+    metalness: 0.4,
+    roughness: 0.6,
+  }), []);
 
-    useFrame((state) => {
-      const time = state.clock.getElapsedTime();
+  const accentMaterial = useMemo(() => new MeshStandardMaterial({
+    color: highlightColor,
+    emissive: highlightColor,
+    emissiveIntensity: 0.5,
+    transparent: true,
+    opacity: 0.9,
+  }), [highlightColor]);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    
+    // Exact mouse tracking
+    const targetX = (mouse.x * viewport.width) / 2;
+    const targetY = (mouse.y * viewport.height) / 2;
+    
+    if (headRef.current) {
+      // Smooth movement towards mouse
+      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.08;
+      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.08;
+      headRef.current.position.z = Math.sin(time * 0.5) * 2;
       
-      const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.2);
-      const targetY = (mouse.y * viewport.height) / 2;
+      // Look DIRECTLY at the mouse in 3D space
+      const mouse3D = new Vector3(targetX, targetY, 5);
+      headRef.current.lookAt(mouse3D);
       
-      if (headRef.current) {
-        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.05;
-        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.05;
-        headRef.current.position.z = Math.sin(time * 0.5) * 1;
-        
-        const lookTarget = new Vector3(targetX + 5, targetY, 0);
-        headRef.current.lookAt(lookTarget);
-        headRef.current.rotation.z += Math.sin(time) * 0.002;
-      }
+      // Subtle head tilt/breathing
+      headRef.current.rotation.z += Math.sin(time * 2) * 0.05;
+    }
 
-      positions[0].copy(headRef.current?.position || new Vector3());
-      rotations[0].copy(headRef.current?.quaternion || new Quaternion());
+    // Wing flapping
+    if (leftWingRef.current && rightWingRef.current) {
+      const flapAngle = Math.sin(time * 3) * 0.6;
+      leftWingRef.current.rotation.z = flapAngle;
+      rightWingRef.current.rotation.z = -flapAngle;
+    }
+
+    // Body physics (Inverse Kinematics / Follow-the-leader)
+    positions[0].copy(headRef.current?.position || new Vector3());
+    rotations[0].copy(headRef.current?.quaternion || new Quaternion());
 
     for (let i = 1; i < segments; i++) {
       const seg = segmentRefs.current[i];
       if (!seg) continue;
       
-      positions[i].lerp(positions[i - 1], 0.15);
-      rotations[i].slerp(rotations[i - 1], 0.1);
+      const prevPos = positions[i - 1];
+      const distance = 0.6;
+      
+      // Direction from current to previous
+      const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
+      
+      // Update position to maintain distance
+      positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
+      
+      // Smoothly slerp rotation
+      rotations[i].slerp(rotations[i-1], 0.15);
       
       seg.position.copy(positions[i]);
       seg.quaternion.copy(rotations[i]);
-      seg.position.y += Math.sin(time * 1.5 + i * 0.4) * 0.05;
       
-      const s = Math.max(0.1, (1 - i / segments) * 0.8);
+      // Add organic snake-like movement
+      seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.1;
+      seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.05;
+      
+      // Tapering scale
+      const s = Math.max(0.05, (1 - i / segments) * 1.2);
       seg.scale.setScalar(s);
     }
   });
 
   return (
     <group>
+      {/* Detailed Head */}
       <group ref={headRef}>
-        <mesh rotation={[0, -Math.PI / 2, 0]}>
-          <coneGeometry args={[0.5, 1.5, 4]} />
+        {/* Main Skull */}
+        <mesh>
+          <boxGeometry args={[0.8, 0.6, 1]} />
           <primitive object={armorMaterial} attach="material" />
         </mesh>
-        <mesh position={[0, -0.3, 0.2]} rotation={[0.2, 0, 0]}>
-          <boxGeometry args={[0.4, 0.2, 0.8]} />
+        {/* Snout */}
+        <mesh position={[0, -0.1, 1]}>
+          <boxGeometry args={[0.5, 0.4, 1.2]} />
           <primitive object={armorMaterial} attach="material" />
         </mesh>
-        <mesh position={[0.4, 0.2, 0.3]}>
-          <boxGeometry args={[0.1, 0.05, 0.2]} />
+        {/* Lower Jaw */}
+        <mesh position={[0, -0.35, 0.8]} rotation={[-0.2, 0, 0]}>
+          <boxGeometry args={[0.4, 0.2, 1]} />
+          <primitive object={armorMaterial} attach="material" />
+        </mesh>
+        {/* Eyes */}
+        <mesh position={[0.3, 0.15, 0.4]}>
+          <sphereGeometry args={[0.1, 8, 8]} />
           <meshBasicMaterial color={highlightColor} />
         </mesh>
-        <mesh position={[0.4, 0.2, -0.3]}>
-          <boxGeometry args={[0.1, 0.05, 0.2]} />
+        <mesh position={[-0.3, 0.15, 0.4]}>
+          <sphereGeometry args={[0.1, 8, 8]} />
           <meshBasicMaterial color={highlightColor} />
         </mesh>
+        {/* Horns */}
+        <mesh position={[0.3, 0.5, -0.2]} rotation={[-0.5, 0, 0.3]}>
+          <coneGeometry args={[0.1, 1, 4]} />
+          <primitive object={accentMaterial} attach="material" />
+        </mesh>
+        <mesh position={[-0.3, 0.5, -0.2]} rotation={[-0.5, 0, -0.3]}>
+          <coneGeometry args={[0.1, 1, 4]} />
+          <primitive object={accentMaterial} attach="material" />
+        </mesh>
+        
+        {/* Wings - Attached to head/neck area for simplified background dragon */}
+        <group position={[0, 0.2, -0.5]}>
+          <group ref={leftWingRef} position={[0.4, 0, 0]}>
+            <mesh position={[1.5, 0, 0]} rotation={[0, 0, 0.2]}>
+              <boxGeometry args={[3, 0.05, 2]} />
+              <primitive object={accentMaterial} attach="material" />
+            </mesh>
+          </group>
+          <group ref={rightWingRef} position={[-0.4, 0, 0]}>
+            <mesh position={[-1.5, 0, 0]} rotation={[0, 0, -0.2]}>
+              <boxGeometry args={[3, 0.05, 2]} />
+              <primitive object={accentMaterial} attach="material" />
+            </mesh>
+          </group>
+        </group>
       </group>
 
+      {/* Articulated Body Segments */}
       {Array.from({ length: segments }).map((_, i) => (
         <group key={i} ref={(el) => (segmentRefs.current[i] = el!)}>
-          <mesh rotation={[0, Math.PI / 4, 0]}>
-            <octahedronGeometry args={[0.8]} />
+          {/* Spinal Plate */}
+          <mesh position={[0, 0.4, 0]} rotation={[Math.PI / 4, 0, 0]}>
+            <octahedronGeometry args={[0.5]} />
+            <primitive object={accentMaterial} attach="material" />
+          </mesh>
+          {/* Body Segment */}
+          <mesh>
+            <sphereGeometry args={[0.7, 8, 8]} />
             <primitive object={armorMaterial} attach="material" />
           </mesh>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.6, 0.02, 8, 24]} />
-            <primitive object={accentMaterial} attach="material" />
+          {/* Side Spikes */}
+          <mesh position={[0.6, 0, 0]} rotation={[0, 0, -Math.PI / 2]}>
+            <coneGeometry args={[0.1, 0.4, 4]} />
+            <primitive object={skinMaterial} attach="material" />
+          </mesh>
+          <mesh position={[-0.6, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <coneGeometry args={[0.1, 0.4, 4]} />
+            <primitive object={skinMaterial} attach="material" />
           </mesh>
         </group>
       ))}

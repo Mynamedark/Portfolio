@@ -3,6 +3,7 @@
  * Handles cleanup and disposal of WebGL resources on route change
  */
 
+import * as THREE from "three";
 import {
   WebGLRenderer,
   Scene,
@@ -11,6 +12,10 @@ import {
   Texture,
   Mesh
 } from "three";
+
+if (typeof window !== "undefined") {
+  (window as any).THREE = THREE;
+}
 
 class WebGLManager {
   private static instance: WebGLManager;

@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { useRef, useMemo, Suspense, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { 
@@ -7,6 +8,10 @@ import {
   Group, 
   Color 
 } from "three";
+
+if (typeof window !== "undefined") {
+  (window as any).THREE = THREE;
+}
 import { Float, MeshDistortMaterial, MeshWobbleMaterial, Sparkles } from "@react-three/drei";
 import { useMobileDetection, shouldDisable3D } from "@/hooks/useMobileDetection";
 
@@ -39,48 +44,65 @@ function ScanningLines() {
 
 function CyberDragon() {
   const { mouse, viewport } = useThree();
-  const segments = 24;
+  const segments = 40; // High detail for cinematic dragon
   const segmentRefs = useRef<Group[]>([]);
   const headRef = useRef<Group>(null);
+  const leftWingRef = useRef<Group>(null);
+  const rightWingRef = useRef<Group>(null);
   
   const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
   const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
 
-  // Professional Materials
-  const armorMaterial = new MeshStandardMaterial({
-    color: "#1a1a1a",
-    metalness: 0.9,
+  // Cinematic Materials
+  const armorMaterial = useMemo(() => new MeshStandardMaterial({
+    color: "#050505",
+    metalness: 1.0,
     roughness: 0.1,
-    emissive: "#000000",
-  });
+  }), []);
 
-  const accentMaterial = new MeshStandardMaterial({
+  const accentMaterial = useMemo(() => new MeshStandardMaterial({
     color: "#00C8FF",
     emissive: "#00C8FF",
-    emissiveIntensity: 0.2,
+    emissiveIntensity: 1.0,
     transparent: true,
-    opacity: 0.8,
-  });
+    opacity: 0.9,
+  }), []);
+
+  const wingMaterial = useMemo(() => new MeshStandardMaterial({
+    color: "#00C8FF",
+    emissive: "#00C8FF",
+    emissiveIntensity: 0.4,
+    transparent: true,
+    opacity: 0.3,
+    side: THREE.DoubleSide
+  }), []);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     
-    // Position dragon to the right side of the screen
-    const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.25);
+    // Position dragon relative to viewport
+    const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.1);
     const targetY = (mouse.y * viewport.height) / 2;
     
     if (headRef.current) {
-      // Smooth head movement
-      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.05;
-      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.05;
-      headRef.current.position.z = Math.sin(time * 0.5) * 1;
+      // Smooth tracking
+      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.07;
+      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.07;
+      headRef.current.position.z = Math.sin(time * 0.3) * 3;
       
-      // Look at mouse direction
-      const lookTarget = new Vector3(targetX + 5, targetY, 0);
-      headRef.current.lookAt(lookTarget);
+      // Look EXACTLY at mouse
+      const mouse3D = new Vector3(targetX, targetY, 10);
+      headRef.current.lookAt(mouse3D);
       
-      // Idle "breathing" rotation
-      headRef.current.rotation.z += Math.sin(time) * 0.002;
+      // Add subtle mecha-head tilt
+      headRef.current.rotation.z += Math.sin(time * 1.5) * 0.05;
+    }
+
+    // Wing flapping animation
+    if (leftWingRef.current && rightWingRef.current) {
+      const flap = Math.sin(time * 4) * 0.8;
+      leftWingRef.current.rotation.y = flap;
+      rightWingRef.current.rotation.y = -flap;
     }
 
     // Trailing body segments
@@ -92,84 +114,103 @@ function CyberDragon() {
       if (!seg) continue;
       
       const prevPos = positions[i - 1];
-      const prevRot = rotations[i - 1];
+      const distance = 0.5;
       
-      // Lerp position for smooth trailing
-      positions[i].lerp(prevPos, 0.15);
-      // Slower rotation trailing
-      rotations[i].slerp(prevRot, 0.1);
+      const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
+      positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
+      rotations[i].slerp(rotations[i - 1], 0.12);
       
       seg.position.copy(positions[i]);
       seg.quaternion.copy(rotations[i]);
       
-      // Subtle idle undulation
-      seg.position.y += Math.sin(time * 1.5 + i * 0.4) * 0.05;
+      // Undulation
+      seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.12;
+      seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.08;
       
-      // Tapering scale
-      const s = Math.max(0.1, (1 - i / segments) * 1.2);
-      seg.scale.setScalar(s);
+      // Tapering
+      const scale = Math.max(0.05, (1 - i / segments) * 1.3);
+      seg.scale.setScalar(scale);
     }
   });
 
   return (
     <group>
-      {/* Head - Sharp, Mecha Style */}
+      {/* Cinematic Dragon Head */}
       <group ref={headRef}>
-        <mesh rotation={[0, -Math.PI / 2, 0]}>
-          <coneGeometry args={[0.5, 1.5, 4]} />
+        {/* Skull */}
+        <mesh>
+          <boxGeometry args={[0.9, 0.7, 1.2]} />
           <primitive object={armorMaterial} attach="material" />
         </mesh>
-        {/* Jaw/Chin Plate */}
-        <mesh position={[0, -0.3, 0.2]} rotation={[0.2, 0, 0]}>
-          <boxGeometry args={[0.4, 0.2, 0.8]} />
+        {/* Snout */}
+        <mesh position={[0, -0.1, 1.1]}>
+          <boxGeometry args={[0.6, 0.5, 1.4]} />
           <primitive object={armorMaterial} attach="material" />
         </mesh>
-        {/* Cyber Eyes - Subtle Neon */}
-        <mesh position={[0.4, 0.2, 0.3]}>
-          <boxGeometry args={[0.1, 0.05, 0.2]} />
+        {/* Glowing Eyes */}
+        <mesh position={[0.35, 0.2, 0.5]}>
+          <sphereGeometry args={[0.12, 16, 16]} />
           <meshBasicMaterial color="#00FF95" />
         </mesh>
-        <mesh position={[0.4, 0.2, -0.3]}>
-          <boxGeometry args={[0.1, 0.05, 0.2]} />
+        <mesh position={[-0.35, 0.2, 0.5]}>
+          <sphereGeometry args={[0.12, 16, 16]} />
           <meshBasicMaterial color="#00FF95" />
         </mesh>
-        {/* Horns/Sensors */}
-        <mesh position={[-0.2, 0.5, 0.3]} rotation={[0, 0, 0.5]}>
-          <boxGeometry args={[0.05, 0.8, 0.05]} />
+        {/* Horns */}
+        <mesh position={[0.4, 0.6, -0.3]} rotation={[-0.4, 0, 0.4]}>
+          <coneGeometry args={[0.15, 1.2, 4]} />
           <primitive object={accentMaterial} attach="material" />
         </mesh>
-        <mesh position={[-0.2, 0.5, -0.3]} rotation={[0, 0, 0.5]}>
-          <boxGeometry args={[0.05, 0.8, 0.05]} />
+        <mesh position={[-0.4, 0.6, -0.3]} rotation={[-0.4, 0, -0.4]}>
+          <coneGeometry args={[0.15, 1.2, 4]} />
           <primitive object={accentMaterial} attach="material" />
         </mesh>
+
+        {/* Cinematic Wings */}
+        <group position={[0, 0, -0.5]}>
+          <group ref={leftWingRef} position={[0.5, 0, 0]}>
+            <mesh position={[2, 0, -0.5]} rotation={[0, 0, 0.1]}>
+              <boxGeometry args={[4, 0.02, 3]} />
+              <primitive object={wingMaterial} attach="material" />
+            </mesh>
+            {/* Wing Ribs */}
+            <mesh position={[2, 0.1, -0.5]}>
+              <boxGeometry args={[4, 0.1, 0.1]} />
+              <primitive object={accentMaterial} attach="material" />
+            </mesh>
+          </group>
+          <group ref={rightWingRef} position={[-0.5, 0, 0]}>
+            <mesh position={[-2, 0, -0.5]} rotation={[0, 0, -0.1]}>
+              <boxGeometry args={[4, 0.02, 3]} />
+              <primitive object={wingMaterial} attach="material" />
+            </mesh>
+            {/* Wing Ribs */}
+            <mesh position={[-2, 0.1, -0.5]}>
+              <boxGeometry args={[4, 0.1, 0.1]} />
+              <primitive object={accentMaterial} attach="material" />
+            </mesh>
+          </group>
+        </group>
       </group>
 
-      {/* Body Segments - Armored Plates */}
+      {/* Armored Body Segments */}
       {Array.from({ length: segments }).map((_, i) => (
         <group key={i} ref={(el) => (segmentRefs.current[i] = el!)}>
-          {/* Main Segment Plate */}
-          <mesh rotation={[0, Math.PI / 4, 0]}>
-            <octahedronGeometry args={[0.8]} />
+          {/* Main Segment Sphere */}
+          <mesh>
+            <sphereGeometry args={[0.8, 8, 8]} />
             <primitive object={armorMaterial} attach="material" />
           </mesh>
-          {/* Accent Ring/Spine */}
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.6, 0.02, 8, 24]} />
+          {/* Spinal Spikes */}
+          <mesh position={[0, 0.6, 0]} rotation={[Math.PI / 4, 0, 0]}>
+            <coneGeometry args={[0.2, 0.8, 4]} />
             <primitive object={accentMaterial} attach="material" />
           </mesh>
-          {/* Side Fins/Armor for upper body */}
-          {i < 12 && (
-            <group>
-              <mesh position={[0, 0, 0.8]} rotation={[0.5, 0, 0]}>
-                <boxGeometry args={[0.4, 0.1, 1.2]} />
-                <primitive object={armorMaterial} attach="material" />
-              </mesh>
-              <mesh position={[0, 0, -0.8]} rotation={[-0.5, 0, 0]}>
-                <boxGeometry args={[0.4, 0.1, 1.2]} />
-                <primitive object={armorMaterial} attach="material" />
-              </mesh>
-            </group>
-          )}
+          {/* Glow Rings */}
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.85, 0.02, 8, 32]} />
+            <primitive object={accentMaterial} attach="material" />
+          </mesh>
         </group>
       ))}
     </group>
