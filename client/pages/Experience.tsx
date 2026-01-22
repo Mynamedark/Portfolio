@@ -101,27 +101,27 @@ export default function Experience() {
       </div>
 
       {/* Header */}
-      <section className="py-32 relative z-10">
+      <section className="py-16 md:py-32 relative z-10">
         <div className="container px-4 mx-auto">
             <div className="max-w-4xl">
               <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={revealVariants}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+                className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6 md:mb-8 backdrop-blur-md"
               >
-                <Briefcase className="w-4 h-4 text-primary animate-pulse" />
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">Log: Professional Record</span>
+                <Briefcase className="w-3 h-3 md:w-4 md:h-4 text-primary animate-pulse" />
+                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">Log: Professional Record</span>
               </motion.div>
-              <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none font-display">
-                Operational <br />
+              <h1 className="text-4xl sm:text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.9] font-display">
+                Operational <br className="hidden sm:block" />
                 <span className="text-muted-foreground/40 italic font-light">Experience.</span>
               </h1>
               <motion.p 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8 font-sans"
+                className="text-lg md:text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-6 md:pl-8 font-sans"
               >
                 A record of professional engagements where technical depth and investigative rigor were deployed to solve complex digital challenges.
               </motion.p>
@@ -130,42 +130,42 @@ export default function Experience() {
       </section>
 
       {/* Experience List */}
-      <section className="pb-48 relative z-10">
+      <section className="pb-24 md:pb-48 relative z-10">
         <div className="container px-4 mx-auto">
-          <div className="space-y-16 md:space-y-24">
+          <div className="space-y-12 md:space-y-24">
             {experiences.map((exp, index) => (
               <SpotlightCard
                 key={index}
                 index={index}
-                className="p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-all duration-500 shadow-2xl"
+                className="p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-all duration-500 shadow-2xl"
               >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-                    <div className="lg:col-span-4 space-y-8">
-                      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
-                        <exp.icon className="w-10 h-10 text-primary" />
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 relative z-10">
+                    <div className="lg:col-span-4 space-y-6 md:space-y-8">
+                      <div className="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
+                        <exp.icon className="w-8 h-8 md:w-10 md:h-10 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-4xl font-bold tracking-tight mb-3 text-foreground font-display">{exp.company}</h3>
-                        <p className="text-2xl text-primary font-bold italic opacity-80 font-display">{exp.role}</p>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 mt-6">
-                          <span className="text-sm text-primary font-mono uppercase tracking-widest font-bold font-display">{exp.period}</span>
+                        <h3 className="text-2xl md:text-4xl font-bold tracking-tight mb-2 md:mb-3 text-foreground font-display">{exp.company}</h3>
+                        <p className="text-lg md:text-2xl text-primary font-bold italic opacity-80 font-display">{exp.role}</p>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 mt-4 md:mt-6">
+                          <span className="text-[10px] md:text-sm text-primary font-mono uppercase tracking-widest font-bold font-display">{exp.period}</span>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="lg:col-span-8 space-y-12">
-                      <p className="text-2xl text-muted-foreground leading-relaxed font-medium font-sans">
+                    <div className="lg:col-span-8 space-y-8 md:space-y-12">
+                      <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed font-medium font-sans">
                         {exp.description}
                       </p>
                       
-                      <div className="pt-8 border-t border-border/50">
-                        <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-8 flex items-center gap-2 font-display">
-                          <Activity className="w-4 h-4" /> Operational Deliverables
+                      <div className="pt-6 md:pt-8 border-t border-border/50">
+                        <h4 className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6 md:mb-8 flex items-center gap-2 font-display">
+                          <Activity className="w-3 h-3 md:w-4 md:h-4" /> Operational Deliverables
                         </h4>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                           {exp.deliverables.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-4 text-xl text-foreground font-medium group-hover:translate-x-2 transition-transform duration-300 font-sans">
-                              <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2.5 flex-shrink-0 shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" />
+                            <li key={idx} className="flex items-start gap-3 md:gap-4 text-base md:text-xl text-foreground font-medium group-hover:translate-x-2 transition-transform duration-300 font-sans">
+                              <div className="w-2 h-2 rounded-full bg-primary mt-2 md:mt-2.5 flex-shrink-0 shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" />
                               {item}
                             </li>
                           ))}
@@ -175,7 +175,7 @@ export default function Experience() {
                   </div>
                 
                 {/* Decorative background element */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-500" />
+                <div className="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-primary/5 rounded-full blur-2xl md:blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-500" />
               </SpotlightCard>
             ))}
           </div>
