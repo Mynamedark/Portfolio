@@ -1,6 +1,7 @@
 import { motion, Variants } from "framer-motion";
 import { Search, Shield, Globe, Database, ArrowUpRight, Activity, Terminal, Lock, Zap, Cpu, Network, FileText } from "lucide-react";
 import { SpotlightCard } from "@/components/SpotlightCard";
+import { toast } from "sonner";
 
 const projects = [
   {
@@ -104,11 +105,16 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
           </div>
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary font-bold text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 w-fit font-display"
-        >
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => toast.error("ACCESS DENIED", {
+              description: "Sorry, this intelligence report is classified as strictly confidential.",
+              className: "font-display",
+            })}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary font-bold text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 w-fit font-display"
+          >
+
           <Search className="w-4 h-4" />
           Download Intelligence Report
         </motion.button>
