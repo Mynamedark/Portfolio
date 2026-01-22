@@ -144,7 +144,7 @@ export default function About() {
       </section>
 
       {/* Capabilities Grid */}
-      <section className="py-32 bg-foreground text-background">
+      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
         <div className="container px-4 mx-auto">
           <motion.div
             initial="hidden"
@@ -153,7 +153,7 @@ export default function About() {
             variants={revealVariants}
             className="text-center mb-24"
           >
-            <h3 className="text-5xl md:text-7xl font-bold tracking-tight">Core <span className="opacity-50 italic font-light">Capabilities.</span></h3>
+            <h3 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground text-center">Core <span className="text-muted-foreground/40 italic font-light">Capabilities.</span></h3>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
@@ -201,8 +201,8 @@ export default function About() {
                 <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                   <cap.icon className="w-8 h-8 text-primary" />
                 </div>
-                <h4 className="text-2xl font-bold tracking-tight">{cap.title}</h4>
-                <p className="text-background/60 text-lg leading-relaxed font-medium group-hover:text-background/90 transition-colors">
+                <h4 className="text-2xl font-bold tracking-tight text-foreground">{cap.title}</h4>
+                <p className="text-muted-foreground text-lg leading-relaxed font-medium group-hover:text-foreground transition-colors">
                   {cap.desc}
                 </p>
               </motion.div>

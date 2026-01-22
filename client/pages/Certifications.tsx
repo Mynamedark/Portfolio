@@ -141,7 +141,7 @@ export default function Certifications() {
       </section>
 
       {/* Final Verification Section */}
-      <section className="py-32 bg-foreground text-background">
+      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
         <div className="container px-4 mx-auto text-center max-w-4xl">
           <motion.div
             initial="hidden"
@@ -149,13 +149,13 @@ export default function Certifications() {
             viewport={{ once: true }}
             variants={revealVariants}
           >
-            <h3 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none italic font-light opacity-50">Defensible <span className="opacity-100 font-bold not-italic">Findings.</span></h3>
-            <p className="text-2xl text-background/60 mb-16 font-medium leading-relaxed">
+            <h3 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none italic font-light text-muted-foreground/40 text-center">Defensible <span className="text-foreground font-bold not-italic">Findings.</span></h3>
+            <p className="text-2xl text-muted-foreground mb-16 font-medium leading-relaxed">
               Every investigation I conduct is supported by a foundation of technical expertise and verified methodology, ensuring reports meet the rigorous requirements of professional and legal environments.
             </p>
-            <div className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-background/10 border border-white/10">
+            <div className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-background/40 border border-border">
               <CheckCircle2 className="w-6 h-6 text-primary" />
-              <span className="text-xl font-bold tracking-tight">System Integrity: 100% Verified</span>
+              <span className="text-xl font-bold tracking-tight text-foreground text-center">System Integrity: 100% Verified</span>
             </div>
           </motion.div>
         </div>

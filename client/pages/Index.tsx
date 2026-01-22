@@ -196,7 +196,7 @@ export default function Index() {
       </section>
 
       {/* Skills Grid */}
-      <section className="py-32 bg-foreground text-background">
+      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
         <div className="container px-4 mx-auto">
           <motion.div 
             initial="hidden"
@@ -206,7 +206,7 @@ export default function Index() {
             className="mb-24"
           >
             <h2 className="text-sm font-bold uppercase tracking-[0.4em] text-primary mb-6">Capabilities</h2>
-            <h3 className="text-4xl md:text-7xl font-bold tracking-tight">The Technical <span className="italic font-light opacity-50">Arsenal.</span></h3>
+            <h3 className="text-4xl md:text-7xl font-bold tracking-tight text-foreground">The Technical <span className="italic font-light text-muted-foreground/40">Arsenal.</span></h3>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -218,15 +218,15 @@ export default function Index() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
                 variants={revealVariants}
-                className="p-12 rounded-[3rem] bg-background/5 border border-white/10 hover:bg-background/10 transition-all duration-500 group"
+                className="p-12 rounded-[3rem] bg-background/40 border border-border hover:border-primary/50 transition-all duration-500 group"
               >
                 <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500">
                   <skill.icon className="w-8 h-8 text-primary" />
                 </div>
-                <h4 className="text-2xl font-bold mb-8 tracking-tight">{skill.category}</h4>
+                <h4 className="text-2xl font-bold mb-8 tracking-tight text-foreground">{skill.category}</h4>
                 <ul className="space-y-4">
                   {skill.items.map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-4 text-background/60 text-lg font-medium group-hover:text-background/90 transition-colors">
+                    <li key={idx} className="flex items-center gap-4 text-muted-foreground text-lg font-medium group-hover:text-foreground transition-colors">
                       <div className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
                       {item}
                     </li>
@@ -316,14 +316,14 @@ export default function Index() {
             <p className="text-2xl text-muted-foreground mb-16 font-medium leading-relaxed">
               Ready to secure your digital footprint or track emerging threats? Let's discuss how my methodology can support your mission.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-              <Link to="/contact" className="px-12 py-6 rounded-full bg-foreground text-background font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-500 text-xl shadow-2xl">
-                Contact the Specialist
-              </Link>
-              <a href="https://linkedin.com/in/dharamkathiriya" target="_blank" rel="noopener noreferrer" className="px-12 py-6 rounded-full border-2 border-border font-bold hover:bg-muted/50 transition-all text-xl backdrop-blur-md">
-                LinkedIn Signal
-              </a>
-            </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+                <Link to="/contact" className="px-12 py-6 rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-all duration-500 text-xl shadow-neon">
+                  Contact the Specialist
+                </Link>
+                <a href="https://linkedin.com/in/dharamkathiriya" target="_blank" rel="noopener noreferrer" className="px-12 py-6 rounded-full border-2 border-border font-bold hover:bg-muted/50 transition-all text-xl backdrop-blur-md">
+                  LinkedIn Signal
+                </a>
+              </div>
           </motion.div>
         </div>
         

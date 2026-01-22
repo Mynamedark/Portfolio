@@ -77,54 +77,54 @@ export default function Downloads() {
                 <p className="text-lg text-muted-foreground mb-10 leading-relaxed font-medium">
                   {resource.description}
                 </p>
-                <button className="mt-auto w-full flex items-center justify-center gap-4 py-5 rounded-full bg-foreground text-background font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-500 text-lg shadow-xl">
-                  <Download className="w-6 h-6" /> Download PDF
-                </button>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Differentiators */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={revealVariants}
-            className="mt-32 p-16 md:p-24 rounded-[4rem] bg-foreground text-background shadow-2xl relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -mr-32 -mt-32" />
-            <h2 className="text-4xl md:text-7xl font-bold mb-20 tracking-tight text-center">Competitive <span className="text-primary italic font-light">Differentiators.</span></h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-              {[
-                {
-                  title: "Real Investigation Experience",
-                  desc: "I don't just use tools; I conduct real-world investigations into threat actor ecosystems and digital fraud patterns."
-                },
-                {
-                  title: "Methodical Precision",
-                  desc: "Every finding is cross-referenced through multiple independent sources and documented to professional standards."
-                },
-                {
-                  title: "Technical Depth",
-                  desc: "A formal background in computer applications allows me to understand the technical 'how' behind investigative leads."
-                },
-                {
-                  title: "Actionable Intelligence",
-                  desc: "I deliver synthesized intelligence that supports immediate decision-making and strategic risk mitigation."
-                }
-              ].map((diff, index) => (
-                <div key={index} className="flex gap-6 group">
-                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform">
-                    <CheckCircle2 className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold mb-4 tracking-tight">{diff.title}</h4>
-                    <p className="text-lg text-background/60 leading-relaxed font-medium group-hover:text-background/90 transition-colors">{diff.desc}</p>
-                  </div>
-                </div>
+                  <button className="mt-auto w-full flex items-center justify-center gap-4 py-5 rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-all duration-500 text-lg shadow-neon">
+                    <Download className="w-6 h-6" /> Download PDF
+                  </button>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+  
+            {/* Differentiators */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={revealVariants}
+              className="mt-32 p-16 md:p-24 rounded-[4rem] bg-secondary/40 backdrop-blur-md border border-border shadow-glass relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -mr-32 -mt-32" />
+              <h2 className="text-4xl md:text-7xl font-bold mb-20 tracking-tight text-center text-foreground">Competitive <span className="text-muted-foreground/40 italic font-light">Differentiators.</span></h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                {[
+                  {
+                    title: "Real Investigation Experience",
+                    desc: "I don't just use tools; I conduct real-world investigations into threat actor ecosystems and digital fraud patterns."
+                  },
+                  {
+                    title: "Methodical Precision",
+                    desc: "Every finding is cross-referenced through multiple independent sources and documented to professional standards."
+                  },
+                  {
+                    title: "Technical Depth",
+                    desc: "A formal background in computer applications allows me to understand the technical 'how' behind investigative leads."
+                  },
+                  {
+                    title: "Actionable Intelligence",
+                    desc: "I deliver synthesized intelligence that supports immediate decision-making and strategic risk mitigation."
+                  }
+                ].map((diff, index) => (
+                  <div key={index} className="flex gap-6 group">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform">
+                      <CheckCircle2 className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-2xl font-bold mb-4 tracking-tight text-foreground">{diff.title}</h4>
+                      <p className="text-lg text-muted-foreground leading-relaxed font-medium group-hover:text-foreground transition-colors">{diff.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
         </div>
       </section>
       

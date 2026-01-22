@@ -126,7 +126,7 @@ export default function Skills() {
       </section>
 
       {/* Tools Carousel/Grid */}
-      <section className="py-32 bg-foreground text-background">
+      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
         <div className="container px-4 mx-auto text-center">
           <motion.div
             initial="hidden"
@@ -135,7 +135,7 @@ export default function Skills() {
             variants={revealVariants}
             className="mb-24"
           >
-            <h3 className="text-5xl md:text-7xl font-bold tracking-tight">The Investigation <span className="opacity-50 italic font-light">Stack.</span></h3>
+            <h3 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">The Investigation <span className="text-muted-foreground/40 italic font-light">Stack.</span></h3>
           </motion.div>
           
           <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
@@ -150,7 +150,7 @@ export default function Skills() {
                   hidden: { opacity: 0, scale: 0.8 },
                   visible: { opacity: 1, scale: 1 }
                 }}
-                className="px-8 py-4 rounded-full bg-background/5 border border-white/10 text-xl font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
+                className="px-8 py-4 rounded-full bg-background/40 border border-border text-xl font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default text-foreground hover:border-primary/50"
               >
                 {tool}
               </motion.span>

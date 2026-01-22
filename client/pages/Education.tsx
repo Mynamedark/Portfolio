@@ -100,7 +100,7 @@ export default function Education() {
       </section>
 
       {/* Motivation Section */}
-      <section className="py-32 bg-foreground text-background">
+      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
         <div className="container px-4 mx-auto text-center max-w-4xl">
           <motion.div
             initial="hidden"
@@ -108,8 +108,8 @@ export default function Education() {
             viewport={{ once: true }}
             variants={revealVariants}
           >
-            <h3 className="text-5xl md:text-8xl font-bold mb-10 tracking-tight leading-none italic font-light opacity-50">Continuous <span className="opacity-100 font-bold not-italic">Evolution.</span></h3>
-            <p className="text-2xl text-background/60 mb-0 font-medium leading-relaxed">
+            <h3 className="text-5xl md:text-8xl font-bold mb-10 tracking-tight leading-none italic font-light text-muted-foreground/40 text-center">Continuous <span className="text-foreground font-bold not-italic">Evolution.</span></h3>
+            <p className="text-2xl text-muted-foreground mb-0 font-medium leading-relaxed">
               In the rapidly shifting landscape of cybercrime, formal education is only the beginning. I complement my academic background with daily research into emerging threat patterns and investigative techniques.
             </p>
           </motion.div>
