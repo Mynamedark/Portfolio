@@ -64,30 +64,22 @@ export default function Index() {
       }
     ];
 
-      const featuredProjects = [
-        {
-          title: "Fake Social Media Account Fraud",
-          context: "Identifying fraudulent activities through impersonated social media profiles.",
-          tools: "SOCMINT, Maltego, Advanced IMINT",
-          outcome: "Uncovered a coordinated scam network of 25+ fake profiles.",
-          icon: Activity
-        },
-        {
-          title: (
-            <>
-              Mobile & <a href="mailto:dharamkathiriya265@gmail.com" className="hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4">Email</a> Fraud Investigation
-            </>
-          ),
-          context: "Analysis of suspicious communications linked to phishing campaigns.",
-          tools: (
-            <>
-              OSINT Framework, <a href="mailto:dharamkathiriya265@gmail.com" className="hover:text-primary transition-colors">Email</a> Header Analysis, HUMINT
-            </>
-          ),
-          outcome: "Traced smishing attacks back to source, preventing further data loss.",
-          icon: Terminal
-        }
-      ];
+    const featuredProjects = [
+      {
+        title: "Fake Social Media Account Fraud",
+        context: "Identifying fraudulent activities through impersonated social media profiles.",
+        tools: "SOCMINT, Maltego, Advanced IMINT",
+        outcome: "Uncovered a coordinated scam network of 25+ fake profiles.",
+        icon: Activity
+      },
+      {
+        title: "Mobile & Email Fraud Investigation",
+        context: "Analysis of suspicious communications linked to phishing campaigns.",
+        tools: "OSINT Framework, Email Header Analysis, HUMINT",
+        outcome: "Traced smishing attacks back to source, preventing further data loss.",
+        icon: Terminal
+      }
+    ];
 
   return (
       <div className="flex flex-col min-h-screen bg-transparent">
@@ -292,17 +284,17 @@ export default function Index() {
         {/* Final CTA */}
         <section className="py-32 md:py-48 relative overflow-hidden border-t border-border">
           <div className="container px-6 mx-auto relative z-10 text-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={revealVariants}
-              className="max-w-4xl mx-auto"
-            >
+            <div className="max-w-4xl mx-auto">
               <h2 className="text-4xl sm:text-5xl md:text-8xl font-bold mb-8 md:mb-12 tracking-tighter leading-none">Initiate an <span className="text-primary italic">Investigation.</span></h2>
-              <p className="text-lg md:text-2xl text-muted-foreground mb-10 md:mb-16 font-medium leading-relaxed">
-                Ready to secure your digital footprint or track emerging threats? Let's discuss how my methodology can support your mission.
-              </p>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={revealVariants}
+              >
+                <p className="text-lg md:text-2xl text-muted-foreground mb-10 md:mb-16 font-medium leading-relaxed">
+                  Ready to secure your digital footprint or track emerging threats? Let's discuss how my methodology can support your mission.
+                </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8">
                   <Link to="/contact" className="w-full sm:w-auto px-10 md:px-12 py-5 md:py-6 rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-all duration-500 text-lg md:text-xl shadow-neon">
                     Contact the Specialist
@@ -311,7 +303,8 @@ export default function Index() {
                     LinkedIn Signal
                   </a>
                 </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
           
           {/* Background Grid Accent */}

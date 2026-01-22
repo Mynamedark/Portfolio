@@ -65,54 +65,89 @@ export default function About() {
         </div>
       </section>
 
-      {/* Philosophy Section */}
-      <section className="py-32 border-y border-border bg-background/40 backdrop-blur-md">
-        <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={revealVariants}
-            >
-              <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4">
-                <Shield className="w-8 h-8 text-primary" /> Investigative Rigor
-              </h3>
-              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
-                In an era of information overload, the value lies not in the volume of data, but in the accuracy of its interpretation. My approach to OSINT is rooted in the principles of evidence preservation and analytical reasoning. I don't just find information; I verify it to ensure it meets the highest standards of credibility for recruiters, clients, and legal environments.
-              </p>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={revealVariants}
-              transition={{ delay: 0.2 }}
-            >
-              <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4">
-                <Terminal className="w-8 h-8 text-primary" /> Technical Foundation
-              </h3>
-              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
-                My background in Computer Applications provides the technical depth necessary to understand how cybercriminals exploit infrastructure. This dual-competency in investigation and development allows me to bridge the gap between abstract threats and technical vulnerabilities, delivering reports that are both comprehensive and actionable.
-              </p>
-            </motion.div>
+        {/* Philosophy Section */}
+        <section className="py-32 border-y border-border bg-background/40 backdrop-blur-md">
+          <div className="container px-4 mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
+              <div>
+                <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4">
+                  <Shield className="w-8 h-8 text-primary" /> Investigative Rigor
+                </h3>
+                <motion.p
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={revealVariants}
+                  className="text-xl text-muted-foreground leading-relaxed font-medium"
+                >
+                  In an era of information overload, the value lies not in the volume of data, but in the accuracy of its interpretation. My approach to OSINT is rooted in the principles of evidence preservation and analytical reasoning. I don't just find information; I verify it to ensure it meets the highest standards of credibility for recruiters, clients, and legal environments.
+                </motion.p>
+              </div>
+              <div>
+                <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4">
+                  <Terminal className="w-8 h-8 text-primary" /> Technical Foundation
+                </h3>
+                <motion.p
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={revealVariants}
+                  transition={{ delay: 0.2 }}
+                  className="text-xl text-muted-foreground leading-relaxed font-medium"
+                >
+                  My background in Computer Applications provides the technical depth necessary to understand how cybercriminals exploit infrastructure. This dual-competency in investigation and development allows me to bridge the gap between abstract threats and technical vulnerabilities, delivering reports that are both comprehensive and actionable.
+                </motion.p>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Experience Timeline */}
-      <section className="py-32 relative">
-        <div className="container px-4 mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={revealVariants}
-            className="text-center mb-24"
-          >
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary mb-6">Operational History</h2>
-            <h3 className="text-5xl md:text-7xl font-bold tracking-tight">Professional <span className="text-muted-foreground/40 italic font-light">Journey.</span></h3>
-          </motion.div>
+        {/* International Operations Section */}
+        <section className="py-32 relative overflow-hidden bg-primary/5">
+          <div className="container px-4 mx-auto">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary mb-6">Global reach</h2>
+              <h3 className="text-5xl md:text-7xl font-bold tracking-tight mb-12">International <span className="text-muted-foreground/40 italic font-light">Collaboration.</span></h3>
+              <motion.p 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={revealVariants}
+                className="text-2xl text-muted-foreground leading-relaxed font-medium"
+              >
+                Operating without borders, I provide OSINT and cybersecurity services to global organizations. My workflow is engineered for high-stakes international collaboration, ensuring investigative precision across time zones and jurisdictions.
+              </motion.p>
+              <div className="mt-16 flex flex-wrap justify-center gap-12">
+                {[
+                  { label: "Remote Ready", desc: "Seamless global integration" },
+                  { label: "Cross-Border", desc: "Multi-jurisdictional expertise" },
+                  { label: "Global Sync", desc: "Adapting to any time zone" }
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + (i * 0.1) }}
+                    variants={revealVariants}
+                    className="flex flex-col items-center"
+                  >
+                    <span className="text-primary font-bold text-xl mb-2">{item.label}</span>
+                    <span className="text-muted-foreground text-xs uppercase tracking-widest font-bold">{item.desc}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Experience Timeline */}
+        <section className="py-32 relative">
+          <div className="container px-4 mx-auto">
+            <div className="text-center mb-24">
+              <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary mb-6">Operational History</h2>
+              <h3 className="text-5xl md:text-7xl font-bold tracking-tight">Professional <span className="text-muted-foreground/40 italic font-light">Journey.</span></h3>
+            </div>
           
           <div className="max-w-5xl mx-auto relative">
             <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 hidden md:block" />
@@ -148,18 +183,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* Capabilities Grid */}
-      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
-        <div className="container px-4 mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={revealVariants}
-            className="text-center mb-24"
-          >
-            <h3 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground text-center">Core <span className="text-muted-foreground/40 italic font-light">Capabilities.</span></h3>
-          </motion.div>
+        {/* Capabilities Grid */}
+        <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
+          <div className="container px-4 mx-auto">
+            <div className="text-center mb-24">
+              <h3 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground text-center">Core <span className="text-muted-foreground/40 italic font-light">Capabilities.</span></h3>
+            </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             {[
