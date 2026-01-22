@@ -15,7 +15,7 @@ export function Layout({ children }: LayoutProps) {
     const getVariant = (pathname: string): BackgroundVariant => {
       switch (pathname) {
         case "/":
-          return "threat-intel-globe";
+          return "tactical-osint-grid";
         case "/about":
           return "digital-network-mesh";
         case "/experience":

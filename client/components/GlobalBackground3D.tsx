@@ -38,7 +38,8 @@ export type BackgroundVariant =
   | "recon-spiral"
   | "traffic-flow"
   | "encryption-vortex"
-  | "osint-node-network";
+  | "osint-node-network"
+  | "tactical-osint-grid";
 
 interface ThemeColors {
   line: string;
@@ -750,6 +751,153 @@ function OSINTNodeNetwork() {
   );
 }
 
+// --- TACTICAL OSINT GRID ---
+function TacticalOSINTGrid() {
+  const groupRef = useRef<Group>(null);
+  const theme = useThemeColors();
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
+  const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
+
+  const { gridPoints, dataPoints, connections } = useMemo(() => {
+    // Large background grid points
+    const gp = [];
+    const size = 60;
+    const step = 6;
+    for (let x = -size; x <= size; x += step) {
+      for (let z = -size; z <= size; z += step) {
+        gp.push(new Vector3(x, -8, z));
+      }
+    }
+
+    // Floating data clusters
+    const dp = [];
+    const conn = [];
+    const clusterCount = 10;
+    for (let i = 0; i < clusterCount; i++) {
+      const center = new Vector3(
+        MathUtils.randFloatSpread(50),
+        MathUtils.randFloatSpread(25),
+        MathUtils.randFloatSpread(20)
+      );
+      const pointsInCluster = 12;
+      const clusterPoints = [];
+      for (let j = 0; j < pointsInCluster; j++) {
+        const p = new Vector3(
+          center.x + MathUtils.randFloatSpread(8),
+          center.y + MathUtils.randFloatSpread(8),
+          center.z + MathUtils.randFloatSpread(8)
+        );
+        dp.push(p);
+        clusterPoints.push(p);
+      }
+      
+      // Connections within cluster
+      for (let j = 0; j < clusterPoints.length; j++) {
+        for (let k = j + 1; k < clusterPoints.length; k++) {
+          if (Math.random() > 0.4) {
+            conn.push(clusterPoints[j].x, clusterPoints[j].y, clusterPoints[j].z, clusterPoints[k].x, clusterPoints[k].y, clusterPoints[k].z);
+          }
+        }
+      }
+    }
+
+    return { 
+      gridPoints: gp, 
+      dataPoints: dp, 
+      connections: new Float32Array(conn) 
+    };
+  }, []);
+
+  const dataNodesRef = useRef<InstancedMesh>(null);
+  const gridNodesRef = useRef<InstancedMesh>(null);
+  const scanRef = useRef<Mesh>(null);
+  const dummy = useMemo(() => new Object3D(), []);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    if (groupRef.current) {
+      groupRef.current.rotation.y = time * 0.04;
+    }
+
+    if (scanRef.current) {
+      scanRef.current.position.y = Math.sin(time * 0.3) * 15;
+    }
+
+    if (dataNodesRef.current) {
+      dataPoints.forEach((pt, i) => {
+        const pulse = 1 + Math.sin(time * 3 + i) * 0.5;
+        dummy.position.copy(pt);
+        dummy.scale.setScalar(0.07 * pulse);
+        dummy.updateMatrix();
+        dataNodesRef.current!.setMatrixAt(i, dummy.matrix);
+      });
+      dataNodesRef.current.instanceMatrix.needsUpdate = true;
+    }
+
+    if (gridNodesRef.current) {
+      gridPoints.forEach((pt, i) => {
+        const wave = Math.sin(time * 0.8 + pt.x * 0.1 + pt.z * 0.1) * 0.5;
+        dummy.position.set(pt.x, pt.y + wave, pt.z);
+        dummy.scale.setScalar(0.03);
+        dummy.updateMatrix();
+        gridNodesRef.current!.setMatrixAt(i, dummy.matrix);
+      });
+      gridNodesRef.current.instanceMatrix.needsUpdate = true;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {/* Background Grid Points */}
+      <instancedMesh ref={gridNodesRef} args={[undefined, undefined, gridPoints.length]}>
+        <sphereGeometry args={[1, 4, 4]} />
+        <meshBasicMaterial color={lineColor} transparent opacity={0.2} />
+      </instancedMesh>
+
+      {/* Data Nodes (The "Assets") */}
+      <instancedMesh ref={dataNodesRef} args={[undefined, undefined, dataPoints.length]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.7} blending={theme.blending} />
+      </instancedMesh>
+
+      {/* Connection Mesh (The "Evidence Links") */}
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[connections, 3]} />
+        </bufferGeometry>
+        <lineBasicMaterial color={lineColor} transparent opacity={0.15} blending={theme.blending} />
+      </lineSegments>
+
+      {/* Tactical Scanning Plane */}
+      <mesh ref={scanRef} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[120, 120]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.03} side={2} blending={theme.blending} />
+      </mesh>
+
+      {/* Radar HUD Overlay Elements */}
+      <group>
+        {[20, 30, 40].map((radius, idx) => (
+          <mesh key={idx} rotation={[Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[radius, radius + 0.1, 64]} />
+            <meshBasicMaterial color={lineColor} transparent opacity={0.08} side={2} />
+          </mesh>
+        ))}
+        {/* Crosshairs */}
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <boxGeometry args={[100, 0.05, 0.05]} />
+          <meshBasicMaterial color={lineColor} transparent opacity={0.05} />
+        </mesh>
+        <mesh rotation={[Math.PI / 2, 0, Math.PI / 2]}>
+          <boxGeometry args={[100, 0.05, 0.05]} />
+          <meshBasicMaterial color={lineColor} transparent opacity={0.05} />
+        </mesh>
+      </group>
+
+      <FloatingData count={250} speed={0.08} range={70} />
+    </group>
+  );
+}
+
 // --- COMMON FLOATING DATA ---
 function FloatingData({ count = 200, speed = 0.02, range = 40 }: { count?: number; speed?: number; range?: number }) {
   const theme = useThemeColors();
@@ -806,10 +954,11 @@ function Scene({ variant }: { variant: BackgroundVariant }) {
       {variant === "signal-scanning" && <SignalScanning />}
       {variant === "recon-spiral" && <ReconSpiral />}
       {variant === "traffic-flow" && <TrafficFlow />}
-      {variant === "encryption-vortex" && <EncryptionVortex />}
-      {variant === "osint-node-network" && <OSINTNodeNetwork />}
+        {variant === "encryption-vortex" && <EncryptionVortex />}
+        {variant === "osint-node-network" && <OSINTNodeNetwork />}
+        {variant === "tactical-osint-grid" && <TacticalOSINTGrid />}
 
-      <FloatingData count={120} />
+        <FloatingData count={120} />
       <CameraRig variant={variant} />
     </>
   );
