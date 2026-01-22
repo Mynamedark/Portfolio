@@ -27,10 +27,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
   return (
     <SpotlightCard
       index={index}
-      className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-colors duration-500 overflow-hidden shadow-2xl"
+      className="group relative p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-colors duration-500 overflow-hidden shadow-2xl"
     >
-      <div className="lg:col-span-8 flex flex-col justify-center relative z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8 md:mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 relative z-10">
+        <div className="lg:col-span-8 flex flex-col justify-center">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8 md:mb-10">
           <motion.div 
             whileHover={{ rotate: 5, scale: 1.1 }}
             className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 ${project.color} shadow-lg shadow-primary/5 shrink-0`}
@@ -90,30 +91,31 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
         </div>
       </div>
       
-      <div className="lg:col-span-4 flex items-center justify-center relative z-10 order-first lg:order-last mb-8 lg:mb-0">
-        <motion.div 
-          whileHover={{ scale: 1.05, rotate: 1 }}
-          className="w-full aspect-square max-w-[240px] md:max-w-[320px] rounded-[2.5rem] md:rounded-[3rem] bg-background/20 border border-border/50 flex items-center justify-center relative group-hover:border-primary/30 transition-all duration-700 overflow-hidden group/img"
-        >
-          {/* Decorative Animated Circles */}
+        <div className="lg:col-span-4 flex items-center justify-center relative z-10 order-first lg:order-last mb-8 lg:mb-0">
           <motion.div 
-            animate={{ 
-              rotate: 360,
-              scale: [1, 1.1, 1],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 border-2 border-dashed border-primary/5 rounded-full m-6 md:m-8"
-          />
-          <motion.div 
-            animate={{ 
-              rotate: -360,
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 border border-dotted border-primary/10 rounded-full m-12 md:m-16"
-          />
-          
-          <Search className="w-16 h-16 md:w-24 md:h-24 text-muted-foreground/10 group-hover/img:text-primary/20 transition-all duration-700 group-hover/img:scale-110" />
-        </motion.div>
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            className="w-full aspect-square max-w-[240px] md:max-w-[320px] rounded-[2.5rem] md:rounded-[3rem] bg-background/20 border border-border/50 flex items-center justify-center relative group-hover:border-primary/30 transition-all duration-700 overflow-hidden group/img"
+          >
+            {/* Decorative Animated Circles */}
+            <motion.div 
+              animate={{ 
+                rotate: 360,
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 border-2 border-dashed border-primary/5 rounded-full m-6 md:m-8"
+            />
+            <motion.div 
+              animate={{ 
+                rotate: -360,
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 border border-dotted border-primary/10 rounded-full m-12 md:m-16"
+            />
+            
+            <Search className="w-16 h-16 md:w-24 md:h-24 text-muted-foreground/10 group-hover/img:text-primary/20 transition-all duration-700 group-hover/img:scale-110" />
+          </motion.div>
+        </div>
       </div>
     </SpotlightCard>
   );
