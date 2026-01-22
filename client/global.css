@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,54 +6,39 @@
 
 @layer base {
   :root {
-    /* Global Color System (Dark Cyber Theme) */
-    --bg-primary: #0A0F1F;
-    --bg-secondary: #141A2E;
-    --accent-blue: #00C8FF;
-    --accent-green: #00FF95;
-    --accent-purple: #9D4DFF;
-    --accent-orange: #FF7A45;
-    --text-primary: #E8F1FF;
-    --text-secondary: #9AA4BF;
-    --border-color: rgba(255, 255, 255, 0.08);
+    /* Modern Sophisticated Palette */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    /* Multi-Gradient Styling */
-    --gradient-blue: linear-gradient(135deg, #00C8FF, #7CFBFF);
-    --gradient-green: linear-gradient(135deg, #00FF95, #7CFFC4);
-    --gradient-purple: linear-gradient(135deg, #9D4DFF, #F472B6);
-    --gradient-orange: linear-gradient(135deg, #FF7A45, #FFB067);
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    /* shadcn/ui Mapping */
-    --background: var(--bg-primary);
-    --foreground: var(--text-primary);
-    --card: var(--bg-secondary);
-    --card-foreground: var(--text-primary);
-    --popover: var(--bg-secondary);
-    --popover-foreground: var(--text-primary);
-    --primary: var(--accent-blue);
-    --primary-foreground: var(--bg-primary);
-    --secondary: var(--bg-secondary);
-    --secondary-foreground: var(--text-primary);
-    --accent: var(--accent-blue);
-    --accent-foreground: var(--text-primary);
-    --muted: var(--bg-secondary);
-    --muted-foreground: var(--text-secondary);
-    --destructive: #FF4D4D;
-    --destructive-foreground: #FFFFFF;
-    --border: var(--border-color);
-    --input: var(--bg-secondary);
-    --ring: var(--accent-blue);
-    --radius: 12px;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    /* Sidebar Mapping */
-    --sidebar-background: var(--bg-primary);
-    --sidebar-foreground: var(--text-secondary);
-    --sidebar-primary: var(--accent-blue);
-    --sidebar-primary-foreground: var(--bg-primary);
-    --sidebar-accent: var(--bg-secondary);
-    --sidebar-accent-foreground: var(--accent-blue);
-    --sidebar-border: var(--border-color);
-    --sidebar-ring: var(--accent-blue);
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 263.4 70% 50.4%;
+
+    --radius: 0.75rem;
+
+    /* Custom Variables */
+    --primary-rgb: 139, 92, 246;
   }
 }
 
@@ -68,8 +53,8 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 18px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -77,77 +62,58 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Inter", sans-serif;
-    color: var(--text-primary);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    @apply font-display tracking-tight;
+    color: hsl(var(--foreground));
+    line-height: 1.1;
   }
 
-  h1 { font-size: 48px; font-weight: 700; }
-  h2 { font-size: 36px; font-weight: 600; }
-  h3 { font-size: 28px; font-weight: 600; }
-  h4 { font-size: 20px; font-weight: 600; }
-
-  @media (max-width: 768px) {
-    h1 { font-size: 36px; }
-    h2 { font-size: 28px; }
-    h3 { font-size: 24px; }
-    body { font-size: 16px; }
-  }
-
+  h1 { @apply text-4xl md:text-6xl lg:text-8xl font-bold; }
+  h2 { @apply text-3xl md:text-5xl font-semibold; }
+  h3 { @apply text-2xl md:text-3xl font-semibold; }
+  
   pre, code, .tech-font {
     font-family: "Fira Code", monospace;
-  }
-
-  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  pre,
-  code {
-    @apply bg-muted p-4 rounded-md;
-    background-color: rgba(20, 26, 46, 0.5);
-    overflow-x: auto;
-    white-space: pre;
-  }
-
-  /* Focus styles */
-  :focus-visible {
-    outline: 2px solid var(--accent-blue);
-    outline-offset: 2px;
   }
 }
 
 @layer components {
-  .cursor-interactive {
-    cursor: pointer;
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden;
   }
 
-  .btn-primary {
-    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 active:scale-95 shadow-primary;
-    background: var(--accent-blue);
-    color: var(--bg-primary);
-  }
-  
-  .btn-primary:hover {
-    background: var(--gradient-blue);
-    box-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
-    transform: translateY(-1px);
+  .premium-button {
+    @apply relative px-8 py-4 rounded-full font-bold transition-all duration-500 overflow-hidden active:scale-95;
+    background: linear-gradient(135deg, hsl(var(--primary)), #a855f7);
+    color: white;
   }
 
-  .btn-secondary {
-    @apply px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-secondary;
+  .premium-button::after {
+    content: '';
+    @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-500;
   }
 
-  .card-interactive {
-    @apply rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  .premium-button:hover::after {
+    @apply opacity-100;
   }
-  
-  .card-interactive:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
-    transform: translateY(-2px);
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-white/90 to-white/40;
   }
+
+  .bento-grid {
+    @apply grid gap-4 md:grid-cols-4 md:grid-rows-2;
+  }
+}
+
+.mask-fade-bottom {
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.noise-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }

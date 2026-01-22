@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CustomCursor } from "./CustomCursor";
 import { GlobalBackground3D, BackgroundVariant } from "./GlobalBackground3D";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,47 +13,46 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const location = useLocation();
 
-    const getVariant = (pathname: string): BackgroundVariant => {
-      switch (pathname) {
-        case "/":
-          return "threat-intel-globe";
-        case "/about":
-          return "digital-network-mesh";
-        case "/experience":
-          return "osint-node-network";
-        case "/contact":
-          return "cyber-dragon";
-        case "/projects":
-          return "data-streams";
-        case "/education":
-          return "digital-network-mesh";
-        case "/downloads":
-          return "osint-node-network";
-        case "/certifications":
-          return "signal-scanning";
-        case "/skills":
-          return "osint-node-network";
-        default:
-          return "osint-node-network";
-      }
-    };
-
+  const getVariant = (pathname: string): BackgroundVariant => {
+    switch (pathname) {
+      case "/":
+        return "threat-intel-globe";
+      case "/contact":
+        return "modern-data-lattice";
+      default:
+        return "modern-data-lattice";
+    }
+  };
 
   const variant = getVariant(location.pathname);
 
   return (
-    <div className="min-h-screen flex flex-col text-foreground relative transition-colors duration-500">
+    <div className="min-h-screen flex flex-col text-foreground relative transition-colors duration-500 overflow-x-hidden">
+      {/* Background Layer */}
       <div
         aria-hidden="true"
         className="fixed inset-0 z-[-20] bg-background transition-colors duration-500"
       />
 
-        <GlobalBackground3D variant={variant} />
-
+      <GlobalBackground3D variant={variant} />
 
       <CustomCursor />
       <Header />
-      <main className="flex-1">{children}</main>
+      
+      <main className="flex-1 relative z-10">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </main>
+      
       <Footer />
     </div>
   );
