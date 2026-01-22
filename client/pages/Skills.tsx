@@ -1,330 +1,129 @@
-import { motion, Variants } from "framer-motion";
-import { CheckCircle2, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Search, Shield, Database, Globe, Lock, Terminal, FileText, CheckCircle2 } from "lucide-react";
 
-const DEFAULT_skillCategories = [
+const skillGroups = [
   {
-    title: "OSINT & Investigation",
-    icon: "🔍",
+    title: "OSINT & Intelligence",
+    icon: Search,
+    description: "Methodical gathering and analysis of publicly available data to produce actionable intelligence.",
     skills: [
-      {
-        name: "Open Source Intelligence (OSINT)",
-        proficiency: 95,
-        description:
-          "Advanced techniques for gathering intelligence from public sources",
-      },
-      {
-        name: "Cyber Crime Investigation",
-        proficiency: 90,
-        description:
-          "Case analysis, threat actor identification, pattern recognition",
-      },
-      {
-        name: "Digital Evidence Collection",
-        proficiency: 88,
-        description: "Preservation of digital evidence with forensic integrity",
-      },
-      {
-        name: "Threat Intelligence Analysis",
-        proficiency: 85,
-        description:
-          "Analysis of threat patterns, APT tracking, vulnerability research",
-      },
-      {
-        name: "Social Engineering Detection",
-        proficiency: 87,
-        description:
-          "Identifying phishing, impersonation, and social media fraud",
-      },
-    ],
+      "Open Source Intelligence (OSINT)",
+      "Identity & Asset Tracing",
+      "Threat Actor Profiling",
+      "Digital Footprint Analysis",
+      "Darknet Monitoring",
+      "SOCMINT (Social Media Intelligence)"
+    ]
   },
   {
-    title: "Technical & Development",
-    icon: "💻",
+    title: "Technical Stack",
+    icon: Terminal,
+    description: "Deep technical proficiency in investigative tools and security-focused development.",
     skills: [
-      {
-        name: "Secure Web Development",
-        proficiency: 90,
-        description:
-          "Building secure, scalable web applications with modern frameworks",
-      },
-      {
-        name: "Database Design & SQL",
-        proficiency: 88,
-        description:
-          "Secure database architecture, query optimization, injection prevention",
-      },
-      {
-        name: "API Security",
-        proficiency: 87,
-        description:
-          "RESTful API design, authentication, rate limiting, encryption",
-      },
-      {
-        name: "Authentication Systems",
-        proficiency: 89,
-        description:
-          "OAuth 2.0, JWT, 2FA, session management, secure password handling",
-      },
-      {
-        name: "OWASP Security Practices",
-        proficiency: 92,
-        description:
-          "Implementation of OWASP Top 10 mitigations and best practices",
-      },
-    ],
+      "Maltego & Spiderfoot",
+      "Shodan & Censys",
+      "Google Dorks & Advanced Search",
+      "WHOIS & DNS Forensics",
+      "Python for Automation",
+      "Blockchain Forensics"
+    ]
   },
   {
-    title: "Tools & Platforms",
-    icon: "🛠️",
-    tools: [
-      "CSI Linux",
-      "Security Blue Team Tools",
-      "Investigation Dashboards",
-      "Secure Coding Environments",
-      "Wireshark",
-      "Burp Suite",
-      "Git & Version Control",
-      "Docker & Containerization",
-      "Linux/Bash",
-      "Python Scripting",
-    ],
-  },
+    title: "Methodology & Reporting",
+    icon: FileText,
+    description: "Translating complex digital evidence into clear, defensible, and professional reports.",
+    skills: [
+      "Intelligence Report Writing",
+      "Evidence Preservation",
+      "Analytical Reasoning",
+      "Privacy & OPSEC",
+      "Legal Standards Alignment",
+      "Critical Infrastructure Assessment"
+    ]
+  }
 ];
 
 export default function Skills() {
-  const [skills, setSkills] = useState<any[]>([]);
-
-  useEffect(() => {
-    const savedSkills = localStorage.getItem("skills");
-    if (savedSkills) {
-      try {
-        const parsed = JSON.parse(savedSkills);
-        // Group skills by category for display
-        const grouped: Record<string, any> = {};
-        parsed.forEach((skill: any) => {
-          if (!grouped[skill.category]) {
-            grouped[skill.category] = [];
-          }
-          grouped[skill.category].push(skill);
-        });
-
-        const categories = Object.entries(grouped).map(([category, items]: [string, any]) => ({
-          title: category,
-          icon: "🎯",
-          skills: items.map((item: any) => ({
-            name: item.name,
-            proficiency: item.proficiency,
-            description: item.name,
-          })),
-        }));
-
-        setSkills(categories.length > 0 ? categories : DEFAULT_skillCategories);
-      } catch {
-        setSkills(DEFAULT_skillCategories);
-      }
-    } else {
-      setSkills(DEFAULT_skillCategories);
-    }
-  }, []);
-
-  const skillCategories = skills;
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
-
   return (
-    <div className="relative">
+    <div className="flex flex-col min-h-screen bg-background pt-20">
       {/* Header */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-            Skills & Expertise
-          </h1>
-          <div className="h-1 w-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-8" />
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            A comprehensive skill set spanning cybercrime investigation,
-            cybersecurity, secure development, and digital forensics.
-          </p>
-        </motion.div>
-      </section>
-
-      {/* Skills Sections */}
-      <section className="container mx-auto max-w-7xl px-4 py-12 md:py-20 border-t border-border space-y-16">
-        {skillCategories.map((category, categoryIndex) => (
+      <section className="py-20">
+        <div className="container px-4 mx-auto">
           <motion.div
-            key={categoryIndex}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl"
           >
-            {/* Category Header */}
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-4xl">{category.icon}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                {category.title}
-              </h2>
-            </div>
-
-            {/* Skills Grid */}
-            {category.skills ? (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              >
-                {category.skills.map((skill, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    className="group relative p-6 rounded-xl border border-border bg-card/50 hover:border-primary/50 transition-all duration-300 overflow-hidden"
-                  >
-                    {/* Background glow */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                    />
-
-                    <div className="relative z-10">
-                      <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-lg font-bold text-foreground">
-                          {skill.name}
-                        </h3>
-                        <span className="text-sm font-bold text-primary">
-                          {skill.proficiency}%
-                        </span>
-                      </div>
-
-                      {/* Proficiency Bar */}
-                      <div className="w-full h-2 rounded-full bg-border mb-4 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.proficiency}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: index * 0.1 }}
-                          className="h-full bg-gradient-to-r from-primary to-secondary"
-                        />
-                      </div>
-
-                      <p className="text-sm text-muted-foreground">
-                        {skill.description}
-                      </p>
-                    </div>
-
-                    {/* Bottom accent */}
-                    <motion.div
-                      className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary to-secondary w-0 group-hover:w-full transition-all duration-500"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "100%" }}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              /* Tools Grid */
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
-              >
-                {category.tools?.map((tool, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      borderColor: "hsl(180, 100%, 50%)",
-                    }}
-                    className="p-4 rounded-lg border border-border bg-card/50 text-center hover:bg-card transition-all duration-300 group cursor-pointer"
-                  >
-                    <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                      {tool}
-                    </p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
+            <h2 className="text-sm font-bold uppercase tracking-widest text-primary mb-4">Competency & Tools</h2>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-8">
+              The <span className="text-muted-foreground italic">Investigative Stack.</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              A comprehensive toolset and methodology designed to uncover hidden connections and provide clarity in complex digital environments.
+            </p>
           </motion.div>
-        ))}
+        </div>
       </section>
 
-      {/* Certifications Quick Preview */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32 border-t border-border">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Verified Credentials
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Professional certifications validating expertise in cybersecurity
-            and digital forensics
-          </p>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto"
-          >
-            {[
-              {
-                name: "CSI Linux",
-                issuer: "Digital Forensics & Cyber Investigation",
-              },
-              {
-                name: "Security Blue Team",
-                issuer: "Dark Web Operation",
-              },
-              {
-                name: "Cybrary",
-                issuer: "Digital Forensics",
-              },
-            ].map((cert, i) => (
+      {/* Skills Bento Grid */}
+      <section className="pb-32">
+        <div className="container px-4 mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {skillGroups.map((group, index) => (
               <motion.div
-                key={i}
-                variants={itemVariants}
-                className="p-6 rounded-lg border border-border bg-card/50 hover:border-primary/50 transition-all duration-300"
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="p-10 rounded-[2.5rem] bg-muted/30 border border-border flex flex-col items-start hover:border-primary/30 transition-colors"
               >
-                <CheckCircle2 className="w-8 h-8 text-primary mx-auto mb-3" />
-                <p className="font-semibold text-foreground">{cert.name}</p>
-                <p className="text-xs text-muted-foreground">{cert.issuer}</p>
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8">
+                  <group.icon className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{group.title}</h3>
+                <p className="text-muted-foreground mb-8 leading-relaxed">
+                  {group.description}
+                </p>
+                <div className="mt-auto w-full space-y-3">
+                  {group.skills.map((skill, idx) => (
+                    <div key={idx} className="flex items-center gap-3 py-2 border-b border-border/50 last:border-0">
+                      <CheckCircle2 className="w-4 h-4 text-primary/60" />
+                      <span className="text-sm font-medium">{skill}</span>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tools Cloud Section */}
+      <section className="py-24 border-t border-border bg-foreground text-background">
+        <div className="container px-4 mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h3 className="text-3xl font-bold mb-4 tracking-tight">Specialized Tools</h3>
+            <p className="text-background/70">
+              I utilize industry-standard and custom-built tools to ensure comprehensive data collection and verification.
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-4">
+            {["Maltego", "Spiderfoot", "Shodan", "Censys", "Figma", "Burp Suite", "Wireshark", "Metasploit", "CSI Linux", "Hunchly", "ExifTool", "Wayback Machine", "Sherlock", "Social Analyzer", "Crt.sh", "HaveIBeenPwned"].map((tool, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="px-6 py-3 rounded-full bg-background/10 border border-background/20 text-sm font-bold hover:bg-background hover:text-foreground transition-all cursor-default"
+              >
+                {tool}
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
     </div>
   );

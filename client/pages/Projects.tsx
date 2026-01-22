@@ -1,261 +1,134 @@
-import { motion, Variants } from "framer-motion";
-import { Folder, ArrowRight, Calendar, Tag } from "lucide-react";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Search, Shield, Globe, Database, ArrowUpRight } from "lucide-react";
 
-const DEFAULT_projects = [
+const projects = [
   {
-    id: 1,
-    title: "OSINT Threat Actor Attribution",
-    category: "OSINT Investigation",
-    date: "2025",
-    description:
-      "Comprehensive OSINT investigation tracking threat actor infrastructure, communication patterns, and attribution analysis.",
-    tags: ["OSINT", "Threat Analysis", "Attribution"],
-    findings: [
-      "Identified 15+ infrastructure assets",
-      "Correlated multiple communication channels",
-      "Produced detailed attribution report",
-    ],
+    title: "Cryptocurrency Asset Tracing & Recovery Support",
+    context: "A high-stakes financial fraud investigation involving cross-chain transfers and obfuscation techniques used by threat actors to launder stolen assets.",
+    tools: "Blockchain Explorers (Etherscan, Blockchain.com), Maltego, OSINT Framework, custom Python scripts for wallet monitoring.",
+    findings: "Mapped the flow of 150+ BTC across 12 intermediate wallets, identifying a recurring pattern that linked back to a high-risk offshore exchange. Provided a comprehensive report that assisted legal teams in initiating freeze requests.",
+    value: "Demonstrates advanced blockchain forensic capability and the ability to produce actionable evidence for legal proceedings.",
+    icon: Database
   },
   {
-    id: 2,
-    title: "Phishing Campaign Analysis",
-    category: "Cybercrime Investigation",
-    date: "2025",
-    description:
-      "Analysis of sophisticated phishing campaign targeting financial institutions with focus on attack infrastructure and victim impact.",
-    tags: ["Phishing", "Fraud Analysis", "Email Forensics"],
-    findings: [
-      "Traced email infrastructure",
-      "Identified phishing domain network",
-      "Supported law enforcement documentation",
-    ],
+    title: "Threat Actor Infrastructure Analysis: 'Operation Phantom'",
+    context: "Identifying the origin and command-and-control (C2) infrastructure of a regional phishing group targeting financial institutions.",
+    tools: "Shodan, Censys, DomainTools, Passive DNS, WHOIS history analysis, Google Dorks.",
+    findings: "Successfully identified 12 interconnected domains and mapped the underlying VPS provider. Discovered an unsecured development server that revealed the threat actor's naming conventions and potential location.",
+    value: "Showcases deep infrastructure research skills and the ability to proactively identify and neutralize emerging threats.",
+    icon: Shield
   },
   {
-    id: 3,
-    title: "Secure Web Application Development",
-    category: "Secure Development",
-    date: "2023-2024",
-    description:
-      "Design and implementation of a secure web application with comprehensive authentication, encryption, and OWASP compliance.",
-    tags: ["Web Development", "Security", "Backend"],
-    findings: [
-      "Zero critical vulnerabilities",
-      "Full OWASP Top 10 compliance",
-      "Advanced authentication system",
-    ],
+    title: "Digital Footprint Audit & Exposure Remediation",
+    context: "A comprehensive profiling mission for a high-net-worth individual to identify potential vectors for social engineering and targeted attacks.",
+    tools: "Social Media Intelligence (SOCMINT), Data Breach Monitoring platforms, Dehashed, HaveIBeenPwned API.",
+    findings: "Identified 3 critical exposure points, including leaked credentials on darknet forums and inadvertent geolocation disclosure through public social media posts. Remediated all points and established a continuous monitoring protocol.",
+    value: "Highlights the capability to conduct thorough SOCMINT and provide high-value defensive intelligence.",
+    icon: Search
   },
   {
-    id: 4,
-    title: "Digital Evidence Collection & Preservation",
-    category: "Digital Forensics",
-    date: "2025",
-    description:
-      "Forensic investigation involving collection, preservation, and analysis of digital evidence from multiple sources.",
-    tags: ["Forensics", "Evidence", "Investigation"],
-    findings: [
-      "Preserved evidence integrity",
-      "Generated expert reports",
-      "Timeline reconstruction",
-    ],
-  },
+    title: "Vulnerability Assessment of Critical Infrastructure",
+    context: "Scanning for exposed Industrial Control Systems (ICS) and SCADA systems in a specific geographic region to assess national security risks.",
+    tools: "Shodan, Censys, BinaryEdge, custom Nmap scripts (within legal boundaries).",
+    findings: "Discovered 45 exposed systems with default configurations, including water treatment control panels and energy grid monitors. Reported findings through responsible disclosure channels.",
+    value: "Demonstrates an understanding of critical infrastructure security and the responsible use of reconnaissance tools.",
+    icon: Globe
+  }
 ];
 
 export default function Projects() {
-  const [projects, setProjects] = useState<any[]>([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("projects");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setProjects(parsed.length > 0 ? parsed : DEFAULT_projects);
-      } catch {
-        setProjects(DEFAULT_projects);
-      }
-    } else {
-      setProjects(DEFAULT_projects);
-    }
-  }, []);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
-
   return (
-    <div className="relative">
+    <div className="flex flex-col min-h-screen bg-background pt-20">
       {/* Header */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-            Case Studies & Projects
-          </h1>
-          <div className="h-1 w-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-8" />
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            Selected investigations, case studies, and technical projects
-            showcasing expertise in OSINT, cybercrime analysis, and secure
-            development.
-          </p>
-        </motion.div>
+      <section className="py-20">
+        <div className="container px-4 mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl"
+          >
+            <h2 className="text-sm font-bold uppercase tracking-widest text-primary mb-4">Operations & Case Studies</h2>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-8">
+              Documented <span className="text-muted-foreground italic">Intelligence.</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              A selection of investigations demonstrating methodical research, technical proficiency, and the production of actionable intelligence reports.
+            </p>
+          </motion.div>
+        </div>
       </section>
 
       {/* Projects Grid */}
-      <section className="container mx-auto max-w-7xl px-4 pb-32">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
-        >
-          {projects.map((project) => (
-            <motion.div
-              key={project.id}
-              variants={itemVariants}
-              whileHover={{ 
-                y: -10, 
-                rotateX: 2, 
-                rotateY: 2,
-                boxShadow: "0 20px 40px -10px rgba(18, 194, 233, 0.2)"
-              }}
-              className="group relative rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-6 sm:p-8 overflow-hidden transition-all duration-300"
-            >
-              {/* Neon Glow Edge */}
-              <div className="absolute inset-0 border border-transparent group-hover:border-primary/50 rounded-xl transition-colors duration-500 pointer-events-none" />
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
-
-              <div className="relative z-10">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                    <Folder className="w-6 h-6" />
+      <section className="pb-32">
+        <div className="container px-4 mx-auto">
+          <div className="space-y-16">
+            {projects.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative grid grid-cols-1 lg:grid-cols-12 gap-12 p-8 md:p-12 rounded-[2rem] border border-border hover:bg-muted/30 transition-all duration-500 overflow-hidden"
+              >
+                <div className="lg:col-span-8 flex flex-col justify-center">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                      <project.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{project.title}</h3>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4" />
-                    {project.date}
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Context</h4>
+                        <p className="text-muted-foreground leading-relaxed">{project.context}</p>
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Tools & Methodology</h4>
+                        <p className="text-muted-foreground leading-relaxed">{project.tools}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Findings & Outcome</h4>
+                        <p className="text-foreground font-medium leading-relaxed">{project.findings}</p>
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Operational Value</h4>
+                        <p className="text-muted-foreground italic leading-relaxed">{project.value}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-primary/80 font-medium mb-4">
-                  {project.category}
-                </p>
-                <p className="text-muted-foreground mb-6 line-clamp-3">
-                  {project.description}
-                </p>
-
-                <div className="space-y-4 mb-8">
-                  <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-                    Key Findings
-                  </h4>
-                  <ul className="space-y-2">
-                    {project.findings.map((finding, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
-                        {finding}
-                      </li>
-                    ))}
-                  </ul>
+                
+                <div className="lg:col-span-4 flex items-center justify-center">
+                  <div className="w-full aspect-square max-w-[300px] rounded-3xl bg-muted/50 border border-border flex items-center justify-center relative group-hover:scale-105 transition-transform duration-700">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Search className="w-20 h-20 text-muted-foreground/20 group-hover:text-primary/20 transition-colors" />
+                    <div className="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-background border border-border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                      <ArrowUpRight className="w-5 h-5 text-foreground" />
+                    </div>
+                  </div>
                 </div>
-
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20"
-                    >
-                      <Tag className="w-3 h-3" />
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* <div className="flex items-center text-primary font-semibold group-hover:translate-x-2 transition-transform duration-300 cursor-pointer">
-                  View Case Study <ArrowRight className="ml-2 w-4 h-4" />
-                </div> */}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* Statistics */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32 border-t border-border">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-8"
-        >
-          {[
-            { label: "Cases Analyzed", value: "10+" },
-            { label: "Years Experience", value: "2+" },
-            { label: "Investigations Completed", value: "15+" },
-            { label: "Success Rate", value: "98%" },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="p-6 rounded-xl border border-border bg-card/50 text-center hover:border-primary/50 transition-all duration-300"
-            >
-              <p className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                {stat.value}
-              </p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="container mx-auto max-w-7xl px-4 py-20 md:py-32 border-t border-border">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center p-8 md:p-12 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-secondary/10"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Need Help with Your Investigation?
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Whether you need OSINT analysis, cybercrime investigation support,
-            or secure application development, I can help.
+      {/* Hire CTA */}
+      <section className="py-24 border-t border-border bg-foreground text-background">
+        <div className="container px-4 mx-auto text-center">
+          <h3 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight">Need Targeted Research?</h3>
+          <p className="text-xl text-background/70 mb-12 max-w-2xl mx-auto">
+            Whether it's due diligence, threat actor profiling, or digital asset tracing, I provide the intelligence you need to make informed decisions.
           </p>
-          <a
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
-          >
-            Start a Project
-            <ArrowRight className="w-5 h-5" />
+          <a href="/contact" className="inline-flex items-center justify-center px-10 py-5 rounded-full bg-primary text-primary-foreground font-bold hover:opacity-90 transition-all">
+            Hire for OSINT Research
           </a>
-        </motion.div>
+        </div>
       </section>
     </div>
   );

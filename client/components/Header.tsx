@@ -26,63 +26,35 @@ export function Header({ isDark, onThemeToggle }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 bg-card backdrop-blur-sm border-b border-border shadow-sm">
       <nav className="container mx-auto max-w-7xl px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="group flex items-center gap-2 font-bold text-xl text-foreground hover:text-muted-foreground transition-colors"
-          >
-            <motion.div
-              className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold"
-              animate={{
-                scale: [1, 1.15, 1],
-                rotate: [0, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link
+              to="/"
+              className="group flex items-center gap-3 font-bold text-xl text-foreground transition-colors"
             >
-              DK
-            </motion.div>
-            <div className="hidden sm:flex items-center gap-0.5">
-              {["D", "h", "a", "r", "a", "m"].map((letter, index) => (
-                <motion.span
-                  key={index}
-                  className="text-foreground"
-                  animate={{
-                    y: [0, -12, 0],
-                  }}
-                  transition={{
-                    duration: 1.2,
-                    repeat: Infinity,
-                    delay: index * 0.70,
-                    ease: "easeInOut",
-                  }}
+              <div className="w-8 h-8 rounded bg-foreground flex items-center justify-center text-background text-xs font-black tracking-tighter">
+                DK
+              </div>
+              <span className="hidden sm:inline-block tracking-tight text-lg font-semibold">
+                Dharam Kathiriya
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={cn(
+                    "text-sm font-medium transition-colors duration-200",
+                    "text-muted-foreground hover:text-foreground",
+                  )}
                 >
-                  {letter}
-                </motion.span>
+                  {link.label}
+                </Link>
               ))}
             </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors duration-300 relative group",
-                  "text-foreground hover:text-muted-foreground",
-                )}
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
-          </div>
 
           {/* Right Section */}
           <div className="flex items-center gap-4">
