@@ -33,9 +33,9 @@ export default function Contact() {
     }
   ];
 
-    return (
-      <div className="flex flex-col min-h-screen bg-transparent pt-20">
-        {/* Header */}
+  return (
+    <div className="flex flex-col min-h-screen bg-transparent pt-20">
+      {/* Header */}
       <section className="py-32">
         <div className="container px-4 mx-auto text-center max-w-4xl">
           <motion.div
