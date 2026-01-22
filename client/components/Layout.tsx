@@ -15,25 +15,25 @@ export function Layout({ children }: LayoutProps) {
   const getVariant = (pathname: string): BackgroundVariant => {
     switch (pathname) {
       case "/":
-        return "threat-intel-globe";
+        return "osint-node-network";
       case "/about":
         return "digital-network-mesh";
       case "/experience":
-        return "security-lattice";
+        return "osint-node-network";
       case "/contact":
-        return "signal-scanning";
+        return "threat-intel-globe";
       case "/projects":
         return "data-streams";
       case "/education":
-        return "recon-spiral";
+        return "digital-network-mesh";
       case "/downloads":
-        return "traffic-flow";
+        return "osint-node-network";
       case "/certifications":
         return "encryption-vortex";
       case "/skills":
-        return "cyber-matrix";
+        return "osint-node-network";
       default:
-        return "threat-intel-globe";
+        return "osint-node-network";
     }
   };
 

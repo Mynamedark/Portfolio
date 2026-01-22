@@ -28,7 +28,8 @@ export type BackgroundVariant =
   | "signal-scanning"
   | "recon-spiral"
   | "traffic-flow"
-  | "encryption-vortex";
+  | "encryption-vortex"
+  | "osint-node-network";
 
 interface ThemeColors {
   line: string;
@@ -552,6 +553,92 @@ function EncryptionVortex() {
   );
 }
 
+// --- OSINT NODE NETWORK ---
+function OSINTNodeNetwork() {
+  const groupRef = useRef<Group>(null);
+  const theme = useThemeColors();
+  const particleColor = useMemo(() => new Color(theme.particle), [theme.particle]);
+  const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
+
+  const { points, lines } = useMemo(() => {
+    const count = 200;
+    const pts: Vector3[] = [];
+    const linePositions: number[] = [];
+    
+    // Create clusters of data
+    for (let c = 0; c < 5; c++) {
+      const clusterCenter = new Vector3(
+        MathUtils.randFloatSpread(15),
+        MathUtils.randFloatSpread(10),
+        MathUtils.randFloatSpread(10)
+      );
+      for (let i = 0; i < count / 5; i++) {
+        const pt = new Vector3(
+          clusterCenter.x + MathUtils.randFloatSpread(4),
+          clusterCenter.y + MathUtils.randFloatSpread(4),
+          clusterCenter.z + MathUtils.randFloatSpread(4)
+        );
+        pts.push(pt);
+      }
+    }
+
+    pts.forEach((p1, i) => {
+      // Connect to nearby points in the same cluster
+      pts.forEach((p2, j) => {
+        if (i >= j) return;
+        const dist = p1.distanceTo(p2);
+        if (dist < 2.5) {
+          linePositions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+        }
+      });
+      
+      // Random long-distance connections (cross-referencing data)
+      if (Math.random() > 0.99) {
+        const target = pts[Math.floor(Math.random() * pts.length)];
+        linePositions.push(p1.x, p1.y, p1.z, target.x, target.y, target.z);
+      }
+    });
+
+    return { points: pts, lines: new Float32Array(linePositions) };
+  }, []);
+
+  const nodesRef = useRef<InstancedMesh>(null);
+  const dummy = useMemo(() => new Object3D(), []);
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const time = state.clock.getElapsedTime();
+    groupRef.current.rotation.y = time * 0.05;
+
+    if (nodesRef.current) {
+      points.forEach((pt, i) => {
+        const pulse = 1 + Math.sin(time * 2 + i) * 0.2;
+        dummy.position.copy(pt);
+        dummy.scale.setScalar(0.04 * pulse);
+        dummy.updateMatrix();
+        nodesRef.current!.setMatrixAt(i, dummy.matrix);
+      });
+      nodesRef.current.instanceMatrix.needsUpdate = true;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      <instancedMesh ref={nodesRef} args={[undefined, undefined, points.length]}>
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.6} blending={theme.blending} />
+      </instancedMesh>
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[lines, 3]} />
+        </bufferGeometry>
+        <lineBasicMaterial color={lineColor} transparent opacity={0.1} blending={theme.blending} />
+      </lineSegments>
+    </group>
+  );
+}
+
 // --- COMMON FLOATING DATA ---
 function FloatingData({ count = 200, speed = 0.02, range = 40 }: { count?: number; speed?: number; range?: number }) {
   const theme = useThemeColors();
@@ -607,10 +694,11 @@ function Scene({ variant }: { variant: BackgroundVariant }) {
       {variant === "security-lattice" && <SecurityLattice />}
       {variant === "signal-scanning" && <SignalScanning />}
       {variant === "recon-spiral" && <ReconSpiral />}
-      {variant === "traffic-flow" && <TrafficFlow />}
-      {variant === "encryption-vortex" && <EncryptionVortex />}
+        {variant === "traffic-flow" && <TrafficFlow />}
+        {variant === "encryption-vortex" && <EncryptionVortex />}
+        {variant === "osint-node-network" && <OSINTNodeNetwork />}
 
-      <FloatingData count={120} />
+        <FloatingData count={120} />
       <CameraRig variant={variant} />
     </>
   );

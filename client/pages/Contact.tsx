@@ -1,5 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import { Mail, Phone, Linkedin, MapPin, Send, MessageSquare, Shield, Target, Activity } from "lucide-react";
+import { Dragon3D } from "@/components/Dragon3D";
 
 export default function Contact() {
   const revealVariants: Variants = {
@@ -36,6 +37,7 @@ export default function Contact() {
 
   return (
     <div className="flex flex-col min-h-screen bg-transparent pt-20">
+      <Dragon3D />
       {/* Header */}
       <section className="py-32">
         <div className="container px-4 mx-auto text-center max-w-4xl">
