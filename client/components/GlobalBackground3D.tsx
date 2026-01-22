@@ -749,91 +749,100 @@ function OSINTNodeNetwork() {
 
 // --- CYBER DRAGON ---
 function CyberDragon() {
+  const { mouse, viewport } = useThree();
+  const segments = 24;
+  const segmentRefs = useRef<Group[]>([]);
   const headRef = useRef<Group>(null);
-  const segmentsRef = useRef<InstancedMesh>(null);
+  
+  const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
+  const rotations = useMemo(() => Array.from({ length: segments }, () => new THREE.Quaternion()), []);
+
   const theme = useThemeColors();
   const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
-  const secondaryColor = useMemo(() => new Color(theme.line), [theme.line]);
 
-  const segmentCount = 20;
-  const dummy = useMemo(() => new Object3D(), []);
-  
-  // Track positions of segments for trailing effect
-  const positions = useMemo(() => {
-    return Array.from({ length: segmentCount }, () => new Vector3());
-  }, []);
+  // Professional Materials
+  const armorMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: "#1a1a1a",
+    metalness: 0.9,
+    roughness: 0.1,
+  }), []);
+
+  const accentMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: highlightColor,
+    emissive: highlightColor,
+    emissiveIntensity: 0.2,
+    transparent: true,
+    opacity: 0.8,
+  }), [highlightColor]);
 
   useFrame((state) => {
-    if (!headRef.current || !segmentsRef.current) return;
-    
     const time = state.clock.getElapsedTime();
-    const mouseX = state.mouse.x * 10;
-    const mouseY = state.mouse.y * 8;
-
-    // Head follows mouse with some delay/smoothness
-    headRef.current.position.x += (mouseX - headRef.current.position.x) * 0.1;
-    headRef.current.position.y += (mouseY - headRef.current.position.y) * 0.1;
-    headRef.current.position.z = Math.sin(time * 0.5) * 2;
     
-    // Look at target
-    headRef.current.lookAt(mouseX, mouseY, 5);
-
-    // Update segment positions (trailing)
-    positions[0].copy(headRef.current.position);
-    for (let i = 1; i < segmentCount; i++) {
-      const prev = positions[i - 1];
-      const curr = positions[i];
-      // Move current segment towards previous one
-      curr.lerp(prev, 0.2);
+    const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.2);
+    const targetY = (mouse.y * viewport.height) / 2;
+    
+    if (headRef.current) {
+      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.05;
+      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.05;
+      headRef.current.position.z = Math.sin(time * 0.5) * 1;
+      
+      const lookTarget = new Vector3(targetX + 5, targetY, 0);
+      headRef.current.lookAt(lookTarget);
+      headRef.current.rotation.z += Math.sin(time) * 0.002;
     }
 
-    // Update instanced mesh
-    for (let i = 0; i < segmentCount; i++) {
-      const scale = (1 - i / segmentCount) * 0.8 + 0.2;
-      dummy.position.copy(positions[i]);
-      dummy.scale.setScalar(0.4 * scale);
+    positions[0].copy(headRef.current?.position || new Vector3());
+    rotations[0].copy(headRef.current?.quaternion || new THREE.Quaternion());
+
+    for (let i = 1; i < segments; i++) {
+      const seg = segmentRefs.current[i];
+      if (!seg) continue;
       
-      // Add some "wobble" to segments
-      const wobbleX = Math.sin(time * 2 + i * 0.5) * 0.2;
-      const wobbleY = Math.cos(time * 2 + i * 0.5) * 0.2;
-      dummy.position.x += wobbleX;
-      dummy.position.y += wobbleY;
+      positions[i].lerp(positions[i - 1], 0.15);
+      rotations[i].slerp(rotations[i - 1], 0.1);
       
-      dummy.rotation.set(time * 0.5, 0, i * 0.1);
-      dummy.updateMatrix();
-      segmentsRef.current.setMatrixAt(i, dummy.matrix);
+      seg.position.copy(positions[i]);
+      seg.quaternion.copy(rotations[i]);
+      seg.position.y += Math.sin(time * 1.5 + i * 0.4) * 0.05;
+      
+      const s = Math.max(0.1, (1 - i / segments) * 0.8);
+      seg.scale.setScalar(s);
     }
-    segmentsRef.current.instanceMatrix.needsUpdate = true;
   });
 
   return (
     <group>
       <group ref={headRef}>
-        {/* Dragon Head */}
-        <mesh>
-          <coneGeometry args={[0.6, 1.2, 4]} />
-          <meshBasicMaterial color={highlightColor} blending={theme.blending} />
+        <mesh rotation={[0, -Math.PI / 2, 0]}>
+          <coneGeometry args={[0.5, 1.5, 4]} />
+          <primitive object={armorMaterial} attach="material" />
         </mesh>
-        {/* Glow Eyes */}
-        <mesh position={[0.2, 0.2, 0.3]}>
-          <sphereGeometry args={[0.1, 8, 8]} />
-          <meshBasicMaterial color="#ffffff" />
+        <mesh position={[0, -0.3, 0.2]} rotation={[0.2, 0, 0]}>
+          <boxGeometry args={[0.4, 0.2, 0.8]} />
+          <primitive object={armorMaterial} attach="material" />
         </mesh>
-        <mesh position={[-0.2, 0.2, 0.3]}>
-          <sphereGeometry args={[0.1, 8, 8]} />
-          <meshBasicMaterial color="#ffffff" />
+        <mesh position={[0.4, 0.2, 0.3]}>
+          <boxGeometry args={[0.1, 0.05, 0.2]} />
+          <meshBasicMaterial color={highlightColor} />
+        </mesh>
+        <mesh position={[0.4, 0.2, -0.3]}>
+          <boxGeometry args={[0.1, 0.05, 0.2]} />
+          <meshBasicMaterial color={highlightColor} />
         </mesh>
       </group>
 
-      <instancedMesh ref={segmentsRef} args={[undefined, undefined, segmentCount]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshBasicMaterial color={secondaryColor} transparent opacity={0.6} blending={theme.blending} />
-      </instancedMesh>
-      
-      {/* Dynamic wings/fins */}
-      <group position={[0, 0, -5]}>
-        <FloatingData count={50} speed={0.1} range={20} />
-      </group>
+      {Array.from({ length: segments }).map((_, i) => (
+        <group key={i} ref={(el) => (segmentRefs.current[i] = el!)}>
+          <mesh rotation={[0, Math.PI / 4, 0]}>
+            <octahedronGeometry args={[0.8]} />
+            <primitive object={armorMaterial} attach="material" />
+          </mesh>
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.6, 0.02, 8, 24]} />
+            <primitive object={accentMaterial} attach="material" />
+          </mesh>
+        </group>
+      ))}
     </group>
   );
 }
