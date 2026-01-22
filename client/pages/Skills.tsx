@@ -169,15 +169,27 @@ export default function Skills() {
                               <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors font-display">{skill.name}</span>
                               <span className="text-[10px] md:text-sm font-mono text-primary font-bold bg-primary/10 px-3 py-1 rounded-lg border border-primary/20 font-display">{skill.level}%</span>
                             </div>
-                            <div className="h-2 w-full bg-muted/20 rounded-full overflow-hidden relative z-10">
-                                <motion.div
-                                  initial={{ width: 0 }}
-                                  whileInView={{ width: `${skill.level}%` }}
-                                  viewport={{ once: true }}
-                                  transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-                                  className="h-full bg-primary relative shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
-                                />
-                            </div>
+                              <div className="h-2 w-full bg-muted/20 rounded-full overflow-hidden relative z-10">
+                                  <motion.div
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: `${skill.level}%` }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+                                    className="h-full bg-primary relative shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
+                                  >
+                                    <motion.div
+                                      animate={{
+                                        left: ["-100%", "100%"],
+                                      }}
+                                      transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "linear",
+                                      }}
+                                      className="absolute top-0 bottom-0 w-20 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                    />
+                                  </motion.div>
+                              </div>
                           </SpotlightCard>
                         ))}
                       </div>

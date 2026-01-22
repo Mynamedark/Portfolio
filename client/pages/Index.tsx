@@ -81,29 +81,85 @@ export default function Index() {
       }
     ];
 
-  return (
-      <div className="flex flex-col min-h-screen bg-transparent">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden pt-16 pb-16 md:pt-48 md:pb-64">
-          <div className="container px-4 sm:px-6 mx-auto relative z-10">
-              <div
-                className="max-w-5xl"
-              >
-                <motion.div variants={itemVariants} initial="hidden" animate="visible" className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6 md:mb-8 backdrop-blur-md">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                  </span>
-                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-primary">Status: Operational</span>
-                </motion.div>
-                
-                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.95] md:leading-[0.9]">
-                      Open-Source <span className="text-muted-foreground/40 italic font-light">Intelligence</span> & Cyber Research
-                    </h1>
-                
-                <motion.p variants={itemVariants} initial="hidden" animate="visible" className="text-base md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mb-8 md:mb-14 font-medium border-l-2 border-primary/30 pl-5 md:pl-8">
-                  Specialized in uncovering digital truth through methodical investigation, threat tracking, and actionable data-driven intelligence.
-                </motion.p>
+    return (
+        <div className="flex flex-col min-h-screen bg-transparent">
+          {/* Scanning Line Effect */}
+          <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
+            <motion.div
+              animate={{
+                top: ["-10%", "110%"],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="absolute left-0 right-0 h-[2px] bg-primary/20 blur-[2px] shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
+            />
+          </div>
+
+          {/* Hero Section */}
+          <section className="relative overflow-hidden pt-16 pb-16 md:pt-48 md:pb-64">
+            <div className="container px-4 sm:px-6 mx-auto relative z-10">
+                <div
+                  className="max-w-5xl"
+                >
+                  <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
+                    <div>
+                      <motion.div variants={itemVariants} initial="hidden" animate="visible" className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6 md:mb-8 backdrop-blur-md">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        </span>
+                        <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-primary">Status: Operational</span>
+                      </motion.div>
+                      
+                      <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.9] font-display">
+                        Open-Source <br />
+                        <span className="text-muted-foreground/40 italic font-light">Intelligence</span> <br />
+                        & Cyber Research
+                      </h1>
+                    </div>
+
+                    <motion.div 
+                      variants={itemVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="hidden xl:block w-64 p-6 rounded-3xl bg-card/20 border border-border backdrop-blur-xl"
+                    >
+                      <div className="flex items-center gap-3 mb-4">
+                        <Activity className="w-4 h-4 text-primary animate-pulse" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary font-display">Live Signal</span>
+                      </div>
+                      <div className="space-y-3 font-mono text-[10px] text-muted-foreground">
+                        <div className="flex justify-between">
+                          <span>Uptime:</span>
+                          <span className="text-foreground">99.9%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Latency:</span>
+                          <span className="text-foreground">12ms</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Location:</span>
+                          <span className="text-foreground italic">Target: Locked</span>
+                        </div>
+                        <div className="pt-2 border-t border-border/50">
+                          <div className="h-1 w-full bg-muted/20 rounded-full overflow-hidden">
+                            <motion.div 
+                              animate={{ width: ["20%", "80%", "40%", "90%"] }}
+                              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                              className="h-full bg-primary"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                  
+                  <motion.p variants={itemVariants} initial="hidden" animate="visible" className="text-base md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mb-8 md:mb-14 font-medium border-l-2 border-primary/30 pl-5 md:pl-8 font-sans">
+                    Specialized in uncovering digital truth through methodical investigation, threat tracking, and actionable data-driven intelligence.
+                  </motion.p>
                 
                   <motion.div variants={itemVariants} initial="hidden" animate="visible" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <Link

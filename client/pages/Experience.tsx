@@ -16,7 +16,7 @@ export default function Experience() {
     {
       company: "Independent Investigation Services",
       role: "OSINT & Cybercrime Research Specialist",
-      period: "2024 - Present",
+      period: "2025 - Present",
       description: "Providing high-stakes digital investigation services for private clients and legal teams. Specialized in asset tracing, threat actor profiling, and infrastructure analysis.",
       deliverables: [
         "Actionable intelligence reports for legal proceedings.",

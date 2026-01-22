@@ -1,25 +1,29 @@
 import { motion, Variants } from "framer-motion";
-import { Search, Shield, Globe, Database, ArrowUpRight, Activity, Terminal, Lock, Zap, Cpu, Network } from "lucide-react";
+import { Search, Shield, Globe, Database, ArrowUpRight, Activity, Terminal, Lock, Zap, Cpu, Network, FileText } from "lucide-react";
 import { SpotlightCard } from "@/components/SpotlightCard";
 
 const projects = [
   {
+    id: "CASE-2025-001",
     title: "Fake Social Media Account Fraud Detection",
     context: "Investigating and identifying fraudulent activities conducted through impersonated and synthetic social media profiles used for social engineering and financial scams.",
     tools: "SOCMINT (Social Media Intelligence), Maltego, Advanced Image Analysis (IMINT), Profile metadata extraction, reverse image search engines.",
     findings: "Successfully deanonymized a network of 25+ fake profiles across multiple platforms, uncovering a coordinated 'pig butchering' operation. Identified the primary threat actor's digital footprint and provided evidence to platform security teams.",
     value: "Demonstrates advanced SOCMINT capabilities and the ability to map complex social networks to identify malicious actors.",
     icon: Search,
-    color: "text-blue-500"
+    color: "text-blue-500",
+    status: "CLOSED / VERIFIED"
   },
   {
+    id: "CASE-2025-002",
     title: "Mobile Number & Email Fraud Investigation",
     context: "Detailed analysis of suspicious communications originating from unidentified mobile numbers and email addresses linked to large-scale phishing and credential harvesting campaigns.",
     tools: "OSINT Framework, HLR Lookups, Email header analysis, Data Breach databases (Dehashed), HUMINT-informed verification, custom intelligence gathering scripts.",
     findings: "Traced a series of sophisticated smishing attacks back to a specific regional VOIP provider. Identified 500+ compromised email addresses and alerted the affected organizations, preventing further data loss.",
     value: "Highlights proficiency in communication forensics and the ability to pivot from minimal data points (phone/email) to full threat profiles.",
     icon: Shield,
-    color: "text-red-500"
+    color: "text-red-500",
+    status: "CLOSED / VERIFIED"
   }
 ];
 
@@ -29,6 +33,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
       index={index}
       className="group relative p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-colors duration-500 overflow-hidden shadow-2xl"
     >
+      <div className="absolute top-8 right-8 md:top-12 md:right-12 text-right hidden sm:block">
+        <div className="text-[10px] font-mono text-muted-foreground/40 mb-1">REFERENCE_ID</div>
+        <div className="text-sm font-mono font-bold text-primary tracking-tighter">{project.id}</div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 relative z-10">
         <div className="lg:col-span-8 flex flex-col justify-center">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-8 md:mb-10">
@@ -38,12 +47,17 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
           >
             <project.icon className="w-7 h-7 md:w-8 md:h-8" />
           </motion.div>
-          <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight font-display leading-tight">
-            {project.title}
-          </h3>
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20 text-[8px] font-bold text-green-500 uppercase tracking-widest">{project.status}</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight font-display leading-tight">
+              {project.title}
+            </h3>
+          </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
           <div className="space-y-6 md:space-y-8">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -89,6 +103,15 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
             </motion.div>
           </div>
         </div>
+
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary font-bold text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 w-fit font-display"
+        >
+          <Search className="w-4 h-4" />
+          Download Intelligence Report
+        </motion.button>
       </div>
       
         <div className="lg:col-span-4 flex items-center justify-center relative z-10 order-first lg:order-last mb-8 lg:mb-0">
