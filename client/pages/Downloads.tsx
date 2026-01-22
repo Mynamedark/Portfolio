@@ -6,7 +6,7 @@ const resources = [
     title: "Professional CV / Resume",
     description: "Detailed overview of my investigative experience, technical stack, and educational background optimized for ATS and recruiters.",
     icon: FileText,
-    filename: "Dharam_Kathiriya_OSINT_Resume.pdf"
+    filename: "Dharam_Resume_TIA.pdf"
   },
   {
     title: "OSINT Methodology Whitepaper",
