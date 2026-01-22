@@ -24,7 +24,7 @@ export function Header({ isDark, onThemeToggle }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-card backdrop-blur-sm border-b border-border shadow-sm">
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border shadow-sm">
       <nav className="container mx-auto max-w-7xl px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -32,7 +32,7 @@ export function Header({ isDark, onThemeToggle }: HeaderProps) {
               to="/"
               className="group flex items-center gap-3 font-bold text-xl text-foreground transition-colors"
             >
-              <div className="w-8 h-8 rounded bg-foreground flex items-center justify-center text-background text-xs font-black tracking-tighter">
+              <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-primary-foreground text-xs font-black tracking-tighter shadow-primary/20">
                 DK
               </div>
               <span className="hidden sm:inline-block tracking-tight text-lg font-semibold">
@@ -42,18 +42,18 @@ export function Header({ isDark, onThemeToggle }: HeaderProps) {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors duration-200",
-                    "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cn(
+                      "text-sm font-medium transition-colors duration-200",
+                      "text-muted-foreground hover:text-primary",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
             </div>
 
           {/* Right Section */}

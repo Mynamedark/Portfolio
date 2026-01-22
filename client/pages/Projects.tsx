@@ -76,15 +76,15 @@ export default function Projects() {
         <div className="container px-4 mx-auto">
           <div className="space-y-16">
             {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={revealVariants}
-                transition={{ delay: index * 0.1 }}
-                className="group relative grid grid-cols-1 lg:grid-cols-12 gap-12 p-12 rounded-[3rem] border border-border bg-background/40 backdrop-blur-md hover:bg-muted/10 transition-all duration-500 overflow-hidden"
-              >
+                <motion.div
+                  key={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={revealVariants}
+                  transition={{ delay: index * 0.1 }}
+                  className="group relative grid grid-cols-1 lg:grid-cols-12 gap-12 p-12 rounded-[3rem] border border-border bg-card backdrop-blur-md hover:shadow-primary/20 hover:border-primary/50 transition-all duration-500 overflow-hidden"
+                >
                 <div className="lg:col-span-8 flex flex-col justify-center">
                   <div className="flex items-center gap-6 mb-10">
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform duration-500">
@@ -117,14 +117,14 @@ export default function Projects() {
                   </div>
                 </div>
                 
-                  <div className="lg:col-span-4 flex items-center justify-center">
-                    <div className="w-full aspect-square max-w-[320px] rounded-[2.5rem] bg-muted/20 border border-border flex items-center justify-center relative group-hover:scale-105 transition-all duration-700">
-                      <Search className="w-24 h-24 text-muted-foreground/10 group-hover:text-primary/10 transition-all duration-700" />
-                      <div className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-foreground text-background flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl">
-                        <ArrowUpRight className="w-7 h-7" />
+                    <div className="lg:col-span-4 flex items-center justify-center">
+                      <div className="w-full aspect-square max-w-[320px] rounded-[2.5rem] bg-background/40 border border-border flex items-center justify-center relative group-hover:scale-105 transition-all duration-700">
+                        <Search className="w-24 h-24 text-muted-foreground/10 group-hover:text-primary/10 transition-all duration-700" />
+                        <div className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl">
+                          <ArrowUpRight className="w-7 h-7" />
+                        </div>
                       </div>
                     </div>
-                  </div>
 
               </motion.div>
             ))}
@@ -133,7 +133,7 @@ export default function Projects() {
       </section>
 
       {/* Hire CTA */}
-      <section className="py-32 border-t border-border bg-foreground text-background">
+      <section className="py-32 border-t border-border bg-card">
         <div className="container px-4 mx-auto text-center max-w-4xl">
           <motion.div
             initial="hidden"
@@ -141,11 +141,11 @@ export default function Projects() {
             viewport={{ once: true }}
             variants={revealVariants}
           >
-            <h3 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none">Need Targeted <span className="text-primary italic">Research?</span></h3>
-            <p className="text-2xl text-background/70 mb-16 font-medium leading-relaxed">
+            <h3 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none text-foreground">Need Targeted <span className="text-primary italic">Research?</span></h3>
+            <p className="text-2xl text-muted-foreground mb-16 font-medium leading-relaxed">
               Whether it's due diligence, threat actor profiling, or digital asset tracing, I provide the intelligence you need to make informed decisions.
             </p>
-            <a href="/contact" className="inline-flex items-center justify-center px-12 py-6 rounded-full bg-primary text-primary-foreground font-bold hover:opacity-90 transition-all text-xl shadow-2xl">
+            <a href="/contact" className="inline-flex items-center justify-center px-12 py-6 rounded-full bg-primary text-primary-foreground font-bold hover:shadow-primary/50 transition-all duration-300 text-xl shadow-2xl">
               Commission an Investigation
             </a>
           </motion.div>

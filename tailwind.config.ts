@@ -13,49 +13,49 @@ export default {
       },
     },
       extend: {
-        colors: {
-          border: "hsl(var(--border))",
-          input: "hsl(var(--input))",
-          ring: "hsl(var(--ring))",
-          background: "hsl(var(--background))",
-          foreground: "hsl(var(--foreground))",
-          primary: {
-            DEFAULT: "hsl(var(--primary))",
-            foreground: "hsl(var(--primary-foreground))",
-          },
-          secondary: {
-            DEFAULT: "hsl(var(--secondary))",
-            foreground: "hsl(var(--secondary-foreground))",
-          },
-          destructive: {
-            DEFAULT: "hsl(var(--destructive))",
-            foreground: "hsl(var(--destructive-foreground))",
-          },
-          muted: {
-            DEFAULT: "hsl(var(--muted))",
-            foreground: "hsl(var(--muted-foreground))",
-          },
-          accent: {
-            DEFAULT: "hsl(var(--accent))",
-            foreground: "hsl(var(--accent-foreground))",
-          },
-          popover: {
-            DEFAULT: "hsl(var(--popover))",
-            foreground: "hsl(var(--popover-foreground))",
-          },
-          card: {
-            DEFAULT: "hsl(var(--card))",
-            foreground: "hsl(var(--card-foreground))",
-          },
+          colors: {
+            border: "var(--border)",
+            input: "var(--input)",
+            ring: "var(--ring)",
+            background: "var(--background)",
+            foreground: "var(--foreground)",
+            primary: {
+              DEFAULT: "var(--primary)",
+              foreground: "var(--primary-foreground)",
+            },
+            secondary: {
+              DEFAULT: "var(--secondary)",
+              foreground: "var(--secondary-foreground)",
+            },
+            destructive: {
+              DEFAULT: "var(--destructive)",
+              foreground: "var(--destructive-foreground)",
+            },
+            muted: {
+              DEFAULT: "var(--muted)",
+              foreground: "var(--muted-foreground)",
+            },
+            accent: {
+              DEFAULT: "var(--accent)",
+              foreground: "var(--accent-foreground)",
+            },
+            popover: {
+              DEFAULT: "var(--popover)",
+              foreground: "var(--popover-foreground)",
+            },
+            card: {
+              DEFAULT: "var(--card)",
+              foreground: "var(--card-foreground)",
+            },
           sidebar: {
-            DEFAULT: "hsl(var(--sidebar-background))",
-            foreground: "hsl(var(--sidebar-foreground))",
-            primary: "hsl(var(--sidebar-primary))",
-            "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-            accent: "hsl(var(--sidebar-accent))",
-            "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-            border: "hsl(var(--sidebar-border))",
-            ring: "hsl(var(--sidebar-ring))",
+            DEFAULT: "var(--sidebar-background)",
+            foreground: "var(--sidebar-foreground)",
+            primary: "var(--sidebar-primary)",
+            "primary-foreground": "var(--sidebar-primary-foreground)",
+            accent: "var(--sidebar-accent)",
+            "accent-foreground": "var(--sidebar-accent-foreground)",
+            border: "var(--sidebar-border)",
+            ring: "var(--sidebar-ring)",
           },
         },
         borderRadius: {
@@ -77,13 +77,13 @@ export default {
           "accordion-down": "accordion-down 0.2s ease-out",
           "accordion-up": "accordion-up 0.2s ease-out",
         },
-        boxShadow: {
-          "primary": "0 0 15px rgba(0, 240, 255, 0.3)",
-          "secondary": "0 0 15px rgba(189, 0, 255, 0.3)",
-          "accent": "0 0 15px rgba(0, 255, 65, 0.3)",
-          "neon": "0 0 20px rgba(0, 240, 255, 0.5)",
-          "glass": "0 8px 32px 0 rgba(0, 0, 0, 0.5)",
-        },
+          boxShadow: {
+            "primary": "0 0 15px rgba(0, 200, 255, 0.3)",
+            "secondary": "0 0 15px rgba(124, 251, 255, 0.3)",
+            "accent": "0 0 15px rgba(0, 200, 255, 0.3)",
+            "neon": "0 0 20px rgba(0, 200, 255, 0.5)",
+            "glass": "0 8px 32px 0 rgba(0, 0, 0, 0.5)",
+          },
         backgroundImage: {
           "none": "none",
         },
