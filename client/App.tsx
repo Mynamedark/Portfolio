@@ -31,23 +31,11 @@ function AppContent() {
   useAnimationDelegation();
 
   const [showPreloader, setShowPreloader] = useState(true);
-  const [isDark, setIsDark] = useState(() => {
-    // Check localStorage or system preference
-    const stored = localStorage.getItem("theme");
-    if (stored) return stored === "dark";
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
   useEffect(() => {
-    // Apply theme
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
+    // Force dark theme
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  }, []);
 
   const handlePreloaderComplete = () => {
     setShowPreloader(false);
@@ -55,10 +43,6 @@ function AppContent() {
 
   const handlePreloaderSkip = () => {
     setShowPreloader(false);
-  };
-
-  const handleThemeToggle = () => {
-    setIsDark(!isDark);
   };
 
   return (
@@ -71,88 +55,88 @@ function AppContent() {
 
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Index />
-              </Layout>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <About />
-              </Layout>
-            }
-          />
-          <Route
-            path="/experience"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Experience />
-              </Layout>
-            }
-          />
-          <Route
-            path="/projects"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Projects />
-              </Layout>
-            }
-          />
-          <Route
-            path="/skills"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Skills />
-              </Layout>
-            }
-          />
-          <Route
-            path="/certifications"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Certifications />
-              </Layout>
-            }
-          />
-          <Route
-            path="/education"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Education />
-              </Layout>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Contact />
-              </Layout>
-            }
-          />
             <Route
-              path="/downloads"
+              path="/"
               element={
-                <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                  <Downloads />
+                <Layout>
+                  <Index />
                 </Layout>
               }
             />
-            <Route path="/admin" element={<Admin />} />
+            <Route
+              path="/about"
+              element={
+                <Layout>
+                  <About />
+                </Layout>
+              }
+            />
+            <Route
+              path="/experience"
+              element={
+                <Layout>
+                  <Experience />
+                </Layout>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <Layout>
+                  <Projects />
+                </Layout>
+              }
+            />
+            <Route
+              path="/skills"
+              element={
+                <Layout>
+                  <Skills />
+                </Layout>
+              }
+            />
+            <Route
+              path="/certifications"
+              element={
+                <Layout>
+                  <Certifications />
+                </Layout>
+              }
+            />
+            <Route
+              path="/education"
+              element={
+                <Layout>
+                  <Education />
+                </Layout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Layout>
+                  <Contact />
+                </Layout>
+              }
+            />
+              <Route
+                path="/downloads"
+                element={
+                  <Layout>
+                    <Downloads />
+                  </Layout>
+                }
+              />
+              <Route path="/admin" element={<Admin />} />
 
-          <Route
-            path="*"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <NotFound />
-              </Layout>
-            }
-          />
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
+              }
+            />
         </Routes>
       </BrowserRouter>
     </>

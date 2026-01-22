@@ -5,14 +5,10 @@ import {
   Object3D,
   Color,
   AdditiveBlending,
-  NormalBlending,
   Fog,
   Vector3,
-  BufferGeometry,
-  Float32BufferAttribute,
   Group,
   Points,
-  Mesh,
   MathUtils,
   Blending,
 } from "three";
@@ -58,17 +54,17 @@ function cssVarHsl(name: string): string {
   return `hsl(${raw})`;
 }
 
-function useThemeColors(isDark: boolean): ThemeColors {
+function useThemeColors(): ThemeColors {
   return useMemo(
     () => ({
       line: cssVarHsl("--primary"),
       particle: cssVarHsl("--secondary") || cssVarHsl("--primary"),
       highlight: cssVarHsl("--accent") || "#00ff00",
-      fogNear: isDark ? 8 : 10,
-      fogFar: isDark ? 22 : 25,
-      blending: isDark ? AdditiveBlending : NormalBlending,
+      fogNear: 8,
+      fogFar: 22,
+      blending: AdditiveBlending,
     }),
-    [isDark],
+    [],
   );
 }
 
@@ -116,9 +112,9 @@ function CameraRig({ variant }: { variant: BackgroundVariant }) {
 }
 
 // --- THREAT INTEL GLOBE ---
-function ThreatIntelGlobe({ isDark }: { isDark: boolean }) {
+function ThreatIntelGlobe() {
   const groupRef = useRef<Group>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const particleColor = useMemo(() => new Color(theme.particle), [theme.particle]);
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
   const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
@@ -203,9 +199,9 @@ function ThreatIntelGlobe({ isDark }: { isDark: boolean }) {
 }
 
 // --- DIGITAL NETWORK MESH ---
-function DigitalNetworkMesh({ isDark }: { isDark: boolean }) {
+function DigitalNetworkMesh() {
   const groupRef = useRef<Group>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const particleColor = useMemo(() => new Color(theme.particle), [theme.particle]);
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
 
@@ -270,9 +266,9 @@ function DigitalNetworkMesh({ isDark }: { isDark: boolean }) {
 }
 
 // --- DATA STREAMS ---
-function DataStreams({ isDark }: { isDark: boolean }) {
+function DataStreams() {
   const groupRef = useRef<Group>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
 
   useFrame((state) => {
@@ -285,15 +281,15 @@ function DataStreams({ isDark }: { isDark: boolean }) {
     <group ref={groupRef}>
       <gridHelper args={[80, 40, lineColor, lineColor]} position={[0, -6, -20]} transparent opacity={0.2} />
       <gridHelper args={[80, 40, lineColor, lineColor]} position={[0, 6, -20]} transparent opacity={0.2} />
-      <FloatingData isDark={isDark} count={200} speed={0.8} range={30} />
+      <FloatingData count={200} speed={0.8} range={30} />
     </group>
   );
 }
 
 // --- CYBER MATRIX ---
-function CyberMatrix({ isDark }: { isDark: boolean }) {
+function CyberMatrix() {
   const meshRef = useRef<InstancedMesh>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
 
   const gridSize = 6;
@@ -337,9 +333,9 @@ function CyberMatrix({ isDark }: { isDark: boolean }) {
 }
 
 // --- SECURITY LATTICE ---
-function SecurityLattice({ isDark }: { isDark: boolean }) {
+function SecurityLattice() {
   const groupRef = useRef<Group>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const particleColor = useMemo(() => new Color(theme.particle), [theme.particle]);
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
 
@@ -402,9 +398,9 @@ function SecurityLattice({ isDark }: { isDark: boolean }) {
 }
 
 // --- SIGNAL SCANNING ---
-function SignalScanning({ isDark }: { isDark: boolean }) {
+function SignalScanning() {
   const groupRef = useRef<Group>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
 
   useFrame((state) => {
@@ -421,15 +417,15 @@ function SignalScanning({ isDark }: { isDark: boolean }) {
           <meshBasicMaterial color={lineColor} transparent opacity={0.4 - i * 0.1} side={2} />
         </mesh>
       ))}
-      <FloatingData isDark={isDark} count={100} speed={0.4} />
+      <FloatingData count={100} speed={0.4} />
     </group>
   );
 }
 
 // --- RECON SPIRAL ---
-function ReconSpiral({ isDark }: { isDark: boolean }) {
+function ReconSpiral() {
   const groupRef = useRef<Group>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const particleColor = useMemo(() => new Color(theme.particle), [theme.particle]);
 
   const { points, lines } = useMemo(() => {
@@ -483,9 +479,9 @@ function ReconSpiral({ isDark }: { isDark: boolean }) {
 }
 
 // --- TRAFFIC FLOW ---
-function TrafficFlow({ isDark }: { isDark: boolean }) {
+function TrafficFlow() {
   const meshRef = useRef<InstancedMesh>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const dummy = useMemo(() => new Object3D(), []);
   const count = 300;
   const particles = useMemo(() => {
@@ -520,9 +516,9 @@ function TrafficFlow({ isDark }: { isDark: boolean }) {
 }
 
 // --- ENCRYPTION VORTEX ---
-function EncryptionVortex({ isDark }: { isDark: boolean }) {
+function EncryptionVortex() {
   const meshRef = useRef<InstancedMesh>(null);
-  const theme = useThemeColors(isDark);
+  const theme = useThemeColors();
   const dummy = useMemo(() => new Object3D(), []);
   const count = 400;
   const particles = useMemo(() => {
@@ -557,8 +553,8 @@ function EncryptionVortex({ isDark }: { isDark: boolean }) {
 }
 
 // --- COMMON FLOATING DATA ---
-function FloatingData({ isDark, count = 200, speed = 0.02, range = 40 }: { isDark: boolean; count?: number; speed?: number; range?: number }) {
-  const theme = useThemeColors(isDark);
+function FloatingData({ count = 200, speed = 0.02, range = 40 }: { count?: number; speed?: number; range?: number }) {
+  const theme = useThemeColors();
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -586,8 +582,8 @@ function FloatingData({ isDark, count = 200, speed = 0.02, range = 40 }: { isDar
   );
 }
 
-function Scene({ isDark, variant }: { isDark: boolean; variant: BackgroundVariant }) {
-  const theme = useThemeColors(isDark);
+function Scene({ variant }: { variant: BackgroundVariant }) {
+  const theme = useThemeColors();
   const { scene, gl } = useThree();
 
   useEffect(() => {
@@ -597,35 +593,34 @@ function Scene({ isDark, variant }: { isDark: boolean; variant: BackgroundVarian
 
   useEffect(() => {
     scene.fog = new Fog(cssVarHsl("--background"), theme.fogNear, theme.fogFar);
-  }, [scene, theme, isDark]);
+  }, [scene, theme]);
 
   return (
     <>
       <ambientLight intensity={0.6} />
       <directionalLight position={[4, 10, 6]} intensity={0.6} />
 
-      {variant === "threat-intel-globe" && <ThreatIntelGlobe isDark={isDark} />}
-      {variant === "digital-network-mesh" && <DigitalNetworkMesh isDark={isDark} />}
-      {variant === "data-streams" && <DataStreams isDark={isDark} />}
-      {variant === "cyber-matrix" && <CyberMatrix isDark={isDark} />}
-      {variant === "security-lattice" && <SecurityLattice isDark={isDark} />}
-      {variant === "signal-scanning" && <SignalScanning isDark={isDark} />}
-      {variant === "recon-spiral" && <ReconSpiral isDark={isDark} />}
-      {variant === "traffic-flow" && <TrafficFlow isDark={isDark} />}
-      {variant === "encryption-vortex" && <EncryptionVortex isDark={isDark} />}
+      {variant === "threat-intel-globe" && <ThreatIntelGlobe />}
+      {variant === "digital-network-mesh" && <DigitalNetworkMesh />}
+      {variant === "data-streams" && <DataStreams />}
+      {variant === "cyber-matrix" && <CyberMatrix />}
+      {variant === "security-lattice" && <SecurityLattice />}
+      {variant === "signal-scanning" && <SignalScanning />}
+      {variant === "recon-spiral" && <ReconSpiral />}
+      {variant === "traffic-flow" && <TrafficFlow />}
+      {variant === "encryption-vortex" && <EncryptionVortex />}
 
-      <FloatingData isDark={isDark} count={120} />
+      <FloatingData count={120} />
       <CameraRig variant={variant} />
     </>
   );
 }
 
 interface GlobalBackground3DProps {
-  isDark: boolean;
   variant?: BackgroundVariant;
 }
 
-export function GlobalBackground3D({ isDark, variant = "threat-intel-globe" }: GlobalBackground3DProps) {
+export function GlobalBackground3D({ variant = "threat-intel-globe" }: GlobalBackground3DProps) {
   const capabilities = useMobileDetection();
   const disable3D = shouldDisable3D(capabilities);
 
@@ -645,7 +640,7 @@ export function GlobalBackground3D({ isDark, variant = "threat-intel-globe" }: G
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
       <Canvas camera={{ position: [0, 0, 18], fov: 45 }} gl={{ antialias: true, powerPreference: "high-performance" }}>
         <Suspense fallback={null}>
-          <Scene isDark={isDark} variant={variant} />
+          <Scene variant={variant} />
         </Suspense>
       </Canvas>
     </div>

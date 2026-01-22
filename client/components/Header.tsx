@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Moon, Sun, Settings } from "lucide-react";
+import { Menu, X, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface HeaderProps {
-  isDark: boolean;
-  onThemeToggle: () => void;
-}
+interface HeaderProps {}
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -20,7 +17,7 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export function Header({ isDark, onThemeToggle }: HeaderProps) {
+export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -67,19 +64,6 @@ export function Header({ isDark, onThemeToggle }: HeaderProps) {
             >
               {/* <Settings className="w-5 h-5" /> */}
             </Link>
-
-            {/* Theme Toggle */}
-            <button
-              onClick={onThemeToggle}
-              className="p-2 rounded-lg hover:bg-muted/40 transition-colors text-foreground"
-              aria-label="Toggle theme"
-            >
-              {isDark ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
 
             {/* Mobile Menu Button */}
             <button

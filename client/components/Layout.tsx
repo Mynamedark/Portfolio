@@ -7,11 +7,9 @@ import { GlobalBackground3D, BackgroundVariant } from "./GlobalBackground3D";
 
 interface LayoutProps {
   children: ReactNode;
-  isDark: boolean;
-  onThemeToggle: () => void;
 }
 
-export function Layout({ children, isDark, onThemeToggle }: LayoutProps) {
+export function Layout({ children }: LayoutProps) {
   const location = useLocation();
 
   const getVariant = (pathname: string): BackgroundVariant => {
@@ -48,10 +46,11 @@ export function Layout({ children, isDark, onThemeToggle }: LayoutProps) {
         className="fixed inset-0 z-[-20] bg-background transition-colors duration-500"
       />
 
-      <GlobalBackground3D isDark={isDark} variant={variant} />
+        <GlobalBackground3D variant={variant} />
+
 
       <CustomCursor />
-      <Header isDark={isDark} onThemeToggle={onThemeToggle} />
+      <Header />
       <main className="flex-1">{children}</main>
       <Footer />
     </div>
