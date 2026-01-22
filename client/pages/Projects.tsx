@@ -2,26 +2,34 @@ import { motion, Variants, useMotionValue, useSpring, useTransform } from "frame
 import { Search, Shield, Globe, Database, ArrowUpRight, Activity, Terminal, Lock, Zap, Cpu, Network } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const projects = [
-  {
-    title: "Fake Social Media Account Fraud Detection",
-    context: "Investigating and identifying fraudulent activities conducted through impersonated and synthetic social media profiles used for social engineering and financial scams.",
-    tools: "SOCMINT (Social Media Intelligence), Maltego, Advanced Image Analysis (IMINT), Profile metadata extraction, reverse image search engines.",
-    findings: "Successfully deanonymized a network of 25+ fake profiles across multiple platforms, uncovering a coordinated 'pig butchering' operation. Identified the primary threat actor's digital footprint and provided evidence to platform security teams.",
-    value: "Demonstrates advanced SOCMINT capabilities and the ability to map complex social networks to identify malicious actors.",
-    icon: Search,
-    color: "text-blue-500"
-  },
-  {
-    title: "Mobile Number & Email Fraud Investigation",
-    context: "Detailed analysis of suspicious communications originating from unidentified mobile numbers and email addresses linked to large-scale phishing and credential harvesting campaigns.",
-    tools: "OSINT Framework, HLR Lookups, Email header analysis, Data Breach databases (Dehashed), HUMINT-informed verification, custom intelligence gathering scripts.",
-    findings: "Traced a series of sophisticated smishing attacks back to a specific regional VOIP provider. Identified 500+ compromised email addresses and alerted the affected organizations, preventing further data loss.",
-    value: "Highlights proficiency in communication forensics and the ability to pivot from minimal data points (phone/email) to full threat profiles.",
-    icon: Shield,
-    color: "text-red-500"
-  }
-];
+  const projects = [
+    {
+      title: "Fake Social Media Account Fraud Detection",
+      context: "Investigating and identifying fraudulent activities conducted through impersonated and synthetic social media profiles used for social engineering and financial scams.",
+      tools: "SOCMINT (Social Media Intelligence), Maltego, Advanced Image Analysis (IMINT), Profile metadata extraction, reverse image search engines.",
+      findings: "Successfully deanonymized a network of 25+ fake profiles across multiple platforms, uncovering a coordinated 'pig butchering' operation. Identified the primary threat actor's digital footprint and provided evidence to platform security teams.",
+      value: "Demonstrates advanced SOCMINT capabilities and the ability to map complex social networks to identify malicious actors.",
+      icon: Search,
+      color: "text-blue-500"
+    },
+    {
+      title: (
+        <>
+          Mobile Number & <a href="mailto:dharamkathiriya265@gmail.com" className="hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4">Email</a> Fraud Investigation
+        </>
+      ),
+      context: "Detailed analysis of suspicious communications originating from unidentified mobile numbers and email addresses linked to large-scale phishing and credential harvesting campaigns.",
+      tools: (
+        <>
+          OSINT Framework, HLR Lookups, <a href="mailto:dharamkathiriya265@gmail.com" className="hover:text-primary transition-colors">Email</a> header analysis, Data Breach databases (Dehashed), HUMINT-informed verification, custom intelligence gathering scripts.
+        </>
+      ),
+      findings: "Traced a series of sophisticated smishing attacks back to a specific regional VOIP provider. Identified 500+ compromised email addresses and alerted the affected organizations, preventing further data loss.",
+      value: "Highlights proficiency in communication forensics and the ability to pivot from minimal data points (phone/email) to full threat profiles.",
+      icon: Shield,
+      color: "text-red-500"
+    }
+  ];
 
 function SpotlightCard({ project, index }: { project: typeof projects[0], index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);

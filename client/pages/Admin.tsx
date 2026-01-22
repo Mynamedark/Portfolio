@@ -91,7 +91,7 @@ const DEFAULT_EXPERIENCES: Experience[] = [
     responsibilities: [
       "Conducted advanced OSINT on threat actors and fake profiles",
       "Analyzed phishing, impersonation, and online fintech fraud patterns",
-      "Correlated emails, usernames, IPs, and domains across open sources",
+      <>Correlated <a href="mailto:dharamkathiriya265@gmail.com" className="text-primary hover:underline">emails</a>, usernames, IPs, and domains across open sources</>,
       "Supported documentation for law enforcement standards",
       "Studied roles of Cyber Crime Cells & CERT-In in India",
       "Built comprehensive threat intelligence reports",

@@ -64,22 +64,30 @@ export default function Index() {
       }
     ];
 
-    const featuredProjects = [
-      {
-        title: "Fake Social Media Account Fraud",
-        context: "Identifying fraudulent activities through impersonated social media profiles.",
-        tools: "SOCMINT, Maltego, Advanced IMINT",
-        outcome: "Uncovered a coordinated scam network of 25+ fake profiles.",
-        icon: Activity
-      },
-      {
-        title: "Mobile & Email Fraud Investigation",
-        context: "Analysis of suspicious communications linked to phishing campaigns.",
-        tools: "OSINT Framework, Email Header Analysis, HUMINT",
-        outcome: "Traced smishing attacks back to source, preventing further data loss.",
-        icon: Terminal
-      }
-    ];
+      const featuredProjects = [
+        {
+          title: "Fake Social Media Account Fraud",
+          context: "Identifying fraudulent activities through impersonated social media profiles.",
+          tools: "SOCMINT, Maltego, Advanced IMINT",
+          outcome: "Uncovered a coordinated scam network of 25+ fake profiles.",
+          icon: Activity
+        },
+        {
+          title: (
+            <>
+              Mobile & <a href="mailto:dharamkathiriya265@gmail.com" className="hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4">Email</a> Fraud Investigation
+            </>
+          ),
+          context: "Analysis of suspicious communications linked to phishing campaigns.",
+          tools: (
+            <>
+              OSINT Framework, <a href="mailto:dharamkathiriya265@gmail.com" className="hover:text-primary transition-colors">Email</a> Header Analysis, HUMINT
+            </>
+          ),
+          outcome: "Traced smishing attacks back to source, preventing further data loss.",
+          icon: Terminal
+        }
+      ];
 
   return (
       <div className="flex flex-col min-h-screen bg-transparent">
