@@ -130,9 +130,8 @@ export default function Downloads() {
                       <p className="text-lg text-muted-foreground leading-relaxed font-medium group-hover:text-foreground transition-colors">{diff.desc}</p>
                     </div>
                   </div>
-                ))}
-                </div>
-              </motion.div>
+                  ))}
+                </motion.div>
             </div>
           </div>
         </section>
