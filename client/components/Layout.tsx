@@ -12,30 +12,31 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const location = useLocation();
 
-  const getVariant = (pathname: string): BackgroundVariant => {
-    switch (pathname) {
-      case "/":
-        return "osint-node-network";
-      case "/about":
-        return "digital-network-mesh";
-      case "/experience":
-        return "osint-node-network";
-      case "/contact":
-        return "threat-intel-globe";
-      case "/projects":
-        return "data-streams";
-      case "/education":
-        return "digital-network-mesh";
-      case "/downloads":
-        return "osint-node-network";
-      case "/certifications":
-        return "encryption-vortex";
-      case "/skills":
-        return "osint-node-network";
-      default:
-        return "osint-node-network";
-    }
-  };
+    const getVariant = (pathname: string): BackgroundVariant => {
+      switch (pathname) {
+        case "/":
+          return "threat-intel-globe";
+        case "/about":
+          return "digital-network-mesh";
+        case "/experience":
+          return "osint-node-network";
+        case "/contact":
+          return "cyber-dragon";
+        case "/projects":
+          return "data-streams";
+        case "/education":
+          return "digital-network-mesh";
+        case "/downloads":
+          return "osint-node-network";
+        case "/certifications":
+          return "signal-scanning";
+        case "/skills":
+          return "osint-node-network";
+        default:
+          return "osint-node-network";
+      }
+    };
+
 
   const variant = getVariant(location.pathname);
 

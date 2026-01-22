@@ -29,7 +29,8 @@ export type BackgroundVariant =
   | "recon-spiral"
   | "traffic-flow"
   | "encryption-vortex"
-  | "osint-node-network";
+  | "osint-node-network"
+  | "cyber-dragon";
 
 interface ThemeColors {
   line: string;
@@ -121,8 +122,8 @@ function ThreatIntelGlobe() {
   const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
 
   const { points, lines } = useMemo(() => {
-    const count = 300;
-    const radius = 6;
+    const count = 400; // Increased count
+    const radius = 6.5;
     const pts: Vector3[] = [];
     const linePositions: number[] = [];
 
@@ -136,12 +137,20 @@ function ThreatIntelGlobe() {
     }
 
     pts.forEach((p1, i) => {
+      // Connect to geographic neighbors
       pts.forEach((p2, j) => {
         if (i >= j) return;
-        if (p1.distanceTo(p2) < 1.6) {
+        const dist = p1.distanceTo(p2);
+        if (dist < 1.8) {
           linePositions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
         }
       });
+      
+      // Long distance "intelligence links"
+      if (i % 40 === 0) {
+        const target = pts[(i + count / 2) % count];
+        linePositions.push(p1.x, p1.y, p1.z, target.x, target.y, target.z);
+      }
     });
 
     return { points: pts, lines: new Float32Array(linePositions) };
@@ -153,14 +162,14 @@ function ThreatIntelGlobe() {
   useFrame((state) => {
     if (!groupRef.current) return;
     const time = state.clock.getElapsedTime();
-    groupRef.current.rotation.y = time * 0.1;
+    groupRef.current.rotation.y = time * 0.15; // Slower, subtle rotation
     groupRef.current.rotation.x = Math.sin(time * 0.05) * 0.1;
 
     if (nodesRef.current) {
       points.forEach((pt, i) => {
-        const pulse = 1 + Math.sin(time * 1.5 + i * 0.1) * 0.15;
+        const pulse = 1 + Math.sin(time * 2 + i * 0.1) * 0.2;
         dummy.position.copy(pt);
-        dummy.scale.setScalar(0.06 * pulse);
+        dummy.scale.setScalar(0.05 * pulse);
         dummy.updateMatrix();
         nodesRef.current!.setMatrixAt(i, dummy.matrix);
       });
@@ -172,29 +181,42 @@ function ThreatIntelGlobe() {
     <group ref={groupRef}>
       <instancedMesh ref={nodesRef} args={[undefined, undefined, points.length]}>
         <sphereGeometry args={[1, 6, 6]} />
-        <meshBasicMaterial color={particleColor} transparent opacity={0.6} blending={theme.blending} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.5} blending={theme.blending} />
       </instancedMesh>
 
       <lineSegments>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[lines, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color={lineColor} transparent opacity={0.15} blending={theme.blending} />
+        <lineBasicMaterial color={lineColor} transparent opacity={0.12} blending={theme.blending} />
       </lineSegments>
 
-      {/* Scanning Rings */}
+      {/* Lat/Long Grid Lines */}
+      {[0, Math.PI / 4, Math.PI / 2, (3 * Math.PI) / 4].map((rot, i) => (
+        <group key={i} rotation={[0, rot, 0]}>
+          <mesh>
+            <ringGeometry args={[6.48, 6.52, 64]} />
+            <meshBasicMaterial color={lineColor} transparent opacity={0.05} side={2} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Scanning Rings / Orbitals */}
       <group rotation={[Math.PI / 3, 0, 0]}>
         <mesh>
-          <ringGeometry args={[6.5, 6.55, 64]} />
-          <meshBasicMaterial color={highlightColor} transparent opacity={0.4} side={2} blending={theme.blending} />
+          <ringGeometry args={[7.0, 7.05, 64]} />
+          <meshBasicMaterial color={highlightColor} transparent opacity={0.2} side={2} blending={theme.blending} />
         </mesh>
       </group>
       <group rotation={[-Math.PI / 4, Math.PI / 4, 0]}>
         <mesh>
-          <ringGeometry args={[7.2, 7.23, 64]} />
-          <meshBasicMaterial color={lineColor} transparent opacity={0.2} side={2} blending={theme.blending} />
+          <ringGeometry args={[7.8, 7.82, 64]} />
+          <meshBasicMaterial color={lineColor} transparent opacity={0.1} side={2} blending={theme.blending} />
         </mesh>
       </group>
+      
+      {/* Grid Floor for depth */}
+      <gridHelper args={[40, 20, lineColor, lineColor]} position={[0, -8, 0]} transparent opacity={0.05} />
     </group>
   );
 }
@@ -205,22 +227,23 @@ function DigitalNetworkMesh() {
   const theme = useThemeColors();
   const particleColor = useMemo(() => new Color(theme.particle), [theme.particle]);
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
 
   const { points, lines } = useMemo(() => {
-    const count = 150;
-    const range = 20;
+    const count = 180;
+    const range = 24;
     const pts: Vector3[] = [];
     const linePositions: number[] = [];
 
     for (let i = 0; i < count; i++) {
-      pts.push(new Vector3(MathUtils.randFloatSpread(range), MathUtils.randFloatSpread(range), MathUtils.randFloatSpread(range)));
+      pts.push(new Vector3(MathUtils.randFloatSpread(range), MathUtils.randFloatSpread(range * 0.8), MathUtils.randFloatSpread(range * 0.5)));
     }
 
     pts.forEach((p1, i) => {
       pts.forEach((p2, j) => {
         if (i >= j) return;
         const dist = p1.distanceTo(p2);
-        if (dist < 4) {
+        if (dist < 4.5) {
           linePositions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
         }
       });
@@ -235,14 +258,16 @@ function DigitalNetworkMesh() {
   useFrame((state) => {
     if (!groupRef.current) return;
     const time = state.clock.getElapsedTime();
-    groupRef.current.rotation.y = time * 0.04;
-    groupRef.current.rotation.x = time * 0.02;
+    groupRef.current.rotation.y = time * 0.03;
+    groupRef.current.rotation.x = Math.sin(time * 0.1) * 0.05;
 
     if (nodesRef.current) {
       points.forEach((pt, i) => {
-        const offset = Math.sin(time * 0.5 + i) * 0.2;
+        // Individual node pulsing
+        const pulse = 1 + Math.sin(time * 1.5 + i * 0.5) * 0.3;
+        const offset = Math.sin(time * 0.4 + i) * 0.1;
         dummy.position.set(pt.x, pt.y + offset, pt.z);
-        dummy.scale.setScalar(0.05);
+        dummy.scale.setScalar(0.06 * pulse);
         dummy.updateMatrix();
         nodesRef.current!.setMatrixAt(i, dummy.matrix);
       });
@@ -253,15 +278,17 @@ function DigitalNetworkMesh() {
   return (
     <group ref={groupRef}>
       <instancedMesh ref={nodesRef} args={[undefined, undefined, points.length]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshBasicMaterial color={particleColor} transparent opacity={0.5} blending={theme.blending} />
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.6} blending={theme.blending} />
       </instancedMesh>
       <lineSegments>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[lines, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color={lineColor} transparent opacity={0.1} blending={theme.blending} />
+        <lineBasicMaterial color={lineColor} transparent opacity={0.12} blending={theme.blending} />
       </lineSegments>
+      
+      <FloatingData count={150} speed={0.05} range={30} />
     </group>
   );
 }
@@ -271,18 +298,48 @@ function DataStreams() {
   const groupRef = useRef<Group>(null);
   const theme = useThemeColors();
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
+
+  const count = 40;
+  const streams = useMemo(() => {
+    return Array.from({ length: count }, () => ({
+      x: MathUtils.randFloatSpread(40),
+      y: MathUtils.randFloatSpread(20),
+      z: MathUtils.randFloatSpread(20),
+      speed: Math.random() * 0.15 + 0.05,
+      length: Math.random() * 10 + 5,
+    }));
+  }, []);
+
+  const meshRef = useRef<InstancedMesh>(null);
+  const dummy = useMemo(() => new Object3D(), []);
 
   useFrame((state) => {
-    if (!groupRef.current) return;
+    if (!meshRef.current) return;
     const time = state.clock.getElapsedTime();
-    groupRef.current.position.z = (time * 8) % 15;
+    
+    streams.forEach((s, i) => {
+      // Diagonal motion
+      const offset = (time * s.speed * 20) % 60;
+      dummy.position.set(s.x + offset - 30, s.y - offset + 30, s.z);
+      dummy.scale.set(0.05, s.length, 0.05);
+      dummy.rotation.set(0, 0, Math.PI / 4); // Diagonal
+      dummy.updateMatrix();
+      meshRef.current!.setMatrixAt(i, dummy.matrix);
+    });
+    meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
   return (
     <group ref={groupRef}>
-      <gridHelper args={[80, 40, lineColor, lineColor]} position={[0, -6, -20]} transparent opacity={0.2} />
-      <gridHelper args={[80, 40, lineColor, lineColor]} position={[0, 6, -20]} transparent opacity={0.2} />
-      <FloatingData count={200} speed={0.8} range={30} />
+      <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.2} blending={theme.blending} />
+      </instancedMesh>
+      
+      <gridHelper args={[80, 40, lineColor, lineColor]} position={[0, -10, -10]} rotation={[Math.PI / 4, 0, 0]} transparent opacity={0.05} />
+      
+      <FloatingData count={100} speed={0.1} />
     </group>
   );
 }
@@ -401,24 +458,75 @@ function SecurityLattice() {
 // --- SIGNAL SCANNING ---
 function SignalScanning() {
   const groupRef = useRef<Group>(null);
+  const sweepRef = useRef<Mesh>(null);
   const theme = useThemeColors();
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
   const lineColor = useMemo(() => new Color(theme.line), [theme.line]);
 
+  const dotCount = 12;
+  const dots = useMemo(() => {
+    return Array.from({ length: dotCount }, () => ({
+      r: Math.random() * 8 + 2,
+      a: Math.random() * Math.PI * 2,
+      id: Math.random(),
+    }));
+  }, []);
+
+  const dotsRef = useRef<InstancedMesh>(null);
+  const dummy = useMemo(() => new Object3D(), []);
+
   useFrame((state) => {
-    if (!groupRef.current) return;
     const time = state.clock.getElapsedTime();
-    groupRef.current.rotation.z = time * 0.2;
+    if (sweepRef.current) {
+      sweepRef.current.rotation.z = -time * 1.5;
+    }
+
+    if (dotsRef.current) {
+      dots.forEach((dot, i) => {
+        // Blinking logic
+        const blink = Math.sin(time * 3 + dot.id * 10) > 0.8 ? 1 : 0.2;
+        dummy.position.set(Math.cos(dot.a) * dot.r, Math.sin(dot.a) * dot.r, 0);
+        dummy.scale.setScalar(0.12 * blink);
+        dummy.updateMatrix();
+        dotsRef.current!.setMatrixAt(i, dummy.matrix);
+      });
+      dotsRef.current.instanceMatrix.needsUpdate = true;
+    }
   });
 
   return (
-    <group ref={groupRef}>
-      {[2, 4, 6, 8].map((r, i) => (
+    <group ref={groupRef} position={[0, 0, 0]}>
+      {/* Radar Rings */}
+      {[2, 4, 6, 8, 10].map((r, i) => (
         <mesh key={i}>
-          <ringGeometry args={[r, r + 0.05, 64]} />
-          <meshBasicMaterial color={lineColor} transparent opacity={0.4 - i * 0.1} side={2} />
+          <ringGeometry args={[r, r + 0.04, 64]} />
+          <meshBasicMaterial color={lineColor} transparent opacity={0.15} side={2} />
         </mesh>
       ))}
-      <FloatingData count={100} speed={0.4} />
+
+      {/* Crosshairs */}
+      <mesh>
+        <boxGeometry args={[20, 0.02, 0.02]} />
+        <meshBasicMaterial color={lineColor} transparent opacity={0.1} />
+      </mesh>
+      <mesh rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[20, 0.02, 0.02]} />
+        <meshBasicMaterial color={lineColor} transparent opacity={0.1} />
+      </mesh>
+
+      {/* Sweep Beam */}
+      <mesh ref={sweepRef}>
+        <ringGeometry args={[0, 10, 64, 1, 0, Math.PI / 4]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.15} side={2} blending={theme.blending} />
+      </mesh>
+
+      {/* Detected Intel Dots */}
+      <instancedMesh ref={dotsRef} args={[undefined, undefined, dotCount]}>
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshBasicMaterial color={highlightColor} transparent opacity={0.8} blending={theme.blending} />
+      </instancedMesh>
+
+      <FloatingData count={60} speed={0.05} range={30} />
     </group>
   );
 }
@@ -639,6 +747,97 @@ function OSINTNodeNetwork() {
   );
 }
 
+// --- CYBER DRAGON ---
+function CyberDragon() {
+  const headRef = useRef<Group>(null);
+  const segmentsRef = useRef<InstancedMesh>(null);
+  const theme = useThemeColors();
+  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
+  const secondaryColor = useMemo(() => new Color(theme.line), [theme.line]);
+
+  const segmentCount = 20;
+  const dummy = useMemo(() => new Object3D(), []);
+  
+  // Track positions of segments for trailing effect
+  const positions = useMemo(() => {
+    return Array.from({ length: segmentCount }, () => new Vector3());
+  }, []);
+
+  useFrame((state) => {
+    if (!headRef.current || !segmentsRef.current) return;
+    
+    const time = state.clock.getElapsedTime();
+    const mouseX = state.mouse.x * 10;
+    const mouseY = state.mouse.y * 8;
+
+    // Head follows mouse with some delay/smoothness
+    headRef.current.position.x += (mouseX - headRef.current.position.x) * 0.1;
+    headRef.current.position.y += (mouseY - headRef.current.position.y) * 0.1;
+    headRef.current.position.z = Math.sin(time * 0.5) * 2;
+    
+    // Look at target
+    headRef.current.lookAt(mouseX, mouseY, 5);
+
+    // Update segment positions (trailing)
+    positions[0].copy(headRef.current.position);
+    for (let i = 1; i < segmentCount; i++) {
+      const prev = positions[i - 1];
+      const curr = positions[i];
+      // Move current segment towards previous one
+      curr.lerp(prev, 0.2);
+    }
+
+    // Update instanced mesh
+    for (let i = 0; i < segmentCount; i++) {
+      const scale = (1 - i / segmentCount) * 0.8 + 0.2;
+      dummy.position.copy(positions[i]);
+      dummy.scale.setScalar(0.4 * scale);
+      
+      // Add some "wobble" to segments
+      const wobbleX = Math.sin(time * 2 + i * 0.5) * 0.2;
+      const wobbleY = Math.cos(time * 2 + i * 0.5) * 0.2;
+      dummy.position.x += wobbleX;
+      dummy.position.y += wobbleY;
+      
+      dummy.rotation.set(time * 0.5, 0, i * 0.1);
+      dummy.updateMatrix();
+      segmentsRef.current.setMatrixAt(i, dummy.matrix);
+    }
+    segmentsRef.current.instanceMatrix.needsUpdate = true;
+  });
+
+  return (
+    <group>
+      <group ref={headRef}>
+        {/* Dragon Head */}
+        <mesh>
+          <coneGeometry args={[0.6, 1.2, 4]} />
+          <meshBasicMaterial color={highlightColor} blending={theme.blending} />
+        </mesh>
+        {/* Glow Eyes */}
+        <mesh position={[0.2, 0.2, 0.3]}>
+          <sphereGeometry args={[0.1, 8, 8]} />
+          <meshBasicMaterial color="#ffffff" />
+        </mesh>
+        <mesh position={[-0.2, 0.2, 0.3]}>
+          <sphereGeometry args={[0.1, 8, 8]} />
+          <meshBasicMaterial color="#ffffff" />
+        </mesh>
+      </group>
+
+      <instancedMesh ref={segmentsRef} args={[undefined, undefined, segmentCount]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial color={secondaryColor} transparent opacity={0.6} blending={theme.blending} />
+      </instancedMesh>
+      
+      {/* Dynamic wings/fins */}
+      <group position={[0, 0, -5]}>
+        <FloatingData count={50} speed={0.1} range={20} />
+      </group>
+    </group>
+  );
+}
+
 // --- COMMON FLOATING DATA ---
 function FloatingData({ count = 200, speed = 0.02, range = 40 }: { count?: number; speed?: number; range?: number }) {
   const theme = useThemeColors();
@@ -696,9 +895,11 @@ function Scene({ variant }: { variant: BackgroundVariant }) {
       {variant === "recon-spiral" && <ReconSpiral />}
         {variant === "traffic-flow" && <TrafficFlow />}
         {variant === "encryption-vortex" && <EncryptionVortex />}
-        {variant === "osint-node-network" && <OSINTNodeNetwork />}
+          {variant === "osint-node-network" && <OSINTNodeNetwork />}
+          {variant === "cyber-dragon" && <CyberDragon />}
 
-        <FloatingData count={120} />
+          <FloatingData count={120} />
+
       <CameraRig variant={variant} />
     </>
   );
@@ -720,7 +921,17 @@ export function GlobalBackground3D({ variant = "threat-intel-globe" }: GlobalBac
 
   if (disable3D) {
     return (
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 bg-background" />
+      <div 
+        aria-hidden="true" 
+        className="pointer-events-none fixed inset-0 -z-10 bg-background"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0),
+            linear-gradient(to bottom, rgba(10, 15, 31, 0.9), rgba(10, 15, 31, 1))
+          `,
+          backgroundSize: '32px 32px, 100% 100%'
+        }}
+      />
     );
   }
 
