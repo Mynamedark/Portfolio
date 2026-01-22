@@ -4,40 +4,22 @@ import { useEffect, useRef, useState } from "react";
 
 const projects = [
   {
-    title: "Cryptocurrency Asset Tracing & Recovery Support",
-    context: "A high-stakes financial fraud investigation involving cross-chain transfers and obfuscation techniques used by threat actors to launder stolen assets.",
-    tools: "Blockchain Explorers (Etherscan, Blockchain.com), Maltego, OSINT Framework, custom Python scripts for wallet monitoring.",
-    findings: "Mapped the flow of 150+ BTC across 12 intermediate wallets, identifying a recurring pattern that linked back to a high-risk offshore exchange. Provided a comprehensive report that assisted legal teams in initiating freeze requests.",
-    value: "Demonstrates advanced blockchain forensic capability and the ability to produce actionable evidence for legal proceedings.",
-    icon: Database,
+    title: "Fake Social Media Account Fraud Detection",
+    context: "Investigating and identifying fraudulent activities conducted through impersonated and synthetic social media profiles used for social engineering and financial scams.",
+    tools: "SOCMINT (Social Media Intelligence), Maltego, Advanced Image Analysis (IMINT), Profile metadata extraction, reverse image search engines.",
+    findings: "Successfully deanonymized a network of 25+ fake profiles across multiple platforms, uncovering a coordinated 'pig butchering' operation. Identified the primary threat actor's digital footprint and provided evidence to platform security teams.",
+    value: "Demonstrates advanced SOCMINT capabilities and the ability to map complex social networks to identify malicious actors.",
+    icon: Search,
     color: "text-blue-500"
   },
   {
-    title: "Threat Actor Infrastructure Analysis: 'Operation Phantom'",
-    context: "Identifying the origin and command-and-control (C2) infrastructure of a regional phishing group targeting financial institutions.",
-    tools: "Shodan, Censys, DomainTools, Passive DNS, WHOIS history analysis, Google Dorks.",
-    findings: "Successfully identified 12 interconnected domains and mapped the underlying VPS provider. Discovered an unsecured development server that revealed the threat actor's naming conventions and potential location.",
-    value: "Showcases deep infrastructure research skills and the ability to proactively identify and neutralize emerging threats.",
+    title: "Mobile Number & Email Fraud Investigation",
+    context: "Detailed analysis of suspicious communications originating from unidentified mobile numbers and email addresses linked to large-scale phishing and credential harvesting campaigns.",
+    tools: "OSINT Framework, HLR Lookups, Email header analysis, Data Breach databases (Dehashed), HUMINT-informed verification, custom intelligence gathering scripts.",
+    findings: "Traced a series of sophisticated smishing attacks back to a specific regional VOIP provider. Identified 500+ compromised email addresses and alerted the affected organizations, preventing further data loss.",
+    value: "Highlights proficiency in communication forensics and the ability to pivot from minimal data points (phone/email) to full threat profiles.",
     icon: Shield,
     color: "text-red-500"
-  },
-  {
-    title: "Digital Footprint Audit & Exposure Remediation",
-    context: "A comprehensive profiling mission for a high-net-worth individual to identify potential vectors for social engineering and targeted attacks.",
-    tools: "Social Media Intelligence (SOCMINT), Data Breach Monitoring platforms, Dehashed, HaveIBeenPwned API.",
-    findings: "Identified 3 critical exposure points, including leaked credentials on darknet forums and inadvertent geolocation disclosure through public social media posts. Remediated all points and established a continuous monitoring protocol.",
-    value: "Highlights the capability to conduct thorough SOCMINT and provide high-value defensive intelligence.",
-    icon: Search,
-    color: "text-emerald-500"
-  },
-  {
-    title: "Vulnerability Assessment of Critical Infrastructure",
-    context: "Scanning for exposed Industrial Control Systems (ICS) and SCADA systems in a specific geographic region to assess national security risks.",
-    tools: "Shodan, Censys, BinaryEdge, custom Nmap scripts (within legal boundaries).",
-    findings: "Discovered 45 exposed systems with default configurations, including water treatment control panels and energy grid monitors. Reported findings through responsible disclosure channels.",
-    value: "Demonstrates an understanding of critical infrastructure security and the responsible use of reconnaissance tools.",
-    icon: Globe,
-    color: "text-amber-500"
   }
 ];
 

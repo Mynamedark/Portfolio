@@ -46,47 +46,40 @@ export default function Index() {
     }
   };
 
-  const skills = [
-    {
-      category: "OSINT Skills",
-      items: ["Data Collection", "Identity Verification", "Threat Actor Tracking", "Darknet Monitoring", "Digital Profiling"],
-      icon: Search,
-    },
-    {
-      category: "Technical Tools",
-      items: ["Maltego", "Spiderfoot", "Shodan", "Google Dorks", "WHOIS & DNS Analysis"],
-      icon: Database,
-    },
-    {
-      category: "Methodology",
-      items: ["Intelligence Reporting", "Analytical Reasoning", "Evidence Preservation", "Privacy Protection"],
-      icon: Shield,
-    }
-  ];
+    const skills = [
+      {
+        category: "Intelligence Disciplines",
+        items: ["OSINT", "HUMINT", "SOCMINT", "GEOINT", "IMINT"],
+        icon: Search,
+      },
+      {
+        category: "Technical Tools",
+        items: ["Maltego", "Shodan", "Censys", "Dehashed", "Data Breach Analysis"],
+        icon: Database,
+      },
+      {
+        category: "Methodology",
+        items: ["Fraud Investigation", "Analytical Reasoning", "Evidence Preservation", "Privacy Protection"],
+        icon: Shield,
+      }
+    ];
 
-  const featuredProjects = [
-    {
-      title: "Cryptocurrency Asset Tracing",
-      context: "Financial fraud investigation involving cross-chain transfers.",
-      tools: "Blockchain Explorers, Maltego, OSINT Framework",
-      outcome: "Successfully identified the primary cash-out point at a high-risk exchange.",
-      icon: Activity
-    },
-    {
-      title: "Threat Actor Infrastructure Analysis",
-      context: "Mapping the digital footprint of a regional phishing group.",
-      tools: "Shodan, Censys, DomainTools, Passive DNS",
-      outcome: "Identified 12 interconnected domains and the underlying VPS provider.",
-      icon: Terminal
-    },
-    {
-      title: "Digital Footprint Audit",
-      context: "Comprehensive profiling for a high-net-worth individual.",
-      tools: "Social Media Intelligence, Data Breach Monitoring",
-      outcome: "Remediated 3 critical exposure points and secured leaked credentials.",
-      icon: Lock
-    }
-  ];
+    const featuredProjects = [
+      {
+        title: "Fake Social Media Account Fraud",
+        context: "Identifying fraudulent activities through impersonated social media profiles.",
+        tools: "SOCMINT, Maltego, Advanced IMINT",
+        outcome: "Uncovered a coordinated scam network of 25+ fake profiles.",
+        icon: Activity
+      },
+      {
+        title: "Mobile & Email Fraud Investigation",
+        context: "Analysis of suspicious communications linked to phishing campaigns.",
+        tools: "OSINT Framework, Email Header Analysis, HUMINT",
+        outcome: "Traced smishing attacks back to source, preventing further data loss.",
+        icon: Terminal
+      }
+    ];
 
   return (
       <div className="flex flex-col min-h-screen bg-transparent">

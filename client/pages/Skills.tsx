@@ -13,15 +13,15 @@ export default function Skills() {
 
   const skillCategories = [
     {
-      title: "Investigative OSINT",
+      title: "Intelligence Disciplines",
       icon: Search,
       skills: [
-        { name: "Advanced Data Collection", level: 95 },
-        { name: "Identity Verification & Profiling", level: 90 },
-        { name: "Threat Actor Infrastructure Mapping", level: 85 },
-        { name: "Darknet & Underground Monitoring", level: 80 },
-        { name: "SOCMINT (Social Media Intelligence)", level: 90 },
-        { name: "GEOINT (Geospatial Intelligence)", level: 75 }
+        { name: "OSINT (Open Source Intelligence)", level: 98 },
+        { name: "HUMINT (Human Intelligence)", level: 85 },
+        { name: "SOCMINT (Social Media Intelligence)", level: 95 },
+        { name: "GEOINT (Geospatial Intelligence)", level: 90 },
+        { name: "IMINT (Imagery Intelligence)", level: 88 },
+        { name: "Threat Actor Profiling", level: 92 }
       ]
     },
     {
