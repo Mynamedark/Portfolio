@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
@@ -11,6 +12,9 @@ import {
   Points,
   MathUtils,
   Blending,
+  Quaternion,
+  MeshStandardMaterial,
+  Mesh,
 } from "three";
 import {
   useMobileDetection,
@@ -755,44 +759,44 @@ function CyberDragon() {
   const headRef = useRef<Group>(null);
   
   const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
-  const rotations = useMemo(() => Array.from({ length: segments }, () => new THREE.Quaternion()), []);
+    const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
 
-  const theme = useThemeColors();
-  const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
+    const theme = useThemeColors();
+    const highlightColor = useMemo(() => new Color(theme.highlight), [theme.highlight]);
 
-  // Professional Materials
-  const armorMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: "#1a1a1a",
-    metalness: 0.9,
-    roughness: 0.1,
-  }), []);
+    // Professional Materials
+    const armorMaterial = useMemo(() => new MeshStandardMaterial({
+      color: "#1a1a1a",
+      metalness: 0.9,
+      roughness: 0.1,
+    }), []);
 
-  const accentMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: highlightColor,
-    emissive: highlightColor,
-    emissiveIntensity: 0.2,
-    transparent: true,
-    opacity: 0.8,
-  }), [highlightColor]);
+    const accentMaterial = useMemo(() => new MeshStandardMaterial({
+      color: highlightColor,
+      emissive: highlightColor,
+      emissiveIntensity: 0.2,
+      transparent: true,
+      opacity: 0.8,
+    }), [highlightColor]);
 
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    
-    const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.2);
-    const targetY = (mouse.y * viewport.height) / 2;
-    
-    if (headRef.current) {
-      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.05;
-      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.05;
-      headRef.current.position.z = Math.sin(time * 0.5) * 1;
+    useFrame((state) => {
+      const time = state.clock.getElapsedTime();
       
-      const lookTarget = new Vector3(targetX + 5, targetY, 0);
-      headRef.current.lookAt(lookTarget);
-      headRef.current.rotation.z += Math.sin(time) * 0.002;
-    }
+      const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.2);
+      const targetY = (mouse.y * viewport.height) / 2;
+      
+      if (headRef.current) {
+        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.05;
+        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.05;
+        headRef.current.position.z = Math.sin(time * 0.5) * 1;
+        
+        const lookTarget = new Vector3(targetX + 5, targetY, 0);
+        headRef.current.lookAt(lookTarget);
+        headRef.current.rotation.z += Math.sin(time) * 0.002;
+      }
 
-    positions[0].copy(headRef.current?.position || new Vector3());
-    rotations[0].copy(headRef.current?.quaternion || new THREE.Quaternion());
+      positions[0].copy(headRef.current?.position || new Vector3());
+      rotations[0].copy(headRef.current?.quaternion || new Quaternion());
 
     for (let i = 1; i < segments; i++) {
       const seg = segmentRefs.current[i];

@@ -3,15 +3,22 @@
  * Handles cleanup and disposal of WebGL resources on route change
  */
 
-import * as THREE from "three";
+import {
+  WebGLRenderer,
+  Scene,
+  BufferGeometry,
+  Material,
+  Texture,
+  Mesh
+} from "three";
 
 class WebGLManager {
   private static instance: WebGLManager;
-  private renderers: Map<string, THREE.WebGLRenderer> = new Map();
-  private scenes: Map<string, THREE.Scene> = new Map();
-  private geometries: Set<THREE.BufferGeometry> = new Set();
-  private materials: Set<THREE.Material> = new Set();
-  private textures: Set<THREE.Texture> = new Set();
+  private renderers: Map<string, WebGLRenderer> = new Map();
+  private scenes: Map<string, Scene> = new Map();
+  private geometries: Set<BufferGeometry> = new Set();
+  private materials: Set<Material> = new Set();
+  private textures: Set<Texture> = new Set();
 
   private constructor() {}
 
@@ -25,35 +32,35 @@ class WebGLManager {
   /**
    * Register a renderer for tracking
    */
-  registerRenderer(id: string, renderer: THREE.WebGLRenderer): void {
+  registerRenderer(id: string, renderer: WebGLRenderer): void {
     this.renderers.set(id, renderer);
   }
 
   /**
    * Register a scene for tracking
    */
-  registerScene(id: string, scene: THREE.Scene): void {
+  registerScene(id: string, scene: Scene): void {
     this.scenes.set(id, scene);
   }
 
   /**
    * Track geometry for cleanup
    */
-  trackGeometry(geometry: THREE.BufferGeometry): void {
+  trackGeometry(geometry: BufferGeometry): void {
     this.geometries.add(geometry);
   }
 
   /**
    * Track material for cleanup
    */
-  trackMaterial(material: THREE.Material): void {
+  trackMaterial(material: Material): void {
     this.materials.add(material);
   }
 
   /**
    * Track texture for cleanup
    */
-  trackTexture(texture: THREE.Texture): void {
+  trackTexture(texture: Texture): void {
     this.textures.add(texture);
   }
 
@@ -65,7 +72,7 @@ class WebGLManager {
     if (!scene) return;
 
     scene.traverse((object) => {
-      if (object instanceof THREE.Mesh) {
+      if (object instanceof Mesh) {
         if (object.geometry) {
           object.geometry.dispose();
           this.geometries.delete(object.geometry);
@@ -132,13 +139,13 @@ class WebGLManager {
   /**
    * Dispose a material safely
    */
-  private disposeMaterial(material: THREE.Material): void {
+  private disposeMaterial(material: Material): void {
     material.dispose();
     this.materials.delete(material);
 
     // Dispose material textures
     Object.values(material).forEach((value) => {
-      if (value instanceof THREE.Texture) {
+      if (value instanceof Texture) {
         value.dispose();
         this.textures.delete(value);
       }

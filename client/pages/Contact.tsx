@@ -48,15 +48,15 @@ export default function Contact() {
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-primary/30" />
 
-            <h2 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none italic font-light opacity-90">Ready to secure your <span className="font-bold opacity-100 not-italic">digital perimeter?</span></h2>
-            <p className="text-2xl text-background/60 mb-16 max-w-3xl mx-auto font-medium leading-relaxed">
+            <h2 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none italic font-light opacity-90 text-foreground">Ready to secure your <span className="font-bold opacity-100 not-italic text-primary">digital perimeter?</span></h2>
+            <p className="text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto font-medium leading-relaxed">
               I specialize in high-stakes investigations where accuracy and discretion are paramount. Let's discuss your requirements in a secure environment.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-              <a href="mailto:dharamkathiriya265@gmail.com" className="px-12 py-6 rounded-full bg-background text-foreground font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-500 flex items-center gap-4 text-xl shadow-xl">
+              <a href="mailto:dharamkathiriya265@gmail.com" className="px-12 py-6 rounded-full bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all duration-500 flex items-center gap-4 text-xl shadow-xl shadow-primary/20">
                 Send Secure Email <Send className="w-6 h-6" />
               </a>
-              <a href="https://linkedin.com/in/dharam-k-726742372" target="_blank" rel="noopener noreferrer" className="px-12 py-6 rounded-full border-2 border-background/10 hover:bg-background/5 transition-all flex items-center gap-4 text-xl font-bold">
+              <a href="https://linkedin.com/in/dharam-k-726742372" target="_blank" rel="noopener noreferrer" className="px-12 py-6 rounded-full border-2 border-border hover:bg-secondary/20 transition-all flex items-center gap-4 text-xl font-bold text-foreground">
                 Connect via LinkedIn <MessageSquare className="w-6 h-6" />
               </a>
             </div>

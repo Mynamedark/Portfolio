@@ -1,6 +1,12 @@
 import { useRef, useMemo, Suspense, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
+import { 
+  Vector3, 
+  Quaternion, 
+  MeshStandardMaterial, 
+  Group, 
+  Color 
+} from "three";
 import { Float, MeshDistortMaterial, MeshWobbleMaterial, Sparkles } from "@react-three/drei";
 import { useMobileDetection, shouldDisable3D } from "@/hooks/useMobileDetection";
 
@@ -14,7 +20,7 @@ function HUDGrid() {
 }
 
 function ScanningLines() {
-  const ref = useRef<THREE.Group>(null);
+  const ref = useRef<Group>(null);
   useFrame((state) => {
     if (ref.current) {
       ref.current.position.y = (Math.sin(state.clock.getElapsedTime() * 0.5) * 10);
@@ -34,21 +40,21 @@ function ScanningLines() {
 function CyberDragon() {
   const { mouse, viewport } = useThree();
   const segments = 24;
-  const segmentRefs = useRef<THREE.Group[]>([]);
-  const headRef = useRef<THREE.Group>(null);
+  const segmentRefs = useRef<Group[]>([]);
+  const headRef = useRef<Group>(null);
   
-  const positions = useMemo(() => Array.from({ length: segments }, () => new THREE.Vector3()), []);
-  const rotations = useMemo(() => Array.from({ length: segments }, () => new THREE.Quaternion()), []);
+  const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
+  const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
 
   // Professional Materials
-  const armorMaterial = new THREE.MeshStandardMaterial({
+  const armorMaterial = new MeshStandardMaterial({
     color: "#1a1a1a",
     metalness: 0.9,
     roughness: 0.1,
     emissive: "#000000",
   });
 
-  const accentMaterial = new THREE.MeshStandardMaterial({
+  const accentMaterial = new MeshStandardMaterial({
     color: "#00C8FF",
     emissive: "#00C8FF",
     emissiveIntensity: 0.2,
@@ -70,7 +76,7 @@ function CyberDragon() {
       headRef.current.position.z = Math.sin(time * 0.5) * 1;
       
       // Look at mouse direction
-      const lookTarget = new THREE.Vector3(targetX + 5, targetY, 0);
+      const lookTarget = new Vector3(targetX + 5, targetY, 0);
       headRef.current.lookAt(lookTarget);
       
       // Idle "breathing" rotation
@@ -78,8 +84,8 @@ function CyberDragon() {
     }
 
     // Trailing body segments
-    positions[0].copy(headRef.current?.position || new THREE.Vector3());
-    rotations[0].copy(headRef.current?.quaternion || new THREE.Quaternion());
+    positions[0].copy(headRef.current?.position || new Vector3());
+    rotations[0].copy(headRef.current?.quaternion || new Quaternion());
 
     for (let i = 1; i < segments; i++) {
       const seg = segmentRefs.current[i];
