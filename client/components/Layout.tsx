@@ -21,7 +21,7 @@ export function Layout({ children }: LayoutProps) {
         case "/experience":
           return "osint-node-network";
         case "/contact":
-          return "cyber-dragon";
+          return "osint-node-network";
         case "/projects":
           return "data-streams";
         case "/education":
