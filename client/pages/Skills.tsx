@@ -50,10 +50,67 @@ export default function Skills() {
     }
   ];
 
-  return (
-    <div className="flex flex-col min-h-screen bg-transparent pt-20">
+    return (
+    <div className="flex flex-col min-h-screen bg-transparent pt-20 relative overflow-hidden">
+      {/* Modern Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated Grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]" 
+          style={{ 
+            backgroundImage: `linear-gradient(to right, var(--primary) 1px, transparent 1px), linear-gradient(to bottom, var(--primary) 1px, transparent 1px)`,
+            backgroundSize: '4rem 4rem',
+            maskImage: 'radial-gradient(circle at 50% 50%, black, transparent 80%)'
+          }} 
+        />
+        
+        {/* Floating Particles */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: Math.random() * 2000 - 1000, 
+              y: Math.random() * 2000 - 1000,
+              opacity: Math.random() * 0.3
+            }}
+            animate={{ 
+              y: [null, Math.random() * 100 - 50],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{ 
+              duration: 5 + Math.random() * 10, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+          />
+        ))}
+
+        {/* Background Orbs */}
+        <motion.div 
+          animate={{ 
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"
+        />
+        <motion.div 
+          animate={{ 
+            x: [0, -100, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"
+        />
+      </div>
+
       {/* Header */}
-      <section className="py-32">
+      <section className="py-32 relative z-10">
         <div className="container px-4 mx-auto">
           <div className="max-w-4xl">
             <motion.div
@@ -62,11 +119,12 @@ export default function Skills() {
               variants={revealVariants}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
             >
-              <Cpu className="w-4 h-4 text-primary" />
+              <Cpu className="w-4 h-4 text-primary animate-pulse" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">System Specs: Expertise</span>
             </motion.div>
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none">
-              Technical <span className="text-muted-foreground/40 italic font-light">Proficiency.</span>
+            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
+              Technical <br />
+              <span className="text-muted-foreground/40 italic font-light">Proficiency.</span>
             </h1>
             <motion.p 
               initial={{ opacity: 0, x: -20 }}
@@ -81,9 +139,9 @@ export default function Skills() {
       </section>
 
       {/* Skills Grid */}
-      <section className="pb-48">
+      <section className="pb-48 relative z-10">
         <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 gap-24">
+          <div className="grid grid-cols-1 gap-32">
             {skillCategories.map((category, catIndex) => (
               <motion.div
                 key={catIndex}
@@ -93,33 +151,32 @@ export default function Skills() {
                 variants={revealVariants}
                 className="relative"
               >
-                <div className="flex items-center gap-6 mb-16">
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-neon">
-                    <category.icon className="w-8 h-8 text-primary" />
+                <div className="flex items-center gap-8 mb-20">
+                  <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-lg shadow-primary/5">
+                    <category.icon className="w-10 h-10 text-primary" />
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-bold tracking-tight">{category.title}</h2>
+                  <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-foreground">{category.title}</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skillIndex}
-                      whileHover={{ y: -5 }}
-                      className="p-8 rounded-[2rem] bg-background/40 backdrop-blur-md border border-border group hover:border-primary/50 transition-all duration-500"
+                      whileHover={{ y: -10, scale: 1.02 }}
+                      className="p-10 rounded-[2.5rem] bg-card/30 backdrop-blur-xl border border-border group hover:border-primary/50 transition-all duration-500 shadow-xl"
                     >
-                      <div className="flex justify-between items-center mb-6">
-                        <span className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">{skill.name}</span>
-                        <span className="text-sm font-mono text-primary font-bold">{skill.level}%</span>
+                      <div className="flex justify-between items-center mb-8">
+                        <span className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">{skill.name}</span>
+                        <span className="text-sm font-mono text-primary font-bold bg-primary/10 px-3 py-1 rounded-lg border border-primary/20">{skill.level}%</span>
                       </div>
-                      <div className="h-1.5 w-full bg-muted/30 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-muted/20 rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
                             viewport={{ once: true }}
                             transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-                            className="h-full bg-primary relative shadow-primary"
+                            className="h-full bg-primary relative shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
                           />
-
                       </div>
                     </motion.div>
                   ))}
@@ -131,7 +188,8 @@ export default function Skills() {
       </section>
 
       {/* Tools Carousel/Grid */}
-      <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
+      <section className="py-48 relative overflow-hidden z-10">
+        <div className="absolute inset-0 bg-primary/[0.02] -z-10" />
         <div className="container px-4 mx-auto text-center">
           <motion.div
             initial="hidden"
@@ -140,10 +198,11 @@ export default function Skills() {
             variants={revealVariants}
             className="mb-24"
           >
-            <h3 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">The Investigation <span className="text-muted-foreground/40 italic font-light">Stack.</span></h3>
+            <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6 text-center">Equipment & Assets</h2>
+            <h3 className="text-5xl md:text-8xl font-bold tracking-tight text-foreground leading-none">The Investigative <br /><span className="text-muted-foreground/40 italic font-light">Stack.</span></h3>
           </motion.div>
           
-          <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
             {["Maltego", "Shodan", "Censys", "Spiderfoot", "Python", "Metasploit", "Nmap", "Wireshark", "Burp Suite", "OSINT Framework", "Trello", "MindManager"].map((tool, index) => (
               <motion.span
                 key={index}
@@ -152,10 +211,11 @@ export default function Skills() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
                 variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1 }
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
                 }}
-                className="px-8 py-4 rounded-full bg-background/40 border border-border text-xl font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default text-foreground hover:border-primary/50"
+                whileHover={{ scale: 1.1, rotate: index % 2 === 0 ? 2 : -2 }}
+                className="px-10 py-5 rounded-3xl bg-card/30 border border-border text-xl font-bold hover:bg-primary hover:text-primary-foreground hover:border-primary/50 transition-all duration-300 cursor-default text-foreground backdrop-blur-md shadow-lg"
               >
                 {tool}
               </motion.span>
@@ -164,5 +224,6 @@ export default function Skills() {
         </div>
       </section>
     </div>
+
   );
 }

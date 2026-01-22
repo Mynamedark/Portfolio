@@ -35,10 +35,67 @@ export default function About() {
     }
   ];
 
-  return (
-    <div className="flex flex-col min-h-screen bg-transparent pt-20">
+    return (
+    <div className="flex flex-col min-h-screen bg-transparent pt-20 relative overflow-hidden">
+      {/* Modern Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated Grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]" 
+          style={{ 
+            backgroundImage: `linear-gradient(to right, var(--primary) 1px, transparent 1px), linear-gradient(to bottom, var(--primary) 1px, transparent 1px)`,
+            backgroundSize: '4rem 4rem',
+            maskImage: 'radial-gradient(circle at 50% 50%, black, transparent 80%)'
+          }} 
+        />
+        
+        {/* Floating Particles */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: Math.random() * 2000 - 1000, 
+              y: Math.random() * 2000 - 1000,
+              opacity: Math.random() * 0.3
+            }}
+            animate={{ 
+              y: [null, Math.random() * 100 - 50],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{ 
+              duration: 5 + Math.random() * 10, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+          />
+        ))}
+
+        {/* Background Orbs */}
+        <motion.div 
+          animate={{ 
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"
+        />
+        <motion.div 
+          animate={{ 
+            x: [0, -100, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"
+        />
+      </div>
+
       {/* Hero Section */}
-      <section className="py-32 relative overflow-hidden">
+      <section className="py-32 relative z-10">
         <div className="container px-4 mx-auto">
           <div className="max-w-4xl">
             <motion.div
@@ -47,11 +104,12 @@ export default function About() {
               variants={revealVariants}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
             >
-              <Target className="w-4 h-4 text-primary" />
+              <Target className="w-4 h-4 text-primary animate-pulse" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Dossier: DHARAM KATHIRIYA</span>
             </motion.div>
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none">
-              A commitment to <span className="text-muted-foreground/40 italic font-light">digital truth.</span>
+            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
+              A commitment to <br />
+              <span className="text-muted-foreground/40 italic font-light">digital truth.</span>
             </h1>
             <motion.p 
               initial={{ opacity: 0, x: -20 }}
@@ -66,58 +124,59 @@ export default function About() {
       </section>
 
         {/* Philosophy Section */}
-        <section className="py-32 border-y border-border bg-background/40 backdrop-blur-md">
+        <section className="py-32 relative z-10">
           <div className="container px-4 mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
-              <div>
-                <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={revealVariants}
+                className="p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl transition-all duration-500 shadow-2xl"
+              >
+                <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4 text-foreground">
                   <Shield className="w-8 h-8 text-primary" /> Investigative Rigor
                 </h3>
-                <motion.p
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={revealVariants}
-                  className="text-xl text-muted-foreground leading-relaxed font-medium"
-                >
+                <p className="text-xl text-muted-foreground leading-relaxed font-medium">
                   In an era of information overload, the value lies not in the volume of data, but in the accuracy of its interpretation. My approach to OSINT is rooted in the principles of evidence preservation and analytical reasoning. I don't just find information; I verify it to ensure it meets the highest standards of credibility for recruiters, clients, and legal environments.
-                </motion.p>
-              </div>
-              <div>
-                <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4">
+                </p>
+              </motion.div>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={revealVariants}
+                transition={{ delay: 0.2 }}
+                className="p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl transition-all duration-500 shadow-2xl"
+              >
+                <h3 className="text-4xl font-bold mb-8 tracking-tight flex items-center gap-4 text-foreground">
                   <Terminal className="w-8 h-8 text-primary" /> Technical Foundation
                 </h3>
-                <motion.p
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={revealVariants}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-muted-foreground leading-relaxed font-medium"
-                >
+                <p className="text-xl text-muted-foreground leading-relaxed font-medium">
                   My background in Computer Applications provides the technical depth necessary to understand how cybercriminals exploit infrastructure. This dual-competency in investigation and development allows me to bridge the gap between abstract threats and technical vulnerabilities, delivering reports that are both comprehensive and actionable.
-                </motion.p>
-              </div>
+                </p>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* International Operations Section */}
-        <section className="py-32 relative overflow-hidden bg-primary/5">
+        <section className="py-48 relative overflow-hidden z-10">
+          <div className="absolute inset-0 bg-primary/[0.02] -z-10" />
           <div className="container px-4 mx-auto">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary mb-6">Global reach</h2>
-              <h3 className="text-5xl md:text-7xl font-bold tracking-tight mb-12">International <span className="text-muted-foreground/40 italic font-light">Collaboration.</span></h3>
+            <div className="max-w-5xl mx-auto text-center p-16 md:p-24 rounded-[3.5rem] border border-border bg-card/20 backdrop-blur-xl shadow-2xl">
+              <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6">Global reach</h2>
+              <h3 className="text-5xl md:text-8xl font-bold tracking-tight mb-12 leading-none">International <br /><span className="text-muted-foreground/40 italic font-light">Collaboration.</span></h3>
               <motion.p 
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={revealVariants}
-                className="text-2xl text-muted-foreground leading-relaxed font-medium"
+                className="text-2xl text-muted-foreground leading-relaxed font-medium mb-16"
               >
                 Operating without borders, I provide OSINT and cybersecurity services to global organizations. My workflow is engineered for high-stakes international collaboration, ensuring investigative precision across time zones and jurisdictions.
               </motion.p>
-              <div className="mt-16 flex flex-wrap justify-center gap-12">
+              <div className="flex flex-wrap justify-center gap-12">
                 {[
                   { label: "Remote Ready", desc: "Seamless global integration" },
                   { label: "Cross-Border", desc: "Multi-jurisdictional expertise" },
@@ -132,8 +191,8 @@ export default function About() {
                     variants={revealVariants}
                     className="flex flex-col items-center"
                   >
-                    <span className="text-primary font-bold text-xl mb-2">{item.label}</span>
-                    <span className="text-muted-foreground text-xs uppercase tracking-widest font-bold">{item.desc}</span>
+                    <span className="text-primary font-bold text-2xl mb-2">{item.label}</span>
+                    <span className="text-muted-foreground text-xs uppercase tracking-widest font-bold opacity-60">{item.desc}</span>
                   </motion.div>
                 ))}
               </div>
@@ -142,11 +201,11 @@ export default function About() {
         </section>
 
         {/* Experience Timeline */}
-        <section className="py-32 relative">
+        <section className="py-32 relative z-10">
           <div className="container px-4 mx-auto">
             <div className="text-center mb-24">
-              <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary mb-6">Operational History</h2>
-              <h3 className="text-5xl md:text-7xl font-bold tracking-tight">Professional <span className="text-muted-foreground/40 italic font-light">Journey.</span></h3>
+              <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6">Operational History</h2>
+              <h3 className="text-5xl md:text-8xl font-bold tracking-tight leading-none">Professional <br /><span className="text-muted-foreground/40 italic font-light">Journey.</span></h3>
             </div>
           
           <div className="max-w-5xl mx-auto relative">
@@ -163,14 +222,14 @@ export default function About() {
                   className={`relative flex flex-col md:flex-row items-center ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                 >
                   {/* Dot */}
-                  <div className="absolute left-0 md:left-1/2 top-0 md:top-12 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background z-10 hidden md:block" />
+                  <div className="absolute left-0 md:left-1/2 top-0 md:top-12 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background z-10 hidden md:block shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]" />
                   
                   <div className="w-full md:w-1/2 px-8 md:px-16 text-center md:text-left">
-                    <div className={`${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                    <div className={`${index % 2 === 0 ? 'md:text-left' : 'md:text-right'} p-10 rounded-[2.5rem] border border-border bg-card/30 backdrop-blur-xl shadow-xl hover:border-primary/30 transition-colors duration-500`}>
                       <span className="text-sm font-bold text-primary mb-4 block uppercase tracking-widest">{event.year}</span>
-                      <h4 className="text-3xl font-bold mb-2 tracking-tight">{event.title}</h4>
-                      <p className="text-xl text-muted-foreground font-bold mb-6 italic opacity-60">{event.organization}</p>
-                      <p className="text-lg text-muted-foreground leading-relaxed font-medium max-w-xl mx-auto md:mx-0">
+                      <h4 className="text-3xl font-bold mb-2 tracking-tight text-foreground">{event.title}</h4>
+                      <p className="text-xl text-primary font-bold mb-6 italic opacity-70">{event.organization}</p>
+                      <p className="text-lg text-muted-foreground leading-relaxed font-medium">
                         {event.description}
                       </p>
                     </div>
@@ -184,13 +243,13 @@ export default function About() {
       </section>
 
         {/* Capabilities Grid */}
-        <section className="py-32 bg-secondary/40 backdrop-blur-md border-y border-border">
+        <section className="py-48 relative z-10">
           <div className="container px-4 mx-auto">
             <div className="text-center mb-24">
-              <h3 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground text-center">Core <span className="text-muted-foreground/40 italic font-light">Capabilities.</span></h3>
+              <h3 className="text-5xl md:text-8xl font-bold tracking-tight text-foreground text-center leading-none text-foreground">Core <br /><span className="text-muted-foreground/40 italic font-light">Capabilities.</span></h3>
             </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 title: "Asset Tracing",
@@ -230,12 +289,12 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 variants={revealVariants}
-                className="space-y-6 group"
+                className="p-10 rounded-[2.5rem] border border-border bg-card/30 backdrop-blur-xl group hover:border-primary/50 transition-all duration-500 shadow-xl"
               >
-                <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <cap.icon className="w-8 h-8 text-primary" />
+                <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 border border-primary/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
+                  <cap.icon className="w-10 h-10 text-primary" />
                 </div>
-                <h4 className="text-2xl font-bold tracking-tight text-foreground">{cap.title}</h4>
+                <h4 className="text-2xl font-bold tracking-tight text-foreground mb-4">{cap.title}</h4>
                 <p className="text-muted-foreground text-lg leading-relaxed font-medium group-hover:text-foreground transition-colors">
                   {cap.desc}
                 </p>
@@ -245,5 +304,6 @@ export default function About() {
         </div>
       </section>
     </div>
+
   );
 }
