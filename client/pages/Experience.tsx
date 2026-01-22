@@ -1,5 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import { Shield, Target, Activity, Terminal, Briefcase, Globe, Database, Search } from "lucide-react";
+import { SpotlightCard } from "@/components/SpotlightCard";
 
 export default function Experience() {
   const revealVariants: Variants = {
@@ -102,29 +103,29 @@ export default function Experience() {
       {/* Header */}
       <section className="py-32 relative z-10">
         <div className="container px-4 mx-auto">
-          <div className="max-w-4xl">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={revealVariants}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
-            >
-              <Briefcase className="w-4 h-4 text-primary animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Log: Professional Record</span>
-            </motion.div>
-            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
-              Operational <br />
-              <span className="text-muted-foreground/40 italic font-light">Experience.</span>
-            </h1>
-            <motion.p 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8"
-            >
-              A record of professional engagements where technical depth and investigative rigor were deployed to solve complex digital challenges.
-            </motion.p>
-          </div>
+            <div className="max-w-4xl">
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={revealVariants}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+              >
+                <Briefcase className="w-4 h-4 text-primary animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">Log: Professional Record</span>
+              </motion.div>
+              <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none font-display">
+                Operational <br />
+                <span className="text-muted-foreground/40 italic font-light">Experience.</span>
+              </h1>
+              <motion.p 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8 font-sans"
+              >
+                A record of professional engagements where technical depth and investigative rigor were deployed to solve complex digital challenges.
+              </motion.p>
+            </div>
         </div>
       </section>
 
@@ -133,53 +134,49 @@ export default function Experience() {
         <div className="container px-4 mx-auto">
           <div className="space-y-16 md:space-y-24">
             {experiences.map((exp, index) => (
-              <motion.div
+              <SpotlightCard
                 key={index}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={revealVariants}
-                transition={{ delay: index * 0.1 }}
-                className="group relative p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-2xl"
+                index={index}
+                className="p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-border bg-card/30 backdrop-blur-xl hover:border-primary/50 transition-all duration-500 shadow-2xl"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-                  <div className="lg:col-span-4 space-y-8">
-                    <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
-                      <exp.icon className="w-10 h-10 text-primary" />
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+                    <div className="lg:col-span-4 space-y-8">
+                      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
+                        <exp.icon className="w-10 h-10 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-4xl font-bold tracking-tight mb-3 text-foreground font-display">{exp.company}</h3>
+                        <p className="text-2xl text-primary font-bold italic opacity-80 font-display">{exp.role}</p>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 mt-6">
+                          <span className="text-sm text-primary font-mono uppercase tracking-widest font-bold font-display">{exp.period}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-4xl font-bold tracking-tight mb-3 text-foreground">{exp.company}</h3>
-                      <p className="text-2xl text-primary font-bold italic opacity-80">{exp.role}</p>
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 mt-6">
-                        <span className="text-sm text-primary font-mono uppercase tracking-widest font-bold">{exp.period}</span>
+                    
+                    <div className="lg:col-span-8 space-y-12">
+                      <p className="text-2xl text-muted-foreground leading-relaxed font-medium font-sans">
+                        {exp.description}
+                      </p>
+                      
+                      <div className="pt-8 border-t border-border/50">
+                        <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-8 flex items-center gap-2 font-display">
+                          <Activity className="w-4 h-4" /> Operational Deliverables
+                        </h4>
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          {exp.deliverables.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-4 text-xl text-foreground font-medium group-hover:translate-x-2 transition-transform duration-300 font-sans">
+                              <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2.5 flex-shrink-0 shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="lg:col-span-8 space-y-12">
-                    <p className="text-2xl text-muted-foreground leading-relaxed font-medium">
-                      {exp.description}
-                    </p>
-                    
-                    <div className="pt-8 border-t border-border/50">
-                      <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-8 flex items-center gap-2">
-                        <Activity className="w-4 h-4" /> Operational Deliverables
-                      </h4>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {exp.deliverables.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-4 text-xl text-foreground font-medium group-hover:translate-x-2 transition-transform duration-300">
-                            <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2.5 flex-shrink-0 shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
                 
                 {/* Decorative background element */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-500" />
-              </motion.div>
+              </SpotlightCard>
             ))}
           </div>
         </div>

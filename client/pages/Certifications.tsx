@@ -1,5 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import { Award, Shield, Lock, Globe, Microscope, CheckCircle2, ExternalLink } from "lucide-react";
+import { SpotlightCard } from "@/components/SpotlightCard";
 
 export default function Certifications() {
   const revealVariants: Variants = {
@@ -123,29 +124,29 @@ export default function Certifications() {
       {/* Header */}
       <section className="py-32 relative z-10">
         <div className="container px-4 mx-auto">
-          <div className="max-w-4xl">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={revealVariants}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
-            >
-              <Award className="w-4 h-4 text-primary animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Dossier: Verified Credentials</span>
-            </motion.div>
-            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
-              Technical <br />
-              <span className="text-muted-foreground/40 italic font-light">Validation.</span>
-            </h1>
-            <motion.p 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8"
-            >
-              A comprehensive record of professional certifications and verified expertise in the fields of OSINT and digital investigation.
-            </motion.p>
-          </div>
+            <div className="max-w-4xl">
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={revealVariants}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+              >
+                <Award className="w-4 h-4 text-primary animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">Dossier: Verified Credentials</span>
+              </motion.div>
+              <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none font-display">
+                Technical <br />
+                <span className="text-muted-foreground/40 italic font-light">Validation.</span>
+              </h1>
+              <motion.p 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8 font-sans"
+              >
+                A comprehensive record of professional certifications and verified expertise in the fields of OSINT and digital investigation.
+              </motion.p>
+            </div>
         </div>
       </section>
 
@@ -154,50 +155,46 @@ export default function Certifications() {
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {certifications.map((cert, index) => (
-                <motion.div
+                <SpotlightCard
                   key={cert.id}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  variants={revealVariants}
-                  className="group p-10 rounded-[2.5rem] md:rounded-[3.5rem] bg-card/30 backdrop-blur-xl border border-border hover:border-primary/50 transition-all duration-500 flex flex-col h-full relative overflow-hidden shadow-2xl"
+                  index={index}
+                  className="p-10 rounded-[2.5rem] md:rounded-[3.5rem] bg-card/30 backdrop-blur-xl border border-border hover:border-primary/50 transition-all duration-500 flex flex-col h-full shadow-2xl"
                 >
                   <div className={`absolute top-0 right-0 w-32 h-32 ${cert.color} opacity-5 blur-3xl -mr-16 -mt-16 group-hover:opacity-10 transition-opacity duration-500`} />
                   
-                  <div className="flex items-start justify-between mb-8">
-                    <div className={`w-20 h-20 rounded-2xl ${cert.color} flex items-center justify-center border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                      <cert.icon className="w-10 h-10 text-white" />
+                    <div className="flex items-start justify-between mb-8 relative z-10">
+                      <div className={`w-20 h-20 rounded-2xl ${cert.color} flex items-center justify-center border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                        <cert.icon className="w-10 h-10 text-white" />
+                      </div>
+                      <span className="text-sm font-mono uppercase tracking-widest text-primary font-bold bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 font-display">
+                        {cert.issuedDate}
+                      </span>
                     </div>
-                    <span className="text-sm font-mono uppercase tracking-widest text-primary font-bold bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
-                      {cert.issuedDate}
-                    </span>
-                  </div>
-                  
-                  <div className="flex-grow space-y-6">
-                    <div className="space-y-2">
-                      <p className={`text-xs font-bold uppercase tracking-wider ${cert.color} bg-clip-text text-transparent`}>
-                        {cert.category}
+                    
+                    <div className="flex-grow space-y-6 relative z-10">
+                      <div className="space-y-2">
+                        <p className={`text-xs font-bold uppercase tracking-wider ${cert.color} bg-clip-text text-transparent font-display`}>
+                          {cert.category}
+                        </p>
+                        <h3 className="text-4xl font-bold tracking-tight text-foreground font-display">{cert.title}</h3>
+                      </div>
+                      <p className="text-2xl text-primary font-bold italic opacity-80 font-display">{cert.issuer}</p>
+                      <p className="text-xl text-muted-foreground leading-relaxed font-medium pt-2 font-sans">
+                        {cert.description}
                       </p>
-                      <h3 className="text-4xl font-bold tracking-tight text-foreground">{cert.title}</h3>
                     </div>
-                    <p className="text-2xl text-primary font-bold italic opacity-80">{cert.issuer}</p>
-                    <p className="text-xl text-muted-foreground leading-relaxed font-medium pt-2">
-                      {cert.description}
-                    </p>
-                  </div>
-                  
-                  <div className="mt-12 pt-8 border-t border-border/50 flex items-center justify-between">
-                    <a 
-                      href={cert.verificationUrl}
-                      className="inline-flex items-center gap-3 text-lg font-bold text-muted-foreground hover:text-primary transition-all duration-300 group/link"
-                    >
-                      <span>Verify Credential</span>
-                      <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                    </a>
-                    <div className={`w-3 h-3 rounded-full ${cert.color} animate-pulse shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]`} />
-                  </div>
-                </motion.div>
+                    
+                    <div className="mt-12 pt-8 border-t border-border/50 flex items-center justify-between relative z-10">
+                      <a 
+                        href={cert.verificationUrl}
+                        className="inline-flex items-center gap-3 text-lg font-bold text-muted-foreground hover:text-primary transition-all duration-300 group/link font-display"
+                      >
+                        <span>Verify Credential</span>
+                        <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                      </a>
+                      <div className={`w-3 h-3 rounded-full ${cert.color} animate-pulse shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]`} />
+                    </div>
+                </SpotlightCard>
             ))}
           </div>
         </div>

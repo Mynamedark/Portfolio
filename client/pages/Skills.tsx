@@ -1,5 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import { Search, Shield, Globe, Database, Terminal, Lock, Activity, Target, Cpu, Server, Network, Eye } from "lucide-react";
+import { SpotlightCard } from "@/components/SpotlightCard";
 
 export default function Skills() {
   const revealVariants: Variants = {
@@ -112,29 +113,29 @@ export default function Skills() {
       {/* Header */}
       <section className="py-32 relative z-10">
         <div className="container px-4 mx-auto">
-          <div className="max-w-4xl">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={revealVariants}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
-            >
-              <Cpu className="w-4 h-4 text-primary animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">System Specs: Expertise</span>
-            </motion.div>
-            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
-              Technical <br />
-              <span className="text-muted-foreground/40 italic font-light">Proficiency.</span>
-            </h1>
-            <motion.p 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8"
-            >
-              A comprehensive breakdown of my investigative capabilities, technical toolset, and analytical methodology honed through real-world investigations.
-            </motion.p>
-          </div>
+            <div className="max-w-4xl">
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={revealVariants}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+              >
+                <Cpu className="w-4 h-4 text-primary animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">System Specs: Expertise</span>
+              </motion.div>
+              <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none font-display">
+                Technical <br />
+                <span className="text-muted-foreground/40 italic font-light">Proficiency.</span>
+              </h1>
+              <motion.p 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8 font-sans"
+              >
+                A comprehensive breakdown of my investigative capabilities, technical toolset, and analytical methodology honed through real-world investigations.
+              </motion.p>
+            </div>
         </div>
       </section>
 
@@ -151,36 +152,37 @@ export default function Skills() {
                 variants={revealVariants}
                 className="relative"
               >
-                <div className="flex items-center gap-8 mb-20">
-                  <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-lg shadow-primary/5">
-                    <category.icon className="w-10 h-10 text-primary" />
+                  <div className="flex items-center gap-8 mb-20">
+                    <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-lg shadow-primary/5">
+                      <category.icon className="w-10 h-10 text-primary" />
+                    </div>
+                    <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-foreground font-display">{category.title}</h2>
                   </div>
-                  <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-foreground">{category.title}</h2>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skillIndex}
-                      whileHover={{ y: -10, scale: 1.02 }}
-                      className="p-10 rounded-[2.5rem] bg-card/30 backdrop-blur-xl border border-border group hover:border-primary/50 transition-all duration-500 shadow-xl"
-                    >
-                      <div className="flex justify-between items-center mb-8">
-                        <span className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">{skill.name}</span>
-                        <span className="text-sm font-mono text-primary font-bold bg-primary/10 px-3 py-1 rounded-lg border border-primary/20">{skill.level}%</span>
-                      </div>
-                      <div className="h-2 w-full bg-muted/20 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-                            className="h-full bg-primary relative shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
-                          />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {category.skills.map((skill, skillIndex) => (
+                        <SpotlightCard
+                          key={skillIndex}
+                          index={skillIndex}
+                          className="p-10 rounded-[2.5rem] bg-card/30 backdrop-blur-xl border border-border group hover:border-primary/50 transition-all duration-500 shadow-xl"
+                        >
+                          <div className="flex justify-between items-center mb-8 relative z-10">
+                            <span className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors font-display">{skill.name}</span>
+                            <span className="text-sm font-mono text-primary font-bold bg-primary/10 px-3 py-1 rounded-lg border border-primary/20 font-display">{skill.level}%</span>
+                          </div>
+                          <div className="h-2 w-full bg-muted/20 rounded-full overflow-hidden relative z-10">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+                                className="h-full bg-primary relative shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
+                              />
+                          </div>
+                        </SpotlightCard>
+                      ))}
+                    </div>
+
               </motion.div>
             ))}
           </div>

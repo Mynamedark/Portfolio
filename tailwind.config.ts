@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["IBM Plex Sans", "sans-serif"],
-        display: ["Inter", "sans-serif"],
+        sans: ["Plus Jakarta Sans", "sans-serif"],
+        display: ["Space Grotesk", "sans-serif"],
         mono: ["Fira Code", "monospace"],
       },
       colors: {
