@@ -791,66 +791,72 @@ function CyberDragon() {
     opacity: 0.9,
   }), [highlightColor]);
 
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    
-    // Exact mouse tracking
-    const targetX = (mouse.x * viewport.width) / 2;
-    const targetY = (mouse.y * viewport.height) / 2;
-    
-    if (headRef.current) {
-      // Smooth movement towards mouse
-      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.08;
-      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.08;
-      headRef.current.position.z = Math.sin(time * 0.5) * 2;
+    useFrame((state) => {
+      const time = state.clock.getElapsedTime();
       
-      // Look DIRECTLY at the mouse in 3D space
-      const mouse3D = new Vector3(targetX, targetY, 5);
-      headRef.current.lookAt(mouse3D);
+      // Exact mouse tracking
+      const targetX = (mouse.x * viewport.width) / 2;
+      const targetY = (mouse.y * viewport.height) / 2;
       
-      // Subtle head tilt/breathing
-      headRef.current.rotation.z += Math.sin(time * 2) * 0.05;
-    }
+      if (headRef.current) {
+        // Smooth movement towards mouse
+        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.08;
+        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.08;
+        headRef.current.position.z = Math.sin(time * 0.5) * 2;
+        
+        // Look DIRECTLY at the mouse in 3D space (placed at camera distance)
+        const mouse3D = new Vector3(targetX, targetY, 18);
+        headRef.current.lookAt(mouse3D);
+        
+        // Subtle head tilt/breathing
+        headRef.current.rotation.z += Math.sin(time * 2) * 0.05;
+      }
 
-    // Wing flapping
-    if (leftWingRef.current && rightWingRef.current) {
-      const flapAngle = Math.sin(time * 3) * 0.6;
-      leftWingRef.current.rotation.z = flapAngle;
-      rightWingRef.current.rotation.z = -flapAngle;
-    }
+      // Wing flapping
+      if (leftWingRef.current && rightWingRef.current) {
+        const flapAngle = Math.sin(time * 3) * 0.6;
+        leftWingRef.current.rotation.z = flapAngle;
+        rightWingRef.current.rotation.z = -flapAngle;
+      }
 
-    // Body physics (Inverse Kinematics / Follow-the-leader)
-    positions[0].copy(headRef.current?.position || new Vector3());
-    rotations[0].copy(headRef.current?.quaternion || new Quaternion());
+      // Body physics (Inverse Kinematics / Follow-the-leader)
+      positions[0].copy(headRef.current?.position || new Vector3());
+      rotations[0].copy(headRef.current?.quaternion || new Quaternion());
 
-    for (let i = 1; i < segments; i++) {
-      const seg = segmentRefs.current[i];
-      if (!seg) continue;
-      
-      const prevPos = positions[i - 1];
-      const distance = 0.6;
-      
-      // Direction from current to previous
-      const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
-      
-      // Update position to maintain distance
-      positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
-      
-      // Smoothly slerp rotation
-      rotations[i].slerp(rotations[i-1], 0.15);
-      
-      seg.position.copy(positions[i]);
-      seg.quaternion.copy(rotations[i]);
-      
-      // Add organic snake-like movement
-      seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.1;
-      seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.05;
-      
-      // Tapering scale
-      const s = Math.max(0.05, (1 - i / segments) * 1.2);
-      seg.scale.setScalar(s);
-    }
-  });
+      for (let i = 0; i < segments; i++) {
+        const seg = segmentRefs.current[i];
+        if (!seg) continue;
+        
+        if (i > 0) {
+          const prevPos = positions[i - 1];
+          const distance = 0.6;
+          
+          // Direction from current to previous
+          const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
+          
+          // Update position to maintain distance
+          positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
+          
+          // Smoothly slerp rotation
+          rotations[i].slerp(rotations[i-1], 0.15);
+          
+          seg.position.copy(positions[i]);
+          seg.quaternion.copy(rotations[i]);
+          
+          // Add organic snake-like movement
+          seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.1;
+          seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.05;
+        } else {
+          // Sync 0-th segment with head
+          seg.position.copy(positions[0]);
+          seg.quaternion.copy(rotations[0]);
+        }
+        
+        // Tapering scale
+        const s = Math.max(0.05, (1 - i / segments) * 1.2);
+        seg.scale.setScalar(s);
+      }
+    });
 
   return (
     <group>
@@ -859,36 +865,37 @@ function CyberDragon() {
         {/* Main Skull */}
         <mesh>
           <boxGeometry args={[0.8, 0.6, 1]} />
-          <primitive object={armorMaterial} attach="material" />
+          <meshStandardMaterial color="#0a0a0a" metalness={0.95} roughness={0.05} />
         </mesh>
         {/* Snout */}
-        <mesh position={[0, -0.1, 1]}>
+        <mesh position={[0, -0.1, 0.9]}>
           <boxGeometry args={[0.5, 0.4, 1.2]} />
-          <primitive object={armorMaterial} attach="material" />
+          <meshStandardMaterial color="#0a0a0a" metalness={0.95} roughness={0.05} />
         </mesh>
         {/* Lower Jaw */}
-        <mesh position={[0, -0.35, 0.8]} rotation={[-0.2, 0, 0]}>
+        <mesh position={[0, -0.35, 0.7]} rotation={[-0.2, 0, 0]}>
           <boxGeometry args={[0.4, 0.2, 1]} />
-          <primitive object={armorMaterial} attach="material" />
+          <meshStandardMaterial color="#0a0a0a" metalness={0.95} roughness={0.05} />
         </mesh>
-        {/* Eyes */}
-        <mesh position={[0.3, 0.15, 0.4]}>
-          <sphereGeometry args={[0.1, 8, 8]} />
+        {/* Eyes - Moved forward */}
+        <mesh position={[0.3, 0.15, 0.6]}>
+          <sphereGeometry args={[0.12, 8, 8]} />
           <meshBasicMaterial color={highlightColor} />
         </mesh>
-        <mesh position={[-0.3, 0.15, 0.4]}>
-          <sphereGeometry args={[0.1, 8, 8]} />
+        <mesh position={[-0.3, 0.15, 0.6]}>
+          <sphereGeometry args={[0.12, 8, 8]} />
           <meshBasicMaterial color={highlightColor} />
         </mesh>
         {/* Horns */}
         <mesh position={[0.3, 0.5, -0.2]} rotation={[-0.5, 0, 0.3]}>
           <coneGeometry args={[0.1, 1, 4]} />
-          <primitive object={accentMaterial} attach="material" />
+          <meshStandardMaterial color={highlightColor} emissive={highlightColor} emissiveIntensity={0.5} />
         </mesh>
         <mesh position={[-0.3, 0.5, -0.2]} rotation={[-0.5, 0, -0.3]}>
           <coneGeometry args={[0.1, 1, 4]} />
-          <primitive object={accentMaterial} attach="material" />
+          <meshStandardMaterial color={highlightColor} emissive={highlightColor} emissiveIntensity={0.5} />
         </mesh>
+
         
         {/* Wings - Attached to head/neck area for simplified background dragon */}
         <group position={[0, 0.2, -0.5]}>

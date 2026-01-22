@@ -77,94 +77,107 @@ function CyberDragon() {
     side: THREE.DoubleSide
   }), []);
 
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    
-    // Position dragon relative to viewport
-    const targetX = (mouse.x * viewport.width) / 2 + (viewport.width * 0.1);
-    const targetY = (mouse.y * viewport.height) / 2;
-    
-    if (headRef.current) {
-      // Smooth tracking
-      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.07;
-      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.07;
-      headRef.current.position.z = Math.sin(time * 0.3) * 3;
+    useFrame((state) => {
+      const time = state.clock.getElapsedTime();
       
-      // Look EXACTLY at mouse
-      const mouse3D = new Vector3(targetX, targetY, 10);
-      headRef.current.lookAt(mouse3D);
+      // Position dragon relative to viewport - Direct mouse tracking
+      const targetX = (mouse.x * viewport.width) / 2;
+      const targetY = (mouse.y * viewport.height) / 2;
       
-      // Add subtle mecha-head tilt
-      headRef.current.rotation.z += Math.sin(time * 1.5) * 0.05;
-    }
+      if (headRef.current) {
+        // Smooth tracking
+        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.07;
+        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.07;
+        headRef.current.position.z = Math.sin(time * 0.3) * 3;
+        
+        // Look EXACTLY at mouse (placed at camera distance)
+        const mouse3D = new Vector3(targetX, targetY, 15);
+        headRef.current.lookAt(mouse3D);
+        
+        // Add subtle mecha-head tilt
+        headRef.current.rotation.z += Math.sin(time * 1.5) * 0.05;
+      }
 
-    // Wing flapping animation
-    if (leftWingRef.current && rightWingRef.current) {
-      const flap = Math.sin(time * 4) * 0.8;
-      leftWingRef.current.rotation.y = flap;
-      rightWingRef.current.rotation.y = -flap;
-    }
+      // Wing flapping animation
+      if (leftWingRef.current && rightWingRef.current) {
+        const flap = Math.sin(time * 4) * 0.8;
+        leftWingRef.current.rotation.y = flap;
+        rightWingRef.current.rotation.y = -flap;
+      }
 
-    // Trailing body segments
-    positions[0].copy(headRef.current?.position || new Vector3());
-    rotations[0].copy(headRef.current?.quaternion || new Quaternion());
+      // Trailing body segments
+      positions[0].copy(headRef.current?.position || new Vector3());
+      rotations[0].copy(headRef.current?.quaternion || new Quaternion());
 
-    for (let i = 1; i < segments; i++) {
-      const seg = segmentRefs.current[i];
-      if (!seg) continue;
-      
-      const prevPos = positions[i - 1];
-      const distance = 0.5;
-      
-      const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
-      positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
-      rotations[i].slerp(rotations[i - 1], 0.12);
-      
-      seg.position.copy(positions[i]);
-      seg.quaternion.copy(rotations[i]);
-      
-      // Undulation
-      seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.12;
-      seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.08;
-      
-      // Tapering
-      const scale = Math.max(0.05, (1 - i / segments) * 1.3);
-      seg.scale.setScalar(scale);
-    }
-  });
+      for (let i = 0; i < segments; i++) {
+        const seg = segmentRefs.current[i];
+        if (!seg) continue;
+        
+        if (i > 0) {
+          const prevPos = positions[i - 1];
+          const distance = 0.5;
+          
+          const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
+          positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
+          rotations[i].slerp(rotations[i - 1], 0.12);
+          
+          seg.position.copy(positions[i]);
+          seg.quaternion.copy(rotations[i]);
+          
+          // Undulation
+          seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.12;
+          seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.08;
+        } else {
+          // Sync 0-th segment with head
+          seg.position.copy(positions[0]);
+          seg.quaternion.copy(rotations[0]);
+        }
+        
+        // Tapering - Neck should be smaller than head
+        const neckTaper = i < 5 ? (i / 5) : 1;
+        const scale = Math.max(0.05, (1 - i / segments) * 1.5 * neckTaper);
+        seg.scale.setScalar(scale);
+      }
+    });
 
   return (
     <group>
       {/* Cinematic Dragon Head */}
       <group ref={headRef}>
-        {/* Skull */}
+        {/* Main Skull */}
         <mesh>
-          <boxGeometry args={[0.9, 0.7, 1.2]} />
-          <primitive object={armorMaterial} attach="material" />
+          <boxGeometry args={[1.2, 0.9, 1.4]} />
+          <meshStandardMaterial color="#0a0a0a" metalness={1} roughness={0.1} />
         </mesh>
         {/* Snout */}
-        <mesh position={[0, -0.1, 1.1]}>
-          <boxGeometry args={[0.6, 0.5, 1.4]} />
-          <primitive object={armorMaterial} attach="material" />
+        <mesh position={[0, -0.2, 1.0]}>
+          <boxGeometry args={[0.7, 0.6, 1.6]} />
+          <meshStandardMaterial color="#0a0a0a" metalness={1} roughness={0.1} />
         </mesh>
-        {/* Glowing Eyes */}
-        <mesh position={[0.35, 0.2, 0.5]}>
-          <sphereGeometry args={[0.12, 16, 16]} />
+        {/* Lower Jaw */}
+        <mesh position={[0, -0.5, 0.9]} rotation={[-0.2, 0, 0]}>
+          <boxGeometry args={[0.6, 0.3, 1.4]} />
+          <meshStandardMaterial color="#0a0a0a" metalness={1} roughness={0.1} />
+        </mesh>
+        {/* Glowing Eyes - Prominent and visible */}
+        <mesh position={[0.4, 0.3, 0.8]}>
+          <sphereGeometry args={[0.18, 16, 16]} />
           <meshBasicMaterial color="#00FF95" />
         </mesh>
-        <mesh position={[-0.35, 0.2, 0.5]}>
-          <sphereGeometry args={[0.12, 16, 16]} />
+        <mesh position={[-0.4, 0.3, 0.8]}>
+          <sphereGeometry args={[0.18, 16, 16]} />
           <meshBasicMaterial color="#00FF95" />
         </mesh>
         {/* Horns */}
-        <mesh position={[0.4, 0.6, -0.3]} rotation={[-0.4, 0, 0.4]}>
+        <mesh position={[0.45, 0.7, -0.4]} rotation={[-0.4, 0, 0.3]}>
           <coneGeometry args={[0.15, 1.2, 4]} />
-          <primitive object={accentMaterial} attach="material" />
+          <meshStandardMaterial color="#00C8FF" emissive="#00C8FF" emissiveIntensity={1.5} />
         </mesh>
-        <mesh position={[-0.4, 0.6, -0.3]} rotation={[-0.4, 0, -0.4]}>
+        <mesh position={[-0.45, 0.7, -0.4]} rotation={[-0.4, 0, -0.3]}>
           <coneGeometry args={[0.15, 1.2, 4]} />
-          <primitive object={accentMaterial} attach="material" />
+          <meshStandardMaterial color="#00C8FF" emissive="#00C8FF" emissiveIntensity={1.5} />
         </mesh>
+
 
         {/* Cinematic Wings */}
         <group position={[0, 0, -0.5]}>
