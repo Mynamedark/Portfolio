@@ -11,55 +11,55 @@ export default function Certifications() {
     },
   };
 
-  const certifications = [
-    {
-      id: 0,
-      title: "Intelligence Track – Advanced Course",
-      issuer: "National Cyber Crime Training Center (Government of India)",
-      category: "Cyber Intelligence & Investigation",
-      issuedDate: "2026",
-      description: "Government-issued advanced intelligence training covering cyber investigations, OSINT methodologies, digital profiling, and national-level cyber awareness.",
-      icon: Shield,
-      color: "from-green-500 to-emerald-500",
-      verificationUrl: "#"
-    },
-    {
-      id: 1,
-      title: "CSI Linux",
-      issuer: "CSI Linux Official",
-      category: "Digital Forensics & Cyber Investigation",
-      issuedDate: "2025",
-      description:
-        "Comprehensive certification in digital forensics and cyber investigation using CSI Linux platform. Covers evidence collection, malware analysis, and forensic examination techniques.",
-      icon: Lock,
-      color: "from-blue-500 to-cyan-500",
-      verificationUrl: "#"
-    },
-    {
-      id: 2,
-      title: "Security Blue Team",
-      issuer: "Security Blue Team",
-      category: "Dark Web Operation & Threat Intelligence",
-      issuedDate: "2025",
-      description:
-        "Advanced certification in dark web operations, threat intelligence gathering, and OSINT methodology. Focus on identifying threat actors and analyzing cybercriminal infrastructure.",
-      icon: Globe,
-      color: "from-purple-500 to-pink-500",
-      verificationUrl: "#"
-    },
-    {
-      id: 3,
-      title: "Digital Forensics",
-      issuer: "Cybrary",
-      category: "Forensic Analysis & Evidence Handling",
-      issuedDate: "2025",
-      description:
-        "Professional certification in digital forensics covering evidence preservation, chain of custody, forensic tools, and expert reporting standards for legal proceedings.",
-      icon: Microscope,
-      color: "from-orange-500 to-red-500",
-      verificationUrl: "#"
-    }
-  ];
+    const certifications = [
+      {
+        id: 0,
+        title: "Intelligence Track – Advanced Course",
+        issuer: "National Cyber Crime Training Center (Government of India)",
+        category: "Cyber Intelligence & Investigation",
+        issuedDate: "2026",
+        description: "Government-issued advanced intelligence training covering cyber investigations, OSINT methodologies, digital profiling, and national-level cyber awareness.",
+        icon: Shield,
+        color: "bg-gradient-green",
+        verificationUrl: "#"
+      },
+      {
+        id: 1,
+        title: "CSI Linux",
+        issuer: "CSI Linux Official",
+        category: "Digital Forensics & Cyber Investigation",
+        issuedDate: "2025",
+        description:
+          "Comprehensive certification in digital forensics and cyber investigation using CSI Linux platform. Covers evidence collection, malware analysis, and forensic examination techniques.",
+        icon: Lock,
+        color: "bg-gradient-blue",
+        verificationUrl: "#"
+      },
+      {
+        id: 2,
+        title: "Security Blue Team",
+        issuer: "Security Blue Team",
+        category: "Dark Web Operation & Threat Intelligence",
+        issuedDate: "2025",
+        description:
+          "Advanced certification in dark web operations, threat intelligence gathering, and OSINT methodology. Focus on identifying threat actors and analyzing cybercriminal infrastructure.",
+        icon: Globe,
+        color: "bg-gradient-purple",
+        verificationUrl: "#"
+      },
+      {
+        id: 3,
+        title: "Digital Forensics",
+        issuer: "Cybrary",
+        category: "Forensic Analysis & Evidence Handling",
+        issuedDate: "2025",
+        description:
+          "Professional certification in digital forensics covering evidence preservation, chain of custody, forensic tools, and expert reporting standards for legal proceedings.",
+        icon: Microscope,
+        color: "bg-gradient-orange",
+        verificationUrl: "#"
+      }
+    ];
 
   return (
     <div className="flex flex-col min-h-screen bg-transparent pt-20">
@@ -91,50 +91,50 @@ export default function Certifications() {
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {certifications.map((cert, index) => (
-              <motion.div
-                key={cert.id}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                variants={revealVariants}
-                className="group p-10 rounded-[2.5rem] bg-background/40 backdrop-blur-md border border-border hover:border-primary/50 transition-all duration-500 flex flex-col h-full relative overflow-hidden"
-              >
-                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${cert.color} opacity-5 blur-3xl -mr-16 -mt-16 group-hover:opacity-10 transition-opacity duration-500`} />
-                
-                <div className="flex items-start justify-between mb-8">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${cert.color} flex items-center justify-center border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                    <cert.icon className="w-8 h-8 text-white" />
+                <motion.div
+                  key={cert.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  variants={revealVariants}
+                  className="group p-10 rounded-[2.5rem] bg-background/40 backdrop-blur-md border border-border hover:border-primary/50 transition-all duration-500 flex flex-col h-full relative overflow-hidden"
+                >
+                  <div className={`absolute top-0 right-0 w-32 h-32 ${cert.color} opacity-5 blur-3xl -mr-16 -mt-16 group-hover:opacity-10 transition-opacity duration-500`} />
+                  
+                  <div className="flex items-start justify-between mb-8">
+                    <div className={`w-16 h-16 rounded-2xl ${cert.color} flex items-center justify-center border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                      <cert.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground bg-muted/30 px-3 py-1 rounded-full border border-border">
+                      {cert.issuedDate}
+                    </span>
                   </div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground bg-muted/30 px-3 py-1 rounded-full border border-border">
-                    {cert.issuedDate}
-                  </span>
-                </div>
-                
-                <div className="flex-grow space-y-4">
-                  <div className="space-y-1">
-                    <p className={`text-xs font-bold uppercase tracking-wider bg-gradient-to-r ${cert.color} bg-clip-text text-transparent`}>
-                      {cert.category}
+                  
+                  <div className="flex-grow space-y-4">
+                    <div className="space-y-1">
+                      <p className={`text-xs font-bold uppercase tracking-wider ${cert.color} bg-clip-text text-transparent`}>
+                        {cert.category}
+                      </p>
+                      <h3 className="text-3xl font-bold tracking-tight">{cert.title}</h3>
+                    </div>
+                    <p className="text-lg text-primary font-bold opacity-80">{cert.issuer}</p>
+                    <p className="text-lg text-muted-foreground leading-relaxed font-medium pt-2">
+                      {cert.description}
                     </p>
-                    <h3 className="text-3xl font-bold tracking-tight">{cert.title}</h3>
                   </div>
-                  <p className="text-lg text-primary font-bold opacity-80">{cert.issuer}</p>
-                  <p className="text-lg text-muted-foreground leading-relaxed font-medium pt-2">
-                    {cert.description}
-                  </p>
-                </div>
-                
-                <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
-                  <a 
-                    href={cert.verificationUrl}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <span>Verify Credential</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${cert.color} animate-pulse`} />
-                </div>
-              </motion.div>
+                  
+                  <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
+                    <a 
+                      href={cert.verificationUrl}
+                      className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <span>Verify Credential</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                    <div className={`w-2 h-2 rounded-full ${cert.color} animate-pulse`} />
+                  </div>
+                </motion.div>
             ))}
           </div>
         </div>

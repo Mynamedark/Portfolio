@@ -115,21 +115,21 @@ export default function Index() {
               Specialized in uncovering digital truth through methodical investigation, threat tracking, and actionable data-driven intelligence.
             </motion.p>
             
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6">
-              <Link
-                to="/projects"
-                className="inline-flex items-center justify-center px-10 py-5 rounded-full bg-foreground text-background font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-500 group text-lg"
-              >
-                Launch Operations
-                <Target className="ml-3 w-5 h-5 group-hover:rotate-45 transition-transform duration-500" />
-              </Link>
-              <Link
-                to="/downloads"
-                className="inline-flex items-center justify-center px-10 py-5 rounded-full border border-border bg-background/20 backdrop-blur-md text-foreground font-bold hover:bg-muted/50 transition-all text-lg"
-              >
-                Get Credentials
-              </Link>
-            </motion.div>
+              <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6">
+                <Link
+                  to="/projects"
+                  className="btn-primary inline-flex items-center justify-center px-10 py-5 rounded-full text-lg group"
+                >
+                  Launch Operations
+                  <Target className="ml-3 w-5 h-5 group-hover:rotate-45 transition-transform duration-500" />
+                </Link>
+                <Link
+                  to="/downloads"
+                  className="inline-flex items-center justify-center px-10 py-5 rounded-full border border-border bg-background/20 backdrop-blur-md text-foreground font-bold hover:bg-muted/50 transition-all text-lg"
+                >
+                  Get Credentials
+                </Link>
+              </motion.div>
           </motion.div>
         </div>
       </section>

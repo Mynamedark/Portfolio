@@ -1,5 +1,4 @@
-/** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,45 +6,54 @@
 
 @layer base {
   :root {
-    /* Cyber OSINT Theme - Unified */
-    --background: #0A0F1F;
-    --foreground: #E6F0FF;
+    /* Global Color System (Dark Cyber Theme) */
+    --bg-primary: #0A0F1F;
+    --bg-secondary: #141A2E;
+    --accent-blue: #00C8FF;
+    --accent-green: #00FF95;
+    --accent-purple: #9D4DFF;
+    --accent-orange: #FF7A45;
+    --text-primary: #E8F1FF;
+    --text-secondary: #9AA4BF;
+    --border-color: rgba(255, 255, 255, 0.08);
 
-    --card: #141A2E;
-    --card-foreground: #E6F0FF;
+    /* Multi-Gradient Styling */
+    --gradient-blue: linear-gradient(135deg, #00C8FF, #7CFBFF);
+    --gradient-green: linear-gradient(135deg, #00FF95, #7CFFC4);
+    --gradient-purple: linear-gradient(135deg, #9D4DFF, #F472B6);
+    --gradient-orange: linear-gradient(135deg, #FF7A45, #FFB067);
 
-    --popover: #141A2E;
-    --popover-foreground: #E6F0FF;
-
-    --primary: #00C8FF;
-    --primary-foreground: #0A0F1F;
-
-    --secondary: #7CFBFF;
-    --secondary-foreground: #0A0F1F;
-
-    --accent: #00C8FF;
-    --accent-foreground: #0A0F1F;
-
-    --muted: #141A2E;
-    --muted-foreground: #9BA4BC;
-
+    /* shadcn/ui Mapping */
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+    --card: var(--bg-secondary);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-secondary);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--accent-blue);
+    --primary-foreground: var(--bg-primary);
+    --secondary: var(--bg-secondary);
+    --secondary-foreground: var(--text-primary);
+    --accent: var(--accent-blue);
+    --accent-foreground: var(--text-primary);
+    --muted: var(--bg-secondary);
+    --muted-foreground: var(--text-secondary);
     --destructive: #FF4D4D;
     --destructive-foreground: #FFFFFF;
+    --border: var(--border-color);
+    --input: var(--bg-secondary);
+    --ring: var(--accent-blue);
+    --radius: 12px;
 
-    --border: rgba(255, 255, 255, 0.08);
-    --input: #141A2E;
-    --ring: #00C8FF;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: #0A0F1F;
-    --sidebar-foreground: #9BA4BC;
-    --sidebar-primary: #00C8FF;
-    --sidebar-primary-foreground: #0A0F1F;
-    --sidebar-accent: #141A2E;
-    --sidebar-accent-foreground: #00C8FF;
-    --sidebar-border: rgba(255, 255, 255, 0.08);
-    --sidebar-ring: #00C8FF;
+    /* Sidebar Mapping */
+    --sidebar-background: var(--bg-primary);
+    --sidebar-foreground: var(--text-secondary);
+    --sidebar-primary: var(--accent-blue);
+    --sidebar-primary-foreground: var(--bg-primary);
+    --sidebar-accent: var(--bg-secondary);
+    --sidebar-accent-foreground: var(--accent-blue);
+    --sidebar-border: var(--border-color);
+    --sidebar-ring: var(--accent-blue);
   }
 }
 
@@ -59,7 +67,36 @@
   }
 
   body {
-    @apply bg-background text-foreground font-[Inter];
+    @apply bg-background text-foreground;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Inter", sans-serif;
+    color: var(--text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  h1 { font-size: 48px; font-weight: 700; }
+  h2 { font-size: 36px; font-weight: 600; }
+  h3 { font-size: 28px; font-weight: 600; }
+  h4 { font-size: 20px; font-weight: 600; }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 24px; }
+    body { font-size: 16px; }
+  }
+
+  pre, code, .tech-font {
+    font-family: "Fira Code", monospace;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
@@ -75,26 +112,9 @@
     white-space: pre;
   }
 
-  /* Typography Hierarchy */
-  h1 {
-    @apply text-5xl md:text-6xl font-bold tracking-tight;
-  }
-
-  h2 {
-    @apply text-3xl md:text-4xl font-semibold tracking-tight;
-  }
-
-  h3 {
-    @apply text-2xl font-semibold;
-  }
-
-  h4 {
-    @apply text-xl font-semibold;
-  }
-
   /* Focus styles */
   :focus-visible {
-    outline: 2px solid hsl(var(--primary));
+    outline: 2px solid var(--accent-blue);
     outline-offset: 2px;
   }
 }
@@ -105,17 +125,29 @@
   }
 
   .btn-primary {
-    @apply px-6 py-3 rounded-md bg-primary text-primary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-primary;
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 active:scale-95 shadow-primary;
+    background: var(--accent-blue);
+    color: var(--bg-primary);
+  }
+  
+  .btn-primary:hover {
+    background: var(--gradient-blue);
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
-    @apply px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-secondary;
+    @apply px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-secondary;
   }
 
   .card-interactive {
-    @apply rounded-lg border border-border bg-card transition-all duration-300 hover:shadow-lg;
-    &:hover {
-      border-color: rgba(0, 200, 255, 0.5);
-    }
+    @apply rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-interactive:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
+    transform: translateY(-2px);
   }
 }
