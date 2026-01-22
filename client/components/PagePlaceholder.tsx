@@ -23,7 +23,8 @@ export function PagePlaceholder({
             {description}
           </p>
         )}
-        <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full" />
+          <div className="w-24 h-1 bg-primary rounded-full shadow-primary" />
+
       </div>
     </div>
   );

@@ -107,15 +107,14 @@ export default function Skills() {
                         <span className="text-sm font-mono text-primary font-bold">{skill.level}%</span>
                       </div>
                       <div className="h-1.5 w-full bg-muted/30 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-                          className="h-full bg-primary relative"
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-                        </motion.div>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+                            className="h-full bg-primary relative shadow-primary"
+                          />
+
                       </div>
                     </motion.div>
                   ))}

@@ -117,15 +117,15 @@ export default function Projects() {
                   </div>
                 </div>
                 
-                <div className="lg:col-span-4 flex items-center justify-center">
-                  <div className="w-full aspect-square max-w-[320px] rounded-[2.5rem] bg-muted/20 border border-border flex items-center justify-center relative group-hover:scale-105 transition-all duration-700">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <Search className="w-24 h-24 text-muted-foreground/10 group-hover:text-primary/10 transition-all duration-700" />
-                    <div className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-foreground text-background flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl">
-                      <ArrowUpRight className="w-7 h-7" />
+                  <div className="lg:col-span-4 flex items-center justify-center">
+                    <div className="w-full aspect-square max-w-[320px] rounded-[2.5rem] bg-muted/20 border border-border flex items-center justify-center relative group-hover:scale-105 transition-all duration-700">
+                      <Search className="w-24 h-24 text-muted-foreground/10 group-hover:text-primary/10 transition-all duration-700" />
+                      <div className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-foreground text-background flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl">
+                        <ArrowUpRight className="w-7 h-7" />
+                      </div>
                     </div>
                   </div>
-                </div>
+
               </motion.div>
             ))}
           </div>

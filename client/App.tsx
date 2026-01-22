@@ -20,7 +20,6 @@ import Education from "./pages/Education";
 import Contact from "./pages/Contact";
 import Downloads from "./pages/Downloads";
 import NotFound from "./pages/NotFound";
-import Gradients from "./pages/Gradients";
 import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
@@ -136,23 +135,16 @@ function AppContent() {
               </Layout>
             }
           />
-          <Route
-            path="/downloads"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Downloads />
-              </Layout>
-            }
-          />
-          <Route
-            path="/gradients"
-            element={
-              <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
-                <Gradients />
-              </Layout>
-            }
-          />
-          <Route path="/admin" element={<Admin />} />
+            <Route
+              path="/downloads"
+              element={
+                <Layout isDark={isDark} onThemeToggle={handleThemeToggle}>
+                  <Downloads />
+                </Layout>
+              }
+            />
+            <Route path="/admin" element={<Admin />} />
+
           <Route
             path="*"
             element={

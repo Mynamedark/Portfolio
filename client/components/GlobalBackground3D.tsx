@@ -61,8 +61,8 @@ function cssVarHsl(name: string): string {
 function useThemeColors(isDark: boolean): ThemeColors {
   return useMemo(
     () => ({
-      line: isDark ? cssVarHsl("--primary") : "#000000",
-      particle: isDark ? cssVarHsl("--secondary") : "#000000",
+      line: cssVarHsl("--primary"),
+      particle: cssVarHsl("--secondary") || cssVarHsl("--primary"),
       highlight: cssVarHsl("--accent") || "#00ff00",
       fogNear: isDark ? 8 : 10,
       fogFar: isDark ? 22 : 25,

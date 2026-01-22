@@ -44,15 +44,16 @@ export function Preloader({ isVisible, onComplete, onSkip }: PreloaderProps) {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="mb-8"
       >
-        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-3xl font-bold relative overflow-hidden">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            🔒
-          </motion.div>
-        </div>
+          <div className="w-16 h-16 rounded-xl bg-primary flex items-center justify-center text-primary-foreground text-3xl font-bold relative overflow-hidden shadow-primary">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              🔒
+            </motion.div>
+          </div>
+
       </motion.div>
 
       {/* Text */}
@@ -75,14 +76,15 @@ export function Preloader({ isVisible, onComplete, onSkip }: PreloaderProps) {
       </motion.p>
 
       {/* Progress Bar */}
-      <div className="w-64 h-1 bg-muted rounded-full overflow-hidden mb-6">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ ease: "easeOut" }}
-          className="h-full bg-gradient-to-r from-primary to-secondary"
-        />
-      </div>
+        <div className="w-64 h-1 bg-muted rounded-full overflow-hidden mb-6">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ ease: "easeOut" }}
+            className="h-full bg-primary shadow-primary"
+          />
+        </div>
+
 
       {/* Progress Text */}
       <motion.p className="text-xs text-muted-foreground mb-8">

@@ -6,96 +6,77 @@
 @tailwind utilities;
 
 @layer base {
-  /**
-   * Professional Cyber-Tech Aesthetic
-   * Dual-theme design: Light Mode + Dark Mode
-   */
   :root {
-    /* Light Theme: Professional with strong visual hierarchy */
-    --background: 0 0% 93%; /* #ECECEC - Subtle gray background */
-    --foreground: 0 0% 4%; /* #0A0A0A - Deep dark text for readability */
+    /* High Contrast Light Mode */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
 
-    --card: 0 0% 100%; /* Pure white cards for distinction */
-    --card-foreground: 0 0% 4%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Neon Blue (#12C2E9) -> 187 86% 49% */
-    --primary: 187 86% 49%;
+    --primary: 187 100% 42%; /* Cyan */
     --primary-foreground: 0 0% 100%;
 
-    /* Electric Purple (#923CB5) -> 282 50% 47% */
-    --secondary: 282 50% 47%;
+    --secondary: 282 70% 50%; /* Purple */
     --secondary-foreground: 0 0% 100%;
 
-    /* Cyber Green (#63D471) -> 127 57% 61% */
-    --accent: 127 57% 61%;
+    --accent: 142 70% 40%; /* Green */
     --accent-foreground: 0 0% 100%;
 
-    --muted: 0 0% 88%;
-    --muted-foreground: 0 0% 35%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 85%;
+    --border: 0 0% 88%;
     --input: 0 0% 100%;
-    --ring: 187 86% 49%;
+    --ring: 187 100% 42%;
 
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 4%;
-    --sidebar-primary: 187 86% 49%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 127 57% 61%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 85%;
-    --sidebar-ring: 187 86% 49%;
+    --radius: 0.25rem;
   }
 
   .dark {
-    /* Dark Theme: Neutral Dark #0F0F0F */
-    --background: 0 0% 6%; /* #0F0F0F */
-    --foreground: 0 0% 96%; /* #F5F5F5 */
+    /* Ultra-High Contrast Dark Mode (OSINT Noir) */
+    --background: 0 0% 0%; /* Pure Black */
+    --foreground: 0 0% 100%; /* Pure White */
 
-    --card: 0 0% 9%; /* Slightly lighter than bg */
-    --card-foreground: 0 0% 96%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Neon Blue (#12C2E9) */
-    --primary: 187 86% 49%;
-    --primary-foreground: 0 0% 6%;
+    --primary: 187 100% 50%; /* Electric Cyan */
+    --primary-foreground: 0 0% 0%;
 
-    /* Electric Purple (#923CB5) */
-    --secondary: 282 50% 47%;
+    --secondary: 282 100% 60%; /* Electric Purple */
     --secondary-foreground: 0 0% 100%;
 
-    /* Cyber Green (#63D471) */
-    --accent: 127 57% 61%;
-    --accent-foreground: 0 0% 6%;
+    --accent: 142 100% 50%; /* Terminal Green */
+    --accent-foreground: 0 0% 0%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 75%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 96%;
+    --destructive: 0 100% 50%; /* Pure Red */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 187 86% 49%;
+    --border: 0 0% 18%;
+    --input: 0 0% 10%;
+    --ring: 187 100% 50%;
 
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 187 86% 49%;
-    --sidebar-primary-foreground: 0 0% 6%;
-    --sidebar-accent: 127 57% 61%;
-    --sidebar-accent-foreground: 0 0% 6%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 187 86% 49%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 187 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 142 100% 50%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 187 100% 50%;
   }
 }
 
@@ -119,6 +100,7 @@
 
   pre,
   code {
+    @apply bg-muted/50 p-4 rounded-md;
     overflow-x: auto;
     white-space: pre;
   }
@@ -140,121 +122,27 @@
     @apply text-xl font-semibold;
   }
 
-  /* Smooth animations */
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-up {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-down {
-    from {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  @keyframes pulse-soft {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes glow-soft {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);
-    }
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -1000px 0;
-    }
-    100% {
-      background-position: 1000px 0;
-    }
-  }
-
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  /* Smooth focus styles */
+  /* Focus styles */
   :focus-visible {
-    outline: 2px solid hsl(var(--primary));
-    outline-offset: 2px;
-  }
-
-  button:focus-visible {
-    outline: 2px solid hsl(var(--primary));
-    outline-offset: 2px;
-  }
-
-  a:focus-visible {
     outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
   }
 }
 
-/* Custom cursor styles */
 @layer components {
   .cursor-interactive {
     cursor: pointer;
   }
 
   .btn-primary {
-    @apply px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold transition-all duration-300 hover:shadow-lg active:scale-95;
+    @apply px-6 py-3 rounded-md bg-primary text-primary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-primary;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-semibold transition-all duration-300 hover:shadow-lg active:scale-95;
+    @apply px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-secondary;
   }
 
   .card-interactive {
-    @apply rounded-xl border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-md;
+    @apply rounded-lg border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-lg;
   }
 }
