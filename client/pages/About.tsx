@@ -40,23 +40,28 @@ export default function About() {
       {/* Hero Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="container px-4 mx-auto">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={revealVariants}
-            className="max-w-4xl"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md">
+          <div className="max-w-4xl">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={revealVariants}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+            >
               <Target className="w-4 h-4 text-primary" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Dossier: DHARAM KATHIRIYA</span>
-            </div>
+            </motion.div>
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none">
               A commitment to <span className="text-muted-foreground/40 italic font-light">digital truth.</span>
             </h1>
-            <p className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8">
+            <motion.p 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8"
+            >
               Based in India, I operate at the forefront of digital investigations, helping organizations navigate the complexities of the cybercrime ecosystem through methodical open-source intelligence.
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
         </div>
       </section>
 

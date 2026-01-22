@@ -38,26 +38,28 @@ export default function Contact() {
       {/* Header */}
       <section className="py-32">
         <div className="container px-4 mx-auto text-center max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-card border border-border rounded-[3rem] p-12 lg:p-16 relative overflow-hidden shadow-2xl"
-          >
+          <div className="bg-card border border-border rounded-[3rem] p-12 lg:p-16 relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 left-0 w-full h-1 bg-primary/30" />
 
             <h2 className="text-4xl md:text-7xl font-bold mb-10 tracking-tight leading-none italic font-light opacity-90 text-foreground">Ready to secure your <span className="font-bold opacity-100 not-italic text-primary">digital perimeter?</span></h2>
-            <p className="text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto font-medium leading-relaxed">
-              I specialize in high-stakes investigations where accuracy and discretion are paramount. Let's discuss your requirements in a secure environment.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-              <a href="mailto:dharamkathiriya265@gmail.com" className="px-12 py-6 rounded-full bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all duration-500 flex items-center gap-4 text-xl shadow-xl shadow-primary/20">
-                Send Secure Email <Send className="w-6 h-6" />
-              </a>
-              <a href="https://linkedin.com/in/dharam-k-726742372" target="_blank" rel="noopener noreferrer" className="px-12 py-6 rounded-full border-2 border-border hover:bg-secondary/20 transition-all flex items-center gap-4 text-xl font-bold text-foreground">
-                Connect via LinkedIn <MessageSquare className="w-6 h-6" />
-              </a>
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <p className="text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto font-medium leading-relaxed">
+                I specialize in high-stakes investigations where accuracy and discretion are paramount. Let's discuss your requirements in a secure environment.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+                <a href="mailto:dharamkathiriya265@gmail.com" className="px-12 py-6 rounded-full bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all duration-500 flex items-center gap-4 text-xl shadow-xl shadow-primary/20">
+                  Send Secure Email <Send className="w-6 h-6" />
+                </a>
+                <a href="https://linkedin.com/in/dharam-k-726742372" target="_blank" rel="noopener noreferrer" className="px-12 py-6 rounded-full border-2 border-border hover:bg-secondary/20 transition-all flex items-center gap-4 text-xl font-bold text-foreground">
+                  Connect via LinkedIn <MessageSquare className="w-6 h-6" />
+                </a>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

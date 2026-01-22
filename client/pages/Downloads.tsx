@@ -37,22 +37,28 @@ export default function Downloads() {
       {/* Header */}
       <section className="py-32">
         <div className="container px-4 mx-auto text-center max-w-4xl">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={revealVariants}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md mx-auto">
+          <div>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={revealVariants}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md mx-auto"
+            >
               <Activity className="w-4 h-4 text-primary" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">System: Resource Uplink</span>
-            </div>
+            </motion.div>
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none">
               Download <span className="text-muted-foreground/40 italic font-light">Credentials.</span>
             </h1>
-            <p className="text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium">
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium"
+            >
               Access professional materials and investigative frameworks designed for recruiters and clients in the cybersecurity and intelligence sectors.
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
         </div>
       </section>
 
@@ -85,16 +91,18 @@ export default function Downloads() {
             </div>
   
             {/* Differentiators */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={revealVariants}
+            <div
               className="mt-32 p-16 md:p-24 rounded-[4rem] bg-secondary/40 backdrop-blur-md border border-border shadow-glass relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -mr-32 -mt-32" />
               <h2 className="text-4xl md:text-7xl font-bold mb-20 tracking-tight text-center text-foreground">Competitive <span className="text-muted-foreground/40 italic font-light">Differentiators.</span></h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={revealVariants}
+                className="grid grid-cols-1 md:grid-cols-2 gap-16"
+              >
                 {[
                   {
                     title: "Real Investigation Experience",
@@ -123,10 +131,11 @@ export default function Downloads() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </motion.div>
-        </div>
-      </section>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
       
       {/* Summary Footer info */}
       <section className="py-24 border-t border-border bg-background/20 backdrop-blur-sm">

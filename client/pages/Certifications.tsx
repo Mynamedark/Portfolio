@@ -66,23 +66,28 @@ export default function Certifications() {
       {/* Header */}
       <section className="py-32">
         <div className="container px-4 mx-auto">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={revealVariants}
-            className="max-w-4xl"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md">
+          <div className="max-w-4xl">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={revealVariants}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+            >
               <Award className="w-4 h-4 text-primary" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Dossier: Verified Credentials</span>
-            </div>
+            </motion.div>
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none">
               Technical <span className="text-muted-foreground/40 italic font-light">Validation.</span>
             </h1>
-            <p className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8">
+            <motion.p 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8"
+            >
               A comprehensive record of professional certifications and verified expertise in the fields of OSINT and digital investigation.
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
         </div>
       </section>
 

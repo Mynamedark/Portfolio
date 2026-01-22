@@ -238,18 +238,18 @@ export default function Projects() {
       {/* Header */}
       <section className="py-32 relative z-10">
         <div className="container px-4 mx-auto">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={revealVariants}
-            className="max-w-4xl"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md">
+          <div className="max-w-4xl">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={revealVariants}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md"
+            >
               <Activity className="w-4 h-4 text-primary animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                   Archive: Case Files
                 </span>
-            </div>
+            </motion.div>
             <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
               Documented <br />
               <span className="text-muted-foreground/40 italic font-light">Intelligence.</span>
@@ -262,7 +262,7 @@ export default function Projects() {
             >
               A selection of high-stakes investigations demonstrating methodical research, technical proficiency, and the production of actionable intelligence reports.
             </motion.p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
