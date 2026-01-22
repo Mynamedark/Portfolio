@@ -1,18 +1,16 @@
 import * as THREE from "three";
-import { useRef, useMemo, Suspense, useEffect } from "react";
+import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { 
   Vector3, 
   Quaternion, 
-  MeshStandardMaterial, 
   Group, 
-  Color 
 } from "three";
 
 if (typeof window !== "undefined") {
   (window as any).THREE = THREE;
 }
-import { Float, MeshDistortMaterial, MeshWobbleMaterial, Sparkles } from "@react-three/drei";
+import { Float, Sparkles } from "@react-three/drei";
 import { useMobileDetection, shouldDisable3D } from "@/hooks/useMobileDetection";
 
 function HUDGrid() {
@@ -44,7 +42,7 @@ function ScanningLines() {
 
 function CyberDragon() {
   const { mouse, viewport } = useThree();
-  const segments = 40; // High detail for cinematic dragon
+  const segments = 40; 
   const segmentRefs = useRef<Group[]>([]);
   const headRef = useRef<Group>(null);
   const leftWingRef = useRef<Group>(null);
@@ -53,59 +51,74 @@ function CyberDragon() {
   const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
   const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
 
-  // Cinematic Materials
-  const armorMaterial = useMemo(() => new MeshStandardMaterial({
-    color: "#050505",
-    metalness: 1.0,
+  // Modern Iridescent/Glass Materials
+  const armorMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#111",
+    metalness: 0.9,
     roughness: 0.1,
+    transmission: 0.4,
+    thickness: 1.5,
+    iridescence: 1,
+    iridescenceIOR: 1.3,
+    clearcoat: 1,
   }), []);
 
-  const accentMaterial = useMemo(() => new MeshStandardMaterial({
-    color: "#00C8FF",
-    emissive: "#00C8FF",
-    emissiveIntensity: 1.0,
+  const accentMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: "#00FF95",
+    emissive: "#00FF95",
+    emissiveIntensity: 3.0,
     transparent: true,
     opacity: 0.9,
   }), []);
 
-  const wingMaterial = useMemo(() => new MeshStandardMaterial({
+  const crystalMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
     color: "#00C8FF",
     emissive: "#00C8FF",
-    emissiveIntensity: 0.4,
+    emissiveIntensity: 0.8,
+    metalness: 0.2,
+    roughness: 0,
+    transmission: 0.9,
+    thickness: 2,
+    ior: 2.4,
+  }), []);
+
+  const wingMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#00C8FF",
+    emissive: "#00C8FF",
+    emissiveIntensity: 0.2,
     transparent: true,
-    opacity: 0.3,
-    side: THREE.DoubleSide
+    opacity: 0.4,
+    side: THREE.DoubleSide,
+    transmission: 0.8,
+    thickness: 0.5
   }), []);
 
     useFrame((state) => {
       const time = state.clock.getElapsedTime();
       
-      // Position dragon relative to viewport - Direct mouse tracking
       const targetX = (mouse.x * viewport.width) / 2;
       const targetY = (mouse.y * viewport.height) / 2;
       
       if (headRef.current) {
-        // Smooth tracking
-        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.07;
-        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.07;
-        headRef.current.position.z = Math.sin(time * 0.3) * 3;
+        // Smooth tracking with "organic" lag
+        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.08;
+        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.08;
+        headRef.current.position.z = Math.sin(time * 0.4) * 2;
         
-        // Look EXACTLY at mouse (placed at camera distance)
+        // Face the mouse pointer directly
         const mouse3D = new Vector3(targetX, targetY, 15);
         headRef.current.lookAt(mouse3D);
         
-        // Add subtle mecha-head tilt
-        headRef.current.rotation.z += Math.sin(time * 1.5) * 0.05;
+        // Fluid idle movement
+        headRef.current.rotation.z += Math.sin(time * 1.2) * 0.03;
       }
 
-      // Wing flapping animation
       if (leftWingRef.current && rightWingRef.current) {
-        const flap = Math.sin(time * 4) * 0.8;
+        const flap = Math.sin(time * 3) * 0.6;
         leftWingRef.current.rotation.y = flap;
         rightWingRef.current.rotation.y = -flap;
       }
 
-      // Trailing body segments
       positions[0].copy(headRef.current?.position || new Vector3());
       rotations[0].copy(headRef.current?.quaternion || new Quaternion());
 
@@ -115,113 +128,110 @@ function CyberDragon() {
         
         if (i > 0) {
           const prevPos = positions[i - 1];
-          const distance = 0.5;
+          const distance = 0.45;
           
           const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
           positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
-          rotations[i].slerp(rotations[i - 1], 0.12);
+          rotations[i].slerp(rotations[i - 1], 0.15);
           
           seg.position.copy(positions[i]);
           seg.quaternion.copy(rotations[i]);
           
-          // Undulation
-          seg.position.y += Math.sin(time * 2 + i * 0.3) * 0.12;
-          seg.position.x += Math.cos(time * 1 + i * 0.2) * 0.08;
+          // Organic undulation
+          seg.position.y += Math.sin(time * 2.5 + i * 0.4) * 0.15;
+          seg.position.x += Math.cos(time * 1.5 + i * 0.3) * 0.1;
         } else {
-          // Sync 0-th segment with head
           seg.position.copy(positions[0]);
           seg.quaternion.copy(rotations[0]);
         }
         
-        // Tapering - Neck should be smaller than head
-        const neckTaper = i < 5 ? (i / 5) : 1;
-        const scale = Math.max(0.05, (1 - i / segments) * 1.5 * neckTaper);
+        // Tapered neck for visibility
+        const neckTaper = i < 6 ? (i / 6) : 1;
+        const scale = Math.max(0.1, (1 - i / segments) * 1.4 * neckTaper);
         seg.scale.setScalar(scale);
       }
     });
 
   return (
     <group>
-      {/* Cinematic Dragon Head */}
+      {/* Modern Faceted Dragon Head */}
       <group ref={headRef}>
-        {/* Main Skull */}
+        {/* Prismatic Skull */}
         <mesh>
-          <boxGeometry args={[1.2, 0.9, 1.4]} />
-          <meshStandardMaterial color="#0a0a0a" metalness={1} roughness={0.1} />
+          <icosahedronGeometry args={[0.8, 1]} />
+          <primitive object={armorMaterial} attach="material" />
         </mesh>
-        {/* Snout */}
-        <mesh position={[0, -0.2, 1.0]}>
-          <boxGeometry args={[0.7, 0.6, 1.6]} />
-          <meshStandardMaterial color="#0a0a0a" metalness={1} roughness={0.1} />
+        {/* Articulated Snout */}
+        <mesh position={[0, -0.15, 0.8]}>
+          <boxGeometry args={[0.6, 0.5, 1.2]} />
+          <primitive object={armorMaterial} attach="material" />
         </mesh>
-        {/* Lower Jaw */}
-        <mesh position={[0, -0.5, 0.9]} rotation={[-0.2, 0, 0]}>
-          <boxGeometry args={[0.6, 0.3, 1.4]} />
-          <meshStandardMaterial color="#0a0a0a" metalness={1} roughness={0.1} />
+        {/* Sharp Lower Jaw */}
+        <mesh position={[0, -0.4, 0.7]} rotation={[-0.15, 0, 0]}>
+          <boxGeometry args={[0.5, 0.25, 1.0]} />
+          <primitive object={armorMaterial} attach="material" />
         </mesh>
-        {/* Glowing Eyes - Prominent and visible */}
-        <mesh position={[0.4, 0.3, 0.8]}>
-          <sphereGeometry args={[0.18, 16, 16]} />
-          <meshBasicMaterial color="#00FF95" />
+        {/* Radiant Eyes */}
+        <mesh position={[0.35, 0.25, 0.6]}>
+          <sphereGeometry args={[0.15, 16, 16]} />
+          <primitive object={accentMaterial} attach="material" />
         </mesh>
-        <mesh position={[-0.4, 0.3, 0.8]}>
-          <sphereGeometry args={[0.18, 16, 16]} />
-          <meshBasicMaterial color="#00FF95" />
+        <mesh position={[-0.35, 0.25, 0.6]}>
+          <sphereGeometry args={[0.15, 16, 16]} />
+          <primitive object={accentMaterial} attach="material" />
         </mesh>
-        {/* Horns */}
-        <mesh position={[0.45, 0.7, -0.4]} rotation={[-0.4, 0, 0.3]}>
-          <coneGeometry args={[0.15, 1.2, 4]} />
-          <meshStandardMaterial color="#00C8FF" emissive="#00C8FF" emissiveIntensity={1.5} />
+        {/* Crystal Horns */}
+        <mesh position={[0.4, 0.6, -0.2]} rotation={[-0.5, 0, 0.4]}>
+          <coneGeometry args={[0.12, 1.4, 6]} />
+          <primitive object={crystalMaterial} attach="material" />
         </mesh>
-        <mesh position={[-0.45, 0.7, -0.4]} rotation={[-0.4, 0, -0.3]}>
-          <coneGeometry args={[0.15, 1.2, 4]} />
-          <meshStandardMaterial color="#00C8FF" emissive="#00C8FF" emissiveIntensity={1.5} />
+        <mesh position={[-0.4, 0.6, -0.2]} rotation={[-0.5, 0, -0.4]}>
+          <coneGeometry args={[0.12, 1.4, 6]} />
+          <primitive object={crystalMaterial} attach="material" />
         </mesh>
 
-
-        {/* Cinematic Wings */}
-        <group position={[0, 0, -0.5]}>
-          <group ref={leftWingRef} position={[0.5, 0, 0]}>
-            <mesh position={[2, 0, -0.5]} rotation={[0, 0, 0.1]}>
-              <boxGeometry args={[4, 0.02, 3]} />
+        {/* Energy Wings */}
+        <group position={[0, 0.2, -0.3]}>
+          <group ref={leftWingRef} position={[0.4, 0, 0]}>
+            <mesh position={[1.8, 0, -0.5]} rotation={[0, 0, 0.1]}>
+              <boxGeometry args={[3.5, 0.01, 2.5]} />
               <primitive object={wingMaterial} attach="material" />
             </mesh>
-            {/* Wing Ribs */}
-            <mesh position={[2, 0.1, -0.5]}>
-              <boxGeometry args={[4, 0.1, 0.1]} />
+            {/* Wing Structural Ribs */}
+            <mesh position={[1.8, 0.05, -0.5]}>
+              <boxGeometry args={[3.5, 0.05, 0.05]} />
               <primitive object={accentMaterial} attach="material" />
             </mesh>
           </group>
-          <group ref={rightWingRef} position={[-0.5, 0, 0]}>
-            <mesh position={[-2, 0, -0.5]} rotation={[0, 0, -0.1]}>
-              <boxGeometry args={[4, 0.02, 3]} />
+          <group ref={rightWingRef} position={[-0.4, 0, 0]}>
+            <mesh position={[-1.8, 0, -0.5]} rotation={[0, 0, -0.1]}>
+              <boxGeometry args={[3.5, 0.01, 2.5]} />
               <primitive object={wingMaterial} attach="material" />
             </mesh>
-            {/* Wing Ribs */}
-            <mesh position={[-2, 0.1, -0.5]}>
-              <boxGeometry args={[4, 0.1, 0.1]} />
+            <mesh position={[-1.8, 0.05, -0.5]}>
+              <boxGeometry args={[3.5, 0.05, 0.05]} />
               <primitive object={accentMaterial} attach="material" />
             </mesh>
           </group>
         </group>
       </group>
 
-      {/* Armored Body Segments */}
+      {/* Modern Armored Body Segments */}
       {Array.from({ length: segments }).map((_, i) => (
         <group key={i} ref={(el) => (segmentRefs.current[i] = el!)}>
-          {/* Main Segment Sphere */}
+          {/* Faceted Segment */}
           <mesh>
-            <sphereGeometry args={[0.8, 8, 8]} />
+            <icosahedronGeometry args={[0.7, 1]} />
             <primitive object={armorMaterial} attach="material" />
           </mesh>
-          {/* Spinal Spikes */}
-          <mesh position={[0, 0.6, 0]} rotation={[Math.PI / 4, 0, 0]}>
-            <coneGeometry args={[0.2, 0.8, 4]} />
-            <primitive object={accentMaterial} attach="material" />
+          {/* Prismatic Spikes */}
+          <mesh position={[0, 0.5, 0]} rotation={[Math.PI / 4, 0, 0]}>
+            <coneGeometry args={[0.15, 0.7, 4]} />
+            <primitive object={crystalMaterial} attach="material" />
           </mesh>
-          {/* Glow Rings */}
+          {/* Energy Core Ring */}
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.85, 0.02, 8, 32]} />
+            <torusGeometry args={[0.75, 0.03, 12, 48]} />
             <primitive object={accentMaterial} attach="material" />
           </mesh>
         </group>
@@ -251,28 +261,27 @@ export function Dragon3D() {
   }
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+    <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
       <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
-        {/* Cinematic Lighting */}
-        <ambientLight intensity={0.2} />
-        <pointLight position={[10, 10, 10]} intensity={1.5} color="#00C8FF" />
+        {/* Advanced Lighting */}
+        <ambientLight intensity={0.3} />
+        <pointLight position={[10, 10, 10]} intensity={2} color="#00C8FF" />
         <spotLight 
-          position={[-10, 20, 10]} 
-          angle={0.15} 
+          position={[-10, 25, 10]} 
+          angle={0.2} 
           penumbra={1} 
-          intensity={2} 
+          intensity={3} 
           color="#00FF95"
-          castShadow 
         />
         <rectAreaLight
-          width={20}
-          height={20}
-          intensity={0.5}
-          position={[0, 0, -5]}
+          width={25}
+          height={25}
+          intensity={1}
+          position={[0, 0, -8]}
           color="#00C8FF"
         />
 
-        <fog attach="fog" args={["#0a0f1f", 10, 25]} />
+        <fog attach="fog" args={["#0a0f1f", 8, 28]} />
 
         <Suspense fallback={null}>
           <HUDGrid />
