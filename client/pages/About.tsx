@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion";
-import { CheckCircle2, Shield, Search, Globe, Database, FileText, Target, Award, BookOpen } from "lucide-react";
+import { CheckCircle2, Shield, Search, Globe, Database, FileText, Target, Award, BookOpen, Terminal } from "lucide-react";
 
 export default function About() {
   const revealVariants: Variants = {
