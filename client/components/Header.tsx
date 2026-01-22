@@ -161,9 +161,9 @@ export function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
                           "flex items-center gap-3 px-4 py-3 rounded-xl border transition-all",
-                          isActive 
-                            ? "bg-primary/10 border-primary text-primary shadow-[0_0_15px_rgba(0,200,255,0.1)]" 
-                            : "bg-muted/20 border-border/50 text-muted-foreground hover:bg-muted/40 hover:border-primary/30"
+                            isActive 
+                              ? "bg-primary/10 border-primary text-primary shadow-primary" 
+                              : "bg-muted/20 border-border/50 text-muted-foreground hover:bg-muted/40 hover:border-primary/30"
                         )}
                       >
                         <span className="font-medium">{link.label}</span>

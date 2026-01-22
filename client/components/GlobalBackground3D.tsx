@@ -49,27 +49,22 @@ interface ThemeColors {
   blending: Blending;
 }
 
-function cssVarHsl(name: string): string {
+function getCssVar(name: string): string {
   if (typeof window === "undefined" || typeof document === "undefined") {
     return "#000000";
   }
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue(name)
     .trim();
-  if (!raw) return "#000000";
-  const parts = raw.split(/\s+/);
-  if (parts.length >= 3) {
-    return `hsl(${parts[0]}, ${parts[1]}, ${parts[2]})`;
-  }
-  return `hsl(${raw})`;
+  return raw || "#000000";
 }
 
 function useThemeColors(): ThemeColors {
   return useMemo(
     () => ({
-      line: cssVarHsl("--primary"),
-      particle: cssVarHsl("--secondary") || cssVarHsl("--primary"),
-      highlight: cssVarHsl("--accent") || "#00ff00",
+      line: getCssVar("--primary"),
+      particle: getCssVar("--secondary") || getCssVar("--primary"),
+      highlight: getCssVar("--accent-purple") || "#8b5cf6",
       fogNear: 8,
       fogFar: 22,
       blending: AdditiveBlending,
@@ -795,7 +790,7 @@ function Scene({ variant }: { variant: BackgroundVariant }) {
   }, [scene, gl]);
 
   useEffect(() => {
-    scene.fog = new Fog(cssVarHsl("--background"), theme.fogNear, theme.fogFar);
+    scene.fog = new Fog(getCssVar("--background"), theme.fogNear, theme.fogFar);
   }, [scene, theme]);
 
   return (

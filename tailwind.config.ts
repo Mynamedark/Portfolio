@@ -90,13 +90,13 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      boxShadow: {
-        primary: "0 0 15px rgba(0, 200, 255, 0.3)",
-        secondary: "0 0 15px rgba(20, 26, 46, 0.3)",
-        accent: "0 0 15px rgba(0, 200, 255, 0.3)",
-        neon: "0 0 20px rgba(0, 200, 255, 0.5)",
-        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.5)",
-      },
+        boxShadow: {
+          primary: "0 0 15px rgba(99, 102, 241, 0.3)",
+          secondary: "0 0 15px rgba(15, 23, 42, 0.3)",
+          accent: "0 0 15px rgba(217, 70, 239, 0.3)",
+          neon: "0 0 20px rgba(99, 102, 241, 0.5)",
+          glass: "0 8px 32px 0 rgba(0, 0, 0, 0.8)",
+        },
       backgroundImage: {
         "gradient-blue": "var(--gradient-blue)",
         "gradient-green": "var(--gradient-green)",

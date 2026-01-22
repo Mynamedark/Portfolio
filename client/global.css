@@ -5,56 +5,56 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Global Color System (Dark Cyber Theme) */
-    --bg-primary: #0A0F1F;
-    --bg-secondary: #141A2E;
-    --accent-blue: #00C8FF;
-    --accent-green: #00FF95;
-    --accent-purple: #9D4DFF;
-    --accent-orange: #FF7A45;
-    --text-primary: #E8F1FF;
-    --text-secondary: #9AA4BF;
-    --border-color: rgba(255, 255, 255, 0.08);
+    :root {
+      /* Modern Ethereal Abyss Theme */
+      --bg-primary: #020617;
+      --bg-secondary: #0f172a;
+      --accent-blue: #6366f1;
+      --accent-green: #10b981;
+      --accent-purple: #d946ef;
+      --accent-orange: #f97316;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: rgba(148, 163, 184, 0.1);
 
-    /* Multi-Gradient Styling */
-    --gradient-blue: linear-gradient(135deg, #00C8FF, #7CFBFF);
-    --gradient-green: linear-gradient(135deg, #00FF95, #7CFFC4);
-    --gradient-purple: linear-gradient(135deg, #9D4DFF, #F472B6);
-    --gradient-orange: linear-gradient(135deg, #FF7A45, #FFB067);
+      /* Modern Gradient Styling */
+      --gradient-blue: linear-gradient(135deg, #6366f1, #818cf8);
+      --gradient-green: linear-gradient(135deg, #10b981, #34d399);
+      --gradient-purple: linear-gradient(135deg, #d946ef, #e879f9);
+      --gradient-orange: linear-gradient(135deg, #f97316, #fb923c);
 
-    /* shadcn/ui Mapping */
-    --background: var(--bg-primary);
-    --foreground: var(--text-primary);
-    --card: var(--bg-secondary);
-    --card-foreground: var(--text-primary);
-    --popover: var(--bg-secondary);
-    --popover-foreground: var(--text-primary);
-    --primary: var(--accent-blue);
-    --primary-foreground: var(--bg-primary);
-    --secondary: var(--bg-secondary);
-    --secondary-foreground: var(--text-primary);
-    --accent: var(--accent-blue);
-    --accent-foreground: var(--text-primary);
-    --muted: var(--bg-secondary);
-    --muted-foreground: var(--text-secondary);
-    --destructive: #FF4D4D;
-    --destructive-foreground: #FFFFFF;
-    --border: var(--border-color);
-    --input: var(--bg-secondary);
-    --ring: var(--accent-blue);
-    --radius: 12px;
+      /* shadcn/ui Mapping */
+      --background: var(--bg-primary);
+      --foreground: var(--text-primary);
+      --card: var(--bg-secondary);
+      --card-foreground: var(--text-primary);
+      --popover: var(--bg-secondary);
+      --popover-foreground: var(--text-primary);
+      --primary: var(--accent-blue);
+      --primary-foreground: #ffffff;
+      --secondary: #1e293b;
+      --secondary-foreground: var(--text-primary);
+      --accent: var(--bg-secondary);
+      --accent-foreground: var(--accent-blue);
+      --muted: #1e293b;
+      --muted-foreground: var(--text-secondary);
+      --destructive: #ef4444;
+      --destructive-foreground: #ffffff;
+      --border: var(--border-color);
+      --input: #1e293b;
+      --ring: var(--accent-blue);
+      --radius: 0.75rem;
 
-    /* Sidebar Mapping */
-    --sidebar-background: var(--bg-primary);
-    --sidebar-foreground: var(--text-secondary);
-    --sidebar-primary: var(--accent-blue);
-    --sidebar-primary-foreground: var(--bg-primary);
-    --sidebar-accent: var(--bg-secondary);
-    --sidebar-accent-foreground: var(--accent-blue);
-    --sidebar-border: var(--border-color);
-    --sidebar-ring: var(--accent-blue);
-  }
+      /* Sidebar Mapping */
+      --sidebar-background: #020617;
+      --sidebar-foreground: #94a3b8;
+      --sidebar-primary: #6366f1;
+      --sidebar-primary-foreground: #ffffff;
+      --sidebar-accent: #0f172a;
+      --sidebar-accent-foreground: #6366f1;
+      --sidebar-border: rgba(148, 163, 184, 0.1);
+      --sidebar-ring: #6366f1;
+    }
 }
 
 @layer base {
@@ -130,11 +130,11 @@
     color: var(--bg-primary);
   }
   
-  .btn-primary:hover {
-    background: var(--gradient-blue);
-    box-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
-    transform: translateY(-1px);
-  }
+    .btn-primary:hover {
+      background: var(--gradient-blue);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
 
   .btn-secondary {
     @apply px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-semibold transition-all duration-300 hover:brightness-110 active:scale-95 shadow-secondary;
@@ -145,9 +145,9 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
   
-  .card-interactive:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
-    transform: translateY(-2px);
-  }
+    .card-interactive:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+      transform: translateY(-2px);
+    }
 }
