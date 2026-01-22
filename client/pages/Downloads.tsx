@@ -32,8 +32,28 @@ export default function Downloads() {
     },
   };
 
-  return (
-    <div className="flex flex-col min-h-screen bg-transparent pt-20">
+    const floatVariants: Variants = {
+      animate: {
+        y: [0, -10, 0],
+        transition: {
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }
+      },
+      hover: {
+        y: 0,
+        scale: 1.02,
+        transition: {
+          duration: 0.3,
+          ease: "easeOut"
+        }
+      }
+    };
+
+    return (
+      <div className="flex flex-col min-h-screen bg-transparent pt-20">
+
       {/* Header */}
       <section className="py-32">
         <div className="container px-4 mx-auto text-center max-w-4xl">
@@ -66,26 +86,35 @@ export default function Downloads() {
       <section className="pb-32">
         <div className="container px-4 mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {resources.map((resource, index) => (
-              <motion.div
-                key={index}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                variants={revealVariants}
-                className="p-12 rounded-[2.5rem] bg-background/40 backdrop-blur-md border border-border flex flex-col items-center text-center hover:border-primary/50 transition-all duration-500 group"
-              >
+              {resources.map((resource, index) => (
+                <motion.div
+                  key={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  animate="animate"
+                  whileHover="hover"
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  variants={{
+                    ...revealVariants,
+                    ...floatVariants
+                  }}
+                  className="p-12 rounded-[2.5rem] bg-background/40 backdrop-blur-md border border-border flex flex-col items-center text-center hover:border-primary/50 transition-all duration-500 group"
+                >
                 <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500">
                   <resource.icon className="w-10 h-10 text-primary" />
                 </div>
                 <h3 className="text-2xl font-bold mb-6 tracking-tight">{resource.title}</h3>
-                <p className="text-lg text-muted-foreground mb-10 leading-relaxed font-medium">
-                  {resource.description}
-                </p>
-                  <button className="mt-auto w-full flex items-center justify-center gap-4 py-5 rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-all duration-500 text-lg shadow-neon">
+                  <p className="text-lg text-muted-foreground mb-10 leading-relaxed font-medium">
+                    {resource.description}
+                  </p>
+                  <a 
+                    href={`/download/${resource.filename}`}
+                    download={resource.filename}
+                    className="mt-auto w-full flex items-center justify-center gap-4 py-5 rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-all duration-500 text-lg shadow-neon"
+                  >
                     <Download className="w-6 h-6" /> Download PDF
-                  </button>
+                  </a>
                 </motion.div>
               ))}
             </div>

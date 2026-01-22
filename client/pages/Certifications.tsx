@@ -37,7 +37,7 @@ export default function Certifications() {
       icon: Lock,
       color: "bg-gradient-blue",
       verificationUrl: "#",
-      image: "" // No image yet
+      image: "/certificates/intelligence-track.jpg" // No image yet
     },
     {
       id: 2,
@@ -50,7 +50,7 @@ export default function Certifications() {
       icon: Globe,
       color: "bg-gradient-purple",
       verificationUrl: "#",
-      image: ""
+      image: "/certificates/intelligence-track.jpg"
     },
     {
       id: 3,
@@ -63,7 +63,7 @@ export default function Certifications() {
       icon: Microscope,
       color: "bg-gradient-orange",
       verificationUrl: "#",
-      image: ""
+      image: "/certificates/intelligence-track.jpg"
     }
   ];
 
