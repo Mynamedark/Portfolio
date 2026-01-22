@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useRef, useMemo, Suspense } from "react";
+import { useRef, useMemo, Suspense, useEffect, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { 
   Vector3, 
@@ -10,229 +10,287 @@ import {
 if (typeof window !== "undefined") {
   (window as any).THREE = THREE;
 }
-import { Float, Sparkles } from "@react-three/drei";
+import { Float, Sparkles, Instances, Instance } from "@react-three/drei";
 import { useMobileDetection, shouldDisable3D } from "@/hooks/useMobileDetection";
 
-function HUDGrid() {
+// Professional Cyber-OSINT Background: Node Graph
+function NodeGraph() {
+  const count = 40;
+  const nodes = useMemo(() => {
+    return Array.from({ length: count }, () => ({
+      position: new Vector3(
+        (Math.random() - 0.5) * 40,
+        (Math.random() - 0.5) * 40,
+        -15 + (Math.random() - 0.5) * 10
+      ),
+      speed: Math.random() * 0.2 + 0.1,
+    }));
+  }, []);
+
+  const linesRef = useRef<THREE.LineSegments>(null);
+
+  useFrame((state) => {
+    if (!linesRef.current) return;
+    const time = state.clock.getElapsedTime();
+    const positions = linesRef.current.geometry.attributes.position.array as Float32Array;
+    
+    let idx = 0;
+    for (let i = 0; i < count; i++) {
+      for (let j = i + 1; j < count; j++) {
+        const dist = nodes[i].position.distanceTo(nodes[j].position);
+        if (dist < 8) {
+          positions[idx++] = nodes[i].position.x;
+          positions[idx++] = nodes[i].position.y + Math.sin(time * nodes[i].speed) * 0.2;
+          positions[idx++] = nodes[i].position.z;
+          positions[idx++] = nodes[j].position.x;
+          positions[idx++] = nodes[j].position.y + Math.sin(time * nodes[j].speed) * 0.2;
+          positions[idx++] = nodes[j].position.z;
+        }
+      }
+    }
+    linesRef.current.geometry.attributes.position.needsUpdate = true;
+  });
+
   return (
-    <group position={[0, 0, -10]}>
-      <gridHelper args={[100, 50, "#00C8FF", "#00C8FF"]} rotation={[Math.PI / 2, 0, 0]} transparent opacity={0.05} />
-      <Sparkles count={50} scale={20} size={1} speed={0.2} color="#00C8FF" opacity={0.2} />
+    <group>
+      <lineSegments ref={linesRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={count * count}
+            array={new Float32Array(count * count * 3)}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <lineBasicMaterial color="#00FF95" transparent opacity={0.03} />
+      </lineSegments>
+      {nodes.map((node, i) => (
+        <mesh key={i} position={node.position}>
+          <sphereGeometry args={[0.05, 8, 8]} />
+          <meshBasicMaterial color="#00FF95" transparent opacity={0.1} />
+        </mesh>
+      ))}
     </group>
   );
 }
 
-function ScanningLines() {
-  const ref = useRef<Group>(null);
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.position.y = (Math.sin(state.clock.getElapsedTime() * 0.5) * 10);
-    }
-  });
-
+function HUDGrid() {
   return (
-    <group ref={ref}>
-      <mesh position={[0, 0, -5]}>
-        <boxGeometry args={[30, 0.01, 0.01]} />
-        <meshBasicMaterial color="#00FF95" transparent opacity={0.1} />
-      </mesh>
+    <group position={[0, 0, -10]}>
+      <gridHelper args={[100, 50, "#00C8FF", "#00C8FF"]} rotation={[Math.PI / 2, 0, 0]} transparent opacity={0.03} />
+      <Sparkles count={30} scale={30} size={0.6} speed={0.1} color="#00C8FF" opacity={0.1} />
     </group>
   );
 }
 
 function CyberDragon() {
-  const { mouse, viewport } = useThree();
-  const segments = 40; 
+  const { mouse, viewport, camera } = useThree();
+  const segments = 45; 
   const segmentRefs = useRef<Group[]>([]);
   const headRef = useRef<Group>(null);
+  const jawRef = useRef<Group>(null);
   const leftWingRef = useRef<Group>(null);
   const rightWingRef = useRef<Group>(null);
   
   const positions = useMemo(() => Array.from({ length: segments }, () => new Vector3()), []);
   const rotations = useMemo(() => Array.from({ length: segments }, () => new Quaternion()), []);
 
-  // Modern Iridescent/Glass Materials
+  const [roarState, setRoarState] = useState(0); // 0: idle, 1: roaring, 2: done
+
+  useEffect(() => {
+    const timer = setTimeout(() => setRoarState(1), 500);
+    const endTimer = setTimeout(() => setRoarState(2), 3500);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(endTimer);
+    };
+  }, []);
+
+  // Professional Mature Materials: Obsidian & Slate
   const armorMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#111",
-    metalness: 0.9,
-    roughness: 0.1,
-    transmission: 0.4,
-    thickness: 1.5,
-    iridescence: 1,
-    iridescenceIOR: 1.3,
+    color: "#050505",
+    metalness: 1,
+    roughness: 0.15,
+    envMapIntensity: 1,
     clearcoat: 1,
+    clearcoatRoughness: 0.1,
+    reflectivity: 1,
+  }), []);
+
+  const scaleMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#1a1a1a",
+    metalness: 0.8,
+    roughness: 0.4,
+    flatShading: true,
   }), []);
 
   const accentMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     color: "#00FF95",
     emissive: "#00FF95",
-    emissiveIntensity: 3.0,
+    emissiveIntensity: 0.5,
     transparent: true,
-    opacity: 0.9,
+    opacity: 0.4,
   }), []);
 
-  const crystalMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#00C8FF",
-    emissive: "#00C8FF",
-    emissiveIntensity: 0.8,
-    metalness: 0.2,
+  const hornMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#111",
+    metalness: 0.9,
     roughness: 0,
-    transmission: 0.9,
-    thickness: 2,
-    ior: 2.4,
+    transmission: 0.5,
+    thickness: 1,
   }), []);
 
   const wingMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#00C8FF",
-    emissive: "#00C8FF",
-    emissiveIntensity: 0.2,
+    color: "#000",
+    metalness: 0.9,
+    roughness: 0.2,
     transparent: true,
-    opacity: 0.4,
+    opacity: 0.15,
     side: THREE.DoubleSide,
-    transmission: 0.8,
-    thickness: 0.5
   }), []);
 
-    useFrame((state) => {
-      const time = state.clock.getElapsedTime();
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    
+    const targetX = (mouse.x * viewport.width) / 2.5;
+    const targetY = (mouse.y * viewport.height) / 2.5;
+    
+    // Roar Animation Logic
+    let roarFactor = 0;
+    if (roarState === 1) {
+      const roarProgress = Math.min(1, (time - 0.5) / 2);
+      roarFactor = Math.sin(roarProgress * Math.PI);
       
-      const targetX = (mouse.x * viewport.width) / 2;
-      const targetY = (mouse.y * viewport.height) / 2;
+      // Camera shake during roar
+      camera.position.x += (Math.random() - 0.5) * 0.05 * roarFactor;
+      camera.position.y += (Math.random() - 0.5) * 0.05 * roarFactor;
       
+      if (jawRef.current) {
+        jawRef.current.rotation.x = -0.8 * roarFactor;
+      }
       if (headRef.current) {
-        // Smooth tracking with "organic" lag
-        headRef.current.position.x += (targetX - headRef.current.position.x) * 0.08;
-        headRef.current.position.y += (targetY - headRef.current.position.y) * 0.08;
-        headRef.current.position.z = Math.sin(time * 0.4) * 2;
-        
-        // Face the mouse pointer directly
-        const mouse3D = new Vector3(targetX, targetY, 15);
-        headRef.current.lookAt(mouse3D);
-        
-        // Fluid idle movement
-        headRef.current.rotation.z += Math.sin(time * 1.2) * 0.03;
+        headRef.current.position.z += 1.5 * roarFactor;
+        headRef.current.rotation.x -= 0.3 * roarFactor;
       }
-
-      if (leftWingRef.current && rightWingRef.current) {
-        const flap = Math.sin(time * 3) * 0.6;
-        leftWingRef.current.rotation.y = flap;
-        rightWingRef.current.rotation.y = -flap;
+    } else {
+      if (jawRef.current) {
+        jawRef.current.rotation.x = THREE.MathUtils.lerp(jawRef.current.rotation.x, -0.1, 0.1);
       }
+    }
 
-      positions[0].copy(headRef.current?.position || new Vector3());
-      rotations[0].copy(headRef.current?.quaternion || new Quaternion());
+    if (headRef.current) {
+      headRef.current.position.x += (targetX - headRef.current.position.x) * 0.05;
+      headRef.current.position.y += (targetY - headRef.current.position.y) * 0.05;
+      headRef.current.position.z = THREE.MathUtils.lerp(headRef.current.position.z, Math.sin(time * 0.3) * 1.5, 0.05);
+      
+      const mouse3D = new Vector3(targetX * 1.5, targetY * 1.5, 10);
+      headRef.current.lookAt(mouse3D);
+    }
 
-      for (let i = 0; i < segments; i++) {
-        const seg = segmentRefs.current[i];
-        if (!seg) continue;
+    if (leftWingRef.current && rightWingRef.current) {
+      const flapSpeed = roarState === 1 ? 8 : 1.5;
+      const flapAmp = roarState === 1 ? 0.8 : 0.3;
+      const flap = Math.sin(time * flapSpeed) * flapAmp;
+      leftWingRef.current.rotation.z = 0.5 + flap;
+      rightWingRef.current.rotation.z = -0.5 - flap;
+    }
+
+    // Body follow logic
+    positions[0].copy(headRef.current?.position || new Vector3());
+    rotations[0].copy(headRef.current?.quaternion || new Quaternion());
+
+    for (let i = 0; i < segments; i++) {
+      const seg = segmentRefs.current[i];
+      if (!seg) continue;
+      
+      if (i > 0) {
+        const prevPos = positions[i - 1];
+        const distance = 0.4;
+        const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
+        positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
+        rotations[i].slerp(rotations[i - 1], 0.1);
         
-        if (i > 0) {
-          const prevPos = positions[i - 1];
-          const distance = 0.45;
-          
-          const dir = new Vector3().subVectors(prevPos, positions[i]).normalize();
-          positions[i].copy(prevPos).sub(dir.multiplyScalar(distance));
-          rotations[i].slerp(rotations[i - 1], 0.15);
-          
-          seg.position.copy(positions[i]);
-          seg.quaternion.copy(rotations[i]);
-          
-          // Organic undulation
-          seg.position.y += Math.sin(time * 2.5 + i * 0.4) * 0.15;
-          seg.position.x += Math.cos(time * 1.5 + i * 0.3) * 0.1;
-        } else {
-          seg.position.copy(positions[0]);
-          seg.quaternion.copy(rotations[0]);
-        }
+        seg.position.copy(positions[i]);
+        seg.quaternion.copy(rotations[i]);
         
-        // Tapered neck for visibility
-        const neckTaper = i < 6 ? (i / 6) : 1;
-        const scale = Math.max(0.1, (1 - i / segments) * 1.4 * neckTaper);
-        seg.scale.setScalar(scale);
+        // Mature serpentine movement
+        seg.position.y += Math.sin(time * 1.5 + i * 0.2) * 0.08;
+        seg.position.x += Math.cos(time * 1.0 + i * 0.15) * 0.05;
+      } else {
+        seg.position.copy(positions[0]);
+        seg.quaternion.copy(rotations[0]);
       }
-    });
+      
+      const scale = Math.max(0.05, (1 - i / segments) * 1.2);
+      seg.scale.setScalar(scale);
+    }
+  });
 
   return (
     <group>
-      {/* Modern Faceted Dragon Head */}
+      {/* Mature Stylized Dragon Head */}
       <group ref={headRef}>
-        {/* Prismatic Skull */}
-        <mesh>
-          <icosahedronGeometry args={[0.8, 1]} />
-          <primitive object={armorMaterial} attach="material" />
+        {/* Armored Skull */}
+        <mesh material={armorMaterial}>
+          <icosahedronGeometry args={[0.7, 1]} />
         </mesh>
-        {/* Articulated Snout */}
-        <mesh position={[0, -0.15, 0.8]}>
-          <boxGeometry args={[0.6, 0.5, 1.2]} />
-          <primitive object={armorMaterial} attach="material" />
+        {/* Snout */}
+        <mesh position={[0, -0.1, 0.6]} material={armorMaterial}>
+          <boxGeometry args={[0.5, 0.4, 0.9]} />
         </mesh>
-        {/* Sharp Lower Jaw */}
-        <mesh position={[0, -0.4, 0.7]} rotation={[-0.15, 0, 0]}>
-          <boxGeometry args={[0.5, 0.25, 1.0]} />
-          <primitive object={armorMaterial} attach="material" />
+        {/* Articulated Lower Jaw */}
+        <group ref={jawRef} position={[0, -0.3, 0.4]}>
+          <mesh position={[0, -0.05, 0.3]} material={armorMaterial}>
+            <boxGeometry args={[0.45, 0.15, 0.8]} />
+          </mesh>
+        </group>
+        {/* Obsidian Horns */}
+        <mesh position={[0.3, 0.5, -0.2]} rotation={[-0.4, 0, 0.3]} material={hornMaterial}>
+          <coneGeometry args={[0.1, 1.2, 5]} />
         </mesh>
-        {/* Radiant Eyes */}
-        <mesh position={[0.35, 0.25, 0.6]}>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <primitive object={accentMaterial} attach="material" />
+        <mesh position={[-0.3, 0.5, -0.2]} rotation={[-0.4, 0, -0.3]} material={hornMaterial}>
+          <coneGeometry args={[0.1, 1.2, 5]} />
         </mesh>
-        <mesh position={[-0.35, 0.25, 0.6]}>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <primitive object={accentMaterial} attach="material" />
+        {/* Subtle Glow Eyes */}
+        <mesh position={[0.3, 0.2, 0.45]} material={accentMaterial}>
+          <sphereGeometry args={[0.08, 16, 16]} />
         </mesh>
-        {/* Crystal Horns */}
-        <mesh position={[0.4, 0.6, -0.2]} rotation={[-0.5, 0, 0.4]}>
-          <coneGeometry args={[0.12, 1.4, 6]} />
-          <primitive object={crystalMaterial} attach="material" />
-        </mesh>
-        <mesh position={[-0.4, 0.6, -0.2]} rotation={[-0.5, 0, -0.4]}>
-          <coneGeometry args={[0.12, 1.4, 6]} />
-          <primitive object={crystalMaterial} attach="material" />
+        <mesh position={[-0.3, 0.2, 0.45]} material={accentMaterial}>
+          <sphereGeometry args={[0.08, 16, 16]} />
         </mesh>
 
-        {/* Energy Wings */}
-        <group position={[0, 0.2, -0.3]}>
+        {/* Cinematic Wings */}
+        <group position={[0, 0.3, -0.2]}>
           <group ref={leftWingRef} position={[0.4, 0, 0]}>
-            <mesh position={[1.8, 0, -0.5]} rotation={[0, 0, 0.1]}>
-              <boxGeometry args={[3.5, 0.01, 2.5]} />
-              <primitive object={wingMaterial} attach="material" />
-            </mesh>
-            {/* Wing Structural Ribs */}
-            <mesh position={[1.8, 0.05, -0.5]}>
-              <boxGeometry args={[3.5, 0.05, 0.05]} />
-              <primitive object={accentMaterial} attach="material" />
+            <mesh position={[2, 0, -1]} rotation={[0.2, 0, 0]} material={wingMaterial}>
+              <boxGeometry args={[4, 0.02, 3]} />
             </mesh>
           </group>
           <group ref={rightWingRef} position={[-0.4, 0, 0]}>
-            <mesh position={[-1.8, 0, -0.5]} rotation={[0, 0, -0.1]}>
-              <boxGeometry args={[3.5, 0.01, 2.5]} />
-              <primitive object={wingMaterial} attach="material" />
-            </mesh>
-            <mesh position={[-1.8, 0.05, -0.5]}>
-              <boxGeometry args={[3.5, 0.05, 0.05]} />
-              <primitive object={accentMaterial} attach="material" />
+            <mesh position={[-2, 0, -1]} rotation={[0.2, 0, 0]} material={wingMaterial}>
+              <boxGeometry args={[4, 0.02, 3]} />
             </mesh>
           </group>
         </group>
       </group>
 
-      {/* Modern Armored Body Segments */}
+      {/* Armored Body Segments */}
       {Array.from({ length: segments }).map((_, i) => (
         <group key={i} ref={(el) => (segmentRefs.current[i] = el!)}>
-          {/* Faceted Segment */}
-          <mesh>
-            <icosahedronGeometry args={[0.7, 1]} />
-            <primitive object={armorMaterial} attach="material" />
+          {/* Faceted Scale Mesh */}
+          <mesh material={scaleMaterial}>
+            <icosahedronGeometry args={[0.6, 1]} />
           </mesh>
-          {/* Prismatic Spikes */}
-          <mesh position={[0, 0.5, 0]} rotation={[Math.PI / 4, 0, 0]}>
-            <coneGeometry args={[0.15, 0.7, 4]} />
-            <primitive object={crystalMaterial} attach="material" />
-          </mesh>
-          {/* Energy Core Ring */}
+          {/* Spinal Spikes */}
+          {i % 2 === 0 && (
+            <mesh position={[0, 0.4, 0]} rotation={[0.2, 0, 0]} material={armorMaterial}>
+              <coneGeometry args={[0.1, 0.6, 4]} />
+            </mesh>
+          )}
+          {/* Faint Energy Ring */}
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.75, 0.03, 12, 48]} />
-            <primitive object={accentMaterial} attach="material" />
+            <torusGeometry args={[0.65, 0.01, 8, 32]} />
+            <meshBasicMaterial color="#00FF95" transparent opacity={0.05} />
           </mesh>
         </group>
       ))}
@@ -248,44 +306,45 @@ export function Dragon3D() {
     return (
       <div 
         aria-hidden="true" 
-        className="pointer-events-none fixed inset-0 z-0 bg-background/50"
+        className="fixed inset-0 z-0 bg-[#050505]"
         style={{
-          backgroundImage: `
-            radial-gradient(circle at 2px 2px, rgba(0, 200, 255, 0.05) 1px, transparent 0),
-            linear-gradient(to bottom, rgba(10, 15, 31, 0.4), rgba(10, 15, 31, 0.6))
-          `,
-          backgroundSize: '32px 32px, 100% 100%'
+          backgroundImage: `radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%)`
         }}
       />
     );
   }
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
-      <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
-        {/* Advanced Lighting */}
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} intensity={2} color="#00C8FF" />
+    <div className="fixed inset-0 z-0 pointer-events-none">
+      <Canvas camera={{ position: [0, 2, 18], fov: 40 }}>
+        {/* Cinematic Lighting */}
+        <color attach="background" args={["#050505"]} />
+        <ambientLight intensity={0.15} />
+        
+        {/* Rim Lighting */}
         <spotLight 
-          position={[-10, 25, 10]} 
-          angle={0.2} 
+          position={[15, 20, -10]} 
+          angle={0.3} 
           penumbra={1} 
-          intensity={3} 
-          color="#00FF95"
+          intensity={4} 
+          color="#00C8FF" 
         />
-        <rectAreaLight
-          width={25}
-          height={25}
-          intensity={1}
-          position={[0, 0, -8]}
-          color="#00C8FF"
+        <spotLight 
+          position={[-15, 20, -10]} 
+          angle={0.3} 
+          penumbra={1} 
+          intensity={4} 
+          color="#00FF95" 
         />
-
-        <fog attach="fog" args={["#0a0f1f", 8, 28]} />
+        
+        {/* Key Light */}
+        <pointLight position={[5, 5, 10]} intensity={1.5} color="#fff" />
+        
+        <fog attach="fog" args={["#050505", 10, 35]} />
 
         <Suspense fallback={null}>
+          <NodeGraph />
           <HUDGrid />
-          <ScanningLines />
           <CyberDragon />
         </Suspense>
       </Canvas>
