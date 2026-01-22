@@ -223,16 +223,18 @@ export default function Certifications() {
                     )}
                   </div>
                   
-                  <div className="mt-12 pt-8 border-t border-border/50 flex items-center justify-between relative z-10">
-                    <a 
-                      href={cert.verificationUrl}
-                      className="inline-flex items-center gap-3 text-lg font-bold text-muted-foreground hover:text-primary transition-all duration-300 group/link font-display"
-                    >
-                      <span>Verify Credential</span>
-                      <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                    </a>
-                    <div className={`w-3 h-3 rounded-full ${cert.color} animate-pulse shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]`} />
-                  </div>
+                    {!cert.image && (
+                      <div className="mt-12 pt-8 border-t border-border/50 flex items-center justify-between relative z-10">
+                        <a 
+                          href={cert.verificationUrl}
+                          className="inline-flex items-center gap-3 text-lg font-bold text-muted-foreground hover:text-primary transition-all duration-300 group/link font-display"
+                        >
+                          <span>Verify Credential</span>
+                          <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                        </a>
+                        <div className={`w-3 h-3 rounded-full ${cert.color} animate-pulse shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]`} />
+                      </div>
+                    )}
                 </SpotlightCard>
             ))}
           </div>
