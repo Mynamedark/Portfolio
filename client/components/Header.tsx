@@ -40,77 +40,77 @@ export function Header() {
       )}
     >
       <nav className="container mx-auto max-w-7xl px-6">
-        <div className="flex items-center justify-between">
-          {/* Logo & Name */}
-          <Link
-            to="/"
-            className="group flex items-center gap-4 transition-all duration-300"
-          >
-            <CyberLogo />
-            <div className="flex flex-col">
-              <ScrambleText
-                text="Dharam Kathiriya"
-                className="hidden sm:inline-block tracking-tight text-lg font-bold text-foreground group-hover:text-primary transition-colors"
-                triggerOn="hover"
-              />
-              <motion.span 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-mono"
-              >
-                Cyber Intelligence Portfolio
-              </motion.span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden xl:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={cn(
-                    "relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md overflow-hidden group",
-                    isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
-                  )}
+          <div className="flex items-center justify-between">
+            {/* Logo & Name */}
+            <Link
+              to="/"
+              className="group flex items-center gap-4 transition-all duration-300"
+            >
+              <CyberLogo />
+              <div className="flex flex-col">
+                <ScrambleText
+                  text="Dharam Kathiriya"
+                  className="hidden sm:inline-block tracking-tight text-lg font-bold text-foreground group-hover:text-primary transition-colors"
+                  triggerOn="hover"
+                />
+                <motion.span 
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-mono"
                 >
-                  <span className="relative z-10">{link.label}</span>
-                  
-                  {/* Active Indicator / Hover Background */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNav"
-                      className="absolute inset-0 bg-primary/10 border-b-2 border-primary z-0"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                  
-                  {/* Hover Accent */}
-                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300 z-0" />
-                </Link>
-              );
-            })}
-          </div>
+                  Cyber Intelligence Portfolio
+                </motion.span>
+              </div>
+            </Link>
 
-          {/* Right Section / Action Buttons */}
-          <div className="flex items-center gap-3">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-mono font-bold uppercase tracking-wider cursor-default"
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              System Status: Secure
-            </motion.div>
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cn(
+                      "relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md overflow-hidden group",
+                      isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <span className="relative z-10">{link.label}</span>
+                    
+                    {/* Active Indicator / Hover Background */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNav"
+                        className="absolute inset-0 bg-primary/10 border-b-2 border-primary z-0"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    
+                    {/* Hover Accent */}
+                    <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300 z-0" />
+                  </Link>
+                );
+              })}
+            </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2.5 rounded-xl bg-muted/30 border border-border/50 hover:bg-muted/50 hover:border-primary/50 transition-all text-foreground"
-              aria-label="Toggle menu"
-            >
+            {/* Right Section / Action Buttons */}
+            <div className="flex items-center gap-3">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-mono font-bold uppercase tracking-wider cursor-default"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                System Status: Secure
+              </motion.div>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2.5 rounded-xl bg-muted/30 border border-border/50 hover:bg-muted/50 hover:border-primary/50 transition-all text-foreground"
+                aria-label="Toggle menu"
+              >
               <AnimatePresence mode="wait">
                 {mobileMenuOpen ? (
                   <motion.div
@@ -137,15 +137,15 @@ export function Header() {
         </div>
 
         {/* Mobile Navigation Overlay */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
-              className="xl:hidden overflow-hidden"
-            >
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                className="lg:hidden overflow-hidden"
+              >
               <div className="py-8 grid grid-cols-2 gap-4 border-t border-primary/10 mt-4">
                 {navLinks.map((link, i) => {
                   const isActive = location.pathname === link.href;

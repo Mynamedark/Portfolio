@@ -97,9 +97,9 @@ export default function Index() {
                   <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-primary">Status: Operational</span>
                 </motion.div>
                 
-                <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.95] md:leading-[0.9]">
-                  Open-Source <span className="text-muted-foreground/40 italic font-light">Intelligence</span> & Cyber Research
-                </h1>
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.95] md:leading-[0.9]">
+                    Open-Source <span className="text-muted-foreground/40 italic font-light">Intelligence</span> & Cyber Research
+                  </h1>
                 
                 <motion.p variants={itemVariants} initial="hidden" animate="visible" className="text-base md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mb-8 md:mb-14 font-medium border-l-2 border-primary/30 pl-5 md:pl-8">
                   Specialized in uncovering digital truth through methodical investigation, threat tracking, and actionable data-driven intelligence.
@@ -267,13 +267,10 @@ export default function Index() {
                     </div>
                   </div>
                   <div className="lg:col-span-4 flex items-center justify-center">
-                    <div className="w-full aspect-square max-w-[200px] sm:max-w-[280px] md:max-w-[320px] rounded-[1.5rem] md:rounded-[2.5rem] bg-background/40 border border-border flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                      <Search className="w-12 h-12 md:w-24 md:h-24 text-muted-foreground/10 group-hover:scale-125 group-hover:text-primary/20 transition-all duration-1000" />
-                      <div className="absolute bottom-4 right-4 md:bottom-10 md:right-10 w-10 h-10 md:w-16 md:h-16 rounded-full bg-foreground text-background flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl">
-                        <ArrowRight className="w-5 h-5 md:w-8 md:h-8 -rotate-45" />
+                      <div className="w-full aspect-square max-w-[200px] sm:max-w-[280px] md:max-w-[320px] rounded-[1.5rem] md:rounded-[2.5rem] bg-background/40 border border-border flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        <Search className="w-12 h-12 md:w-24 md:h-24 text-muted-foreground/10 group-hover:scale-125 group-hover:text-primary/20 transition-all duration-1000" />
                       </div>
-                    </div>
                   </div>
                 </motion.div>
               ))}
