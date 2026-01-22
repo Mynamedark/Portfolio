@@ -1,6 +1,5 @@
 import { motion, Variants, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Search, Shield, Globe, Database, ArrowUpRight, Activity, Terminal, Lock, Zap, Cpu, Network } from "lucide-react";
-import { ScrambleText } from "@/components/ui/ScrambleText";
 import { useEffect, useRef, useState } from "react";
 
 const projects = [
@@ -99,9 +98,9 @@ function SpotlightCard({ project, index }: { project: typeof projects[0], index:
           >
             <project.icon className="w-8 h-8" />
           </motion.div>
-          <h3 className="text-3xl md:text-5xl font-bold tracking-tight">
-            <ScrambleText text={project.title} triggerOn="hover" />
-          </h3>
+            <h3 className="text-3xl md:text-5xl font-bold tracking-tight">
+              {project.title}
+            </h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -265,9 +264,9 @@ export default function Projects() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-md">
               <Activity className="w-4 h-4 text-primary animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                <ScrambleText text="Archive: Case Files" triggerOn="load" />
-              </span>
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                  Archive: Case Files
+                </span>
             </div>
             <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none">
               Documented <br />
