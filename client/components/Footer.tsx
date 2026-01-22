@@ -1,4 +1,4 @@
-import { Linkedin, Mail, Github } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Footer() {
@@ -23,9 +23,6 @@ export function Footer() {
           </nav>
 
           <div className="flex items-center gap-6">
-            <a href="https://github.com/dharamkathiriya" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
             <a href="https://www.linkedin.com/in/dharam-k-726742372" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
               <Linkedin className="w-5 h-5" />
             </a>

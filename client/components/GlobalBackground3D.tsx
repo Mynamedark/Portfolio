@@ -94,26 +94,38 @@ function CameraRig({ variant }: { variant: BackgroundVariant }) {
 
   useFrame((state) => {
     const t = Math.min(scrollRef.current / window.innerHeight, 1);
+    const time = state.clock.getElapsedTime();
+    const mouseX = state.mouse.x * 2;
+    const mouseY = state.mouse.y * 2;
 
     if (variant === "grid") {
-      // Fly through effect
+      // Fly through effect + mouse sway
       const targetZ = 15 + t * 5;
-      const targetY = 2 + t * 2;
+      const targetY = 2 + t * 2 + mouseY * 0.5;
+      const targetX = mouseX * 0.5;
       camera.position.z += (targetZ - camera.position.z) * 0.05;
       camera.position.y += (targetY - camera.position.y) * 0.05;
+      camera.position.x += (targetX - camera.position.x) * 0.05;
       camera.lookAt(0, 0, 0);
     } else if (variant === "matrix") {
-      // Static camera, slight mouse parallax could be added here
+      // Static camera, slight mouse parallax
       const targetZ = 20;
       camera.position.z += (targetZ - camera.position.z) * 0.05;
+      camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
+      camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
+      camera.lookAt(0, 0, 0);
     } else if (variant === "dna") {
       // DNA: Rotate around it
       const targetZ = 22;
       camera.position.z += (targetZ - camera.position.z) * 0.05;
+      camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
     } else {
-      // Globe/Network: Zoom out on scroll
+      // Globe/Network: Zoom out on scroll + mouse parallax
       const targetZ = 18 + t * 5;
       camera.position.z += (targetZ - camera.position.z) * 0.05;
+      camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+      camera.position.y += (mouseY * 3 - camera.position.y) * 0.02;
+      camera.lookAt(0, 0, 0);
     }
   });
 
@@ -184,6 +196,18 @@ function GlobeScene({ isDark }: { isDark: boolean }) {
     const time = state.clock.getElapsedTime();
     groupRef.current.rotation.y = time * 0.15;
     groupRef.current.rotation.x = Math.sin(time * 0.1) * 0.1;
+
+    // Pulse effect for nodes
+    if (nodesRef.current) {
+      points.forEach((pt, i) => {
+        const pulse = 1 + Math.sin(time * 2 + i) * 0.1;
+        dummy.position.copy(pt);
+        dummy.scale.setScalar(0.08 * pulse);
+        dummy.updateMatrix();
+        nodesRef.current!.setMatrixAt(i, dummy.matrix);
+      });
+      nodesRef.current.instanceMatrix.needsUpdate = true;
+    }
   });
 
   return (
@@ -954,7 +978,9 @@ function FloatingData({
   useFrame((state) => {
     if (!pointsRef.current) return;
     const time = state.clock.getElapsedTime();
-    pointsRef.current.rotation.y = time * speed;
+    // Simulate data falling/scanning
+    pointsRef.current.position.y = -(time * speed * 2) % (range / 2);
+    pointsRef.current.rotation.y = time * speed * 0.1;
   });
 
   return (

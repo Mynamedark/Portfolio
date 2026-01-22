@@ -9,7 +9,6 @@ import {
   FileText,
   Mail,
   Linkedin,
-  Github,
   ChevronRight,
 } from "lucide-react";
 
@@ -292,34 +291,6 @@ export default function Index() {
           </motion.div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-border">
-        <div className="container px-4 mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-foreground flex items-center justify-center text-background text-xs font-black tracking-tighter">
-              DK
-            </div>
-            <span className="font-bold tracking-tight">Dharam Kathiriya</span>
-          </div>
-          
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/dharamkathiriya" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
-            <a href="https://linkedin.com/in/dharamkathiriya" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a href="mailto:contact@dharam.me" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Mail className="w-5 h-5" />
-            </a>
-          </div>
-          
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Dharam Kathiriya. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
