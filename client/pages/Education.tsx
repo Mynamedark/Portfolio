@@ -38,30 +38,29 @@ export default function Education() {
         />
         
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              x: Math.random() * 2000 - 1000, 
-              y: Math.random() * 2000 - 1000,
-              opacity: Math.random() * 0.3
-            }}
-            animate={{ 
-              y: [null, Math.random() * 100 - 50],
-              opacity: [0.1, 0.3, 0.1]
-            }}
-            transition={{ 
-              duration: 5 + Math.random() * 10, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ 
+                opacity: Math.random() * 0.3
+              }}
+              animate={{ 
+                y: [0, Math.random() * 100 - 50],
+                x: [0, Math.random() * 100 - 50],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{ 
+                duration: 5 + Math.random() * 10, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+              className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
 
         {/* Background Orbs */}
         <motion.div 
@@ -95,7 +94,7 @@ export default function Education() {
                 <BookOpen className="w-4 h-4 text-primary animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">Archive: Academic Record</span>
               </motion.div>
-              <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-10 leading-none font-display">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-10 leading-none font-display">
                 Academic <br />
                 <span className="text-muted-foreground/40 italic font-light">Foundation.</span>
               </h1>
@@ -103,7 +102,7 @@ export default function Education() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8 font-sans"
+                className="text-lg md:text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium border-l-2 border-primary/30 pl-8 font-sans"
               >
                 A record of formal education providing the technical depth and theoretical framework necessary for complex digital investigations.
               </motion.p>

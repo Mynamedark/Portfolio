@@ -56,30 +56,29 @@ export default function Experience() {
         />
         
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              x: Math.random() * 2000 - 1000, 
-              y: Math.random() * 2000 - 1000,
-              opacity: Math.random() * 0.3
-            }}
-            animate={{ 
-              y: [null, Math.random() * 100 - 50],
-              opacity: [0.1, 0.3, 0.1]
-            }}
-            transition={{ 
-              duration: 5 + Math.random() * 10, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ 
+                opacity: Math.random() * 0.3
+              }}
+              animate={{ 
+                y: [0, Math.random() * 100 - 50],
+                x: [0, Math.random() * 100 - 50],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{ 
+                duration: 5 + Math.random() * 10, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+              className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
 
         {/* Background Orbs */}
         <motion.div 
@@ -113,10 +112,10 @@ export default function Experience() {
                 <Briefcase className="w-3 h-3 md:w-4 md:h-4 text-primary animate-pulse" />
                 <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-primary font-display">Log: Professional Record</span>
               </motion.div>
-              <h1 className="text-4xl sm:text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.9] font-display">
-                Operational <br className="hidden sm:block" />
-                <span className="text-muted-foreground/40 italic font-light">Experience.</span>
-              </h1>
+                <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.9] font-display">
+                  Operational <br className="hidden sm:block" />
+                  <span className="text-muted-foreground/40 italic font-light">Experience.</span>
+                </h1>
               <motion.p 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}

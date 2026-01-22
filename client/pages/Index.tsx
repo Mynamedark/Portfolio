@@ -97,9 +97,9 @@ export default function Index() {
                   <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-primary">Status: Operational</span>
                 </motion.div>
                 
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.95] md:leading-[0.9]">
-                    Open-Source <span className="text-muted-foreground/40 italic font-light">Intelligence</span> & Cyber Research
-                  </h1>
+                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.95] md:leading-[0.9]">
+                      Open-Source <span className="text-muted-foreground/40 italic font-light">Intelligence</span> & Cyber Research
+                    </h1>
                 
                 <motion.p variants={itemVariants} initial="hidden" animate="visible" className="text-base md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mb-8 md:mb-14 font-medium border-l-2 border-primary/30 pl-5 md:pl-8">
                   Specialized in uncovering digital truth through methodical investigation, threat tracking, and actionable data-driven intelligence.
@@ -282,7 +282,7 @@ export default function Index() {
         <section className="py-24 md:py-48 relative overflow-hidden border-t border-border">
           <div className="container px-4 sm:px-6 mx-auto relative z-10 text-center">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl sm:text-5xl md:text-8xl font-bold mb-6 md:mb-12 tracking-tighter leading-none">Initiate an <span className="text-primary italic">Investigation.</span></h2>
+              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 md:mb-12 tracking-tighter leading-none">Initiate an <span className="text-primary italic">Investigation.</span></h2>
               <motion.div
                 initial="hidden"
                 whileInView="visible"
