@@ -113,10 +113,6 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
           />
           
           <Search className="w-16 h-16 md:w-24 md:h-24 text-muted-foreground/10 group-hover/img:text-primary/20 transition-all duration-700 group-hover/img:scale-110" />
-          
-          <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl hover:scale-110 cursor-pointer">
-            <ArrowUpRight className="w-5 h-5 md:w-7 md:h-7" />
-          </div>
         </motion.div>
       </div>
     </SpotlightCard>
@@ -207,7 +203,7 @@ export default function Projects() {
                 Archive: Case Files
               </span>
             </motion.div>
-            <h1 className="text-4xl sm:text-6xl md:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.9] font-display">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter text-foreground mb-6 md:mb-10 leading-[0.9] font-display">
               Documented <br className="hidden sm:block" />
               <span className="text-muted-foreground/40 italic font-light">Intelligence.</span>
             </h1>
@@ -249,7 +245,7 @@ export default function Projects() {
                 <Lock className="w-8 h-8 md:w-10 md:h-10 text-primary" />
               </div>
             </div>
-            <h3 className="text-3xl sm:text-4xl md:text-8xl font-bold mb-6 md:mb-10 tracking-tight leading-none text-foreground font-display">
+            <h3 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-10 tracking-tight leading-none text-foreground font-display">
               Need Targeted <br className="hidden sm:block" />
               <span className="text-primary italic">Research?</span>
             </h3>
