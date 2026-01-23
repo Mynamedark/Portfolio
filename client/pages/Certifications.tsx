@@ -23,7 +23,7 @@ export default function Certifications() {
       icon: Shield,
       color: "bg-gradient-green",
       verificationUrl: "#",
-      file: "/certificates/Course_Completion_Certificate_Intermediate.pdf"
+      file: "/certificates/Course_Completion_Certificate_Intermediate.jpg"
     },
     {
       id: 1,
@@ -36,7 +36,7 @@ export default function Certifications() {
       icon: Lock,
       color: "bg-gradient-blue",
       verificationUrl: "#",
-      file: "/certificates/CSIL-CI_Certification.pdf"
+      file: "/certificates/CSIL-CI_Certification.jpg"
     },
     {
       id: 2,
@@ -49,7 +49,7 @@ export default function Certifications() {
       icon: Globe,
       color: "bg-gradient-purple",
       verificationUrl: "#",
-      file: "/certificates/Introduction to Dark Web Operations-course.pdf"
+      file: "/certificates/Introduction to Dark Web Operations-course.jpg"
     },
     {
       id: 3,
@@ -62,7 +62,7 @@ export default function Certifications() {
       icon: Microscope,
       color: "bg-gradient-orange",
       verificationUrl: "#",
-      file: "/certificates/cybrary-cert-digital-forensics-basics.pdf"
+      file: "/certificates/cybrary-cert-digital-forensics-basics.jpg"
     }
   ];
 
