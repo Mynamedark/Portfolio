@@ -41,7 +41,7 @@ function Certifications() {
       issuedDate: "2026",
       icon: Shield,
       color: "bg-gradient-green",
-      image: "/certificates/Course_Completion_Certificate_Intermediate.jpg",
+      image: "Course_Completion_Certificate_Intermediate.jpg",
     },
     {
       id: 1,
@@ -51,7 +51,7 @@ function Certifications() {
       issuedDate: "2025",
       icon: Lock,
       color: "bg-gradient-blue",
-      image: "/certificates/CSIL-CI_Certification.jpg",
+      image: "CSIL-CI_Certification.jpg",
     },
     {
       id: 2,
@@ -61,7 +61,7 @@ function Certifications() {
       issuedDate: "2025",
       icon: Globe,
       color: "bg-gradient-purple",
-      image: "/certificates/Introduction_to_Dark_Web_Operations.jpg",
+      image: "Introduction_to_Dark_Web_Operations.jpg",
     },
     {
       id: 3,
@@ -71,7 +71,7 @@ function Certifications() {
       issuedDate: "2025",
       icon: Microscope,
       color: "bg-gradient-orange",
-      image: "/certificates/cybrary-cert-digital-forensics-basics.jpg",
+      image: "cybrary-cert-digital-forensics-basics.jpg",
     },
   ];
 
